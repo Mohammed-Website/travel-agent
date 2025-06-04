@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - عروض السفر</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="website-analysis.css">
+    <link rel="stylesheet" href="manage-travel-offers.css">
+</head>
+
+<body>
+
+
+
+
+    <div class="sidebar-toggle" onclick="toggleSidebar()">تحليلات ☰</div>
+
+    <div class="sidebar" id="sidebar">
+        <button onclick="loadClickData()">📞 بيانات تواصل العملاء</button>
+        <button onclick="loadVisitorData()">🌐 بيانات زوار الموقع</button>
+    </div>
+
+    <div class="content" id="output">
+        <h2></h2>
+    </div>
+
+
+
+
+
+
+
+    <div class="container">
+        <h1 class="section-title">لوحة تحكم العروض السياحية</h1>
+
+        <button id="add-offer" class="btn primary">إضافة عرض جديد</button>
+
+        <div id="offers-container" class="d-flex flex-wrap"></div>
+    </div>
+
+
+
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">إضافة عرض جديد</h2>
+                <span class="close-btn close-modal-btn">&times;</span>
+            </div>
+
+            <form id="offer-form">
+                <input type="hidden" id="offer-id" />
+
+                <div class="form-group">
+                    <label for="offer-title">عنوان العرض</label>
+                    <input type="text" id="offer-title" class="form-control" required />
+                </div>
+
+                <!-- Add this new section for title card image -->
+                <div class="form-group">
+                    <label>صورة بطاقة العرض</label>
+                    <div class="title-card-image-container">
+                        <img id="title-card-preview" src="" class="image-preview" alt="Title card preview"
+                            style="display: none;" onclick="openFullscreenImage(this.src)">
+                        <label class="file-label" id="title-card-label">
+                            اختر صورة
+                            <input type="file" id="title-card-image" accept="image/*" style="display: none;" />
+                        </label>
+                        <button type="button" id="remove-title-card-image" class="remove-btn"
+                            style="display: none;">X</button>
+                    </div>
+                </div>
+
+                <div id="images-container">
+                    <div class="image-field">
+                        <img src="preview1.jpg" class="image-preview" alt="Preview">
+                        <label class="file-label">
+                            اختر ملف
+                            <input type="file" style="display: none;" required />
+                        </label>
+                        <button class="remove-btn">إزالة</button>
+                    </div>
+                </div>
+
+                <button type="button" id="add-image" class="btn secondary add-image-btn">إضافة صورة</button>
+
+                <div class="form-actions">
+                    <button type="button" id="save-offer" class="btn primary">💾 حفظ</button>
+                    <button type="button" class="btn secondary close-modal-btn">❌ إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Import the Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <script>
+        // Your Supabase credentials
+        const supabaseUrl = "https://dkerfetnaquggtlpicul.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrZXJmZXRuYXF1Z2d0bHBpY3VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3ODY5MDUsImV4cCI6MjA2MjM2MjkwNX0.GMEkAcx_SWTjV_TdlhQNXzIzh9mDM_L2h8SaLXllQsw"; // use public key
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
+
+
+
+
+    <script src="website-analysis.js"></script>
+    <script src="manage-travel-offers.js"></script>
+
+
+
+</body>
+
+</html>

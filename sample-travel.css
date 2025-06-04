@@ -1,0 +1,1812 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap'); */
+
+
+
+/* Smooth Background Animation */
+@keyframes animate-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Full-Screen Open/Close Animation */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Fade-out and Zoom-out animation */
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+
+
+
+/* General Reset */
+* {
+  font-family: 'Cairo', sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  direction: rtl;
+}
+
+:root {
+  --bg-color: #F0F4F8;
+  --text-color: black;
+}
+
+body {
+  /* background: black; */
+  background: white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* WhatsApp Icon with Neon Effect */
+.whatsapp_icon_div {
+  direction: ltr;
+  z-index: 997;
+  position: fixed;
+  bottom: 40px;
+  left: 0.3vmax;
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  /* Explicitly set to row (default) */
+  justify-content: center;
+  align-items: center;
+  /* This should center them vertically */
+  gap: 3px;
+  background: rgb(225, 227, 226);
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  padding: 3px 10px;
+  /* Increased horizontal padding */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp_icon_div:hover {
+  transform: scale(1.015);
+}
+
+.whatsapp_icon_div ion-icon {
+  font-size: 2.5rem;
+  display: flex;
+  /* Ensures proper alignment */
+  align-items: center;
+}
+
+.whatsapp_icon_div p {
+  margin: 0;
+  /* Remove default paragraph margins */
+  padding: 0;
+  /* Remove default paragraph padding */
+  white-space: nowrap;
+  /* Prevent text from wrapping */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Header Styling with Neon Background Animation */
+#mughader_header {
+  background: rgb(225, 227, 226);
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+header.hidden {
+  transform: translateY(-100%);
+}
+
+.mughader_header_container {
+  direction: ltr;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* Logo */
+.mughader_header_logo {
+  width: 13rem;
+}
+
+/* Navigation Links (Desktop) */
+.mughader_desktop_nav {
+  display: flex;
+}
+
+.mughader_nav_links {
+  direction: rtl;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  /* Space between items */
+  align-items: center;
+  /* Ensures everything is centered */
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure social icons are in the same row */
+.mughader_social_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Increase spacing slightly if needed */
+.mughader_nav_links li {
+  display: flex;
+  align-items: center;
+}
+
+/* Neon Text Effect */
+.mughader_nav_links a,
+.mughader_mobile_sidebar a {
+  color: black;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.mughader_nav_links a:hover,
+.mughader_mobile_sidebar a:hover {
+  color: #006495;
+}
+
+/* Neon Social Icons */
+.mughader_social_icon ion-icon {
+  background: linear-gradient(to right, #8a008a, #008888);
+  color: white;
+  font-size: 1.5rem;
+  padding: 5px;
+  border-radius: 10%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.mughader_social_icon ion-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile Menu Icon */
+.mughader_mobile_menu_icon {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: black;
+  transition: 0.3s ease-in-out;
+}
+
+/* Neon Sidebar */
+.mughader_mobile_sidebar {
+  background: black;
+}
+
+/* Sidebar (Mobile) */
+.mughader_mobile_sidebar {
+  background: rgb(225, 227, 226);
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 230px;
+  max-width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  transition: right 0.3s ease;
+}
+
+.mughader_mobile_sidebar ul {
+  list-style: none;
+  text-align: right;
+}
+
+.mughader_mobile_sidebar li {
+  margin: 2rem 15px 0.5rem 0;
+}
+
+.mughader_mobile_sidebar a {
+  text-decoration: none;
+  color: black;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mughader_mobile_sidebar a:hover {
+  color: #007bff;
+}
+
+.mughader_mobile_social_icons_div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Close Icon */
+.mughader_mobile_sidebar .mughader_close_icon {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Neon Close Icon */
+.mughader_close_icon {
+  color: black;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Cool Animated Background */
+@keyframes neonBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Section Styling */
+.neon_section {
+  background: var(--bg-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.background_image {
+  width: 100%;
+  height: 60vh;
+}
+
+/* Text Container */
+.neon_text_container {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  padding: 20px;
+}
+
+/* Title Styling */
+.neon_title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* Subtitle Styling */
+.neon_subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: var(--text-color);
+}
+
+/* Button Styling */
+.neon_button {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: white;
+  background: #002a59;
+  text-decoration: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.neon_button:hover {
+  background: #005ec9;
+  transform: scale(1.05);
+}
+
+/* Our Location Address Links */
+.our-location-address-div {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+  /* Spacing between links */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /* Ensures responsiveness on small screens */
+}
+
+.our-location-address-div a {
+  font-size: 1rem;
+  padding: 5px 10px;
+  background: linear-gradient(135deg, #005ec9, #002a59);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.our-location-address-div a:hover {
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Section Styling */
+#scrollable_cards_section_id {
+  padding: 1rem;
+  position: relative;
+  background: #c6c6c6;
+  /* Light neutral background */
+}
+
+/* Title Styling */
+.scrollable_section_title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: white;
+  padding: 0.5rem 0;
+  border-radius: 5px;
+  padding-right: 10px;
+  background: linear-gradient(90deg, #457b9d, #1d3557, #457b9d, #1d3557);
+  background-size: 300% 100%;
+  animation: animate-bg 10s linear infinite;
+}
+
+/* Cards Container */
+.title_cards_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+/* Main Card Styling */
+.title_card {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  margin: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Inner wrapper clips content */
+.title_card_inner_wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/* Animated Border */
+.title_card::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px; 
+  border-radius: 50%;
+  background: conic-gradient(#457b9d, #1d3557, #457b9d, #1d3557);
+  z-index: 0;
+  animation: borderRotate 4s linear infinite;
+}
+
+.title_card:hover::before {
+  animation-play-state: running;
+}
+
+.title_card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Image Styling */
+.title_card_inner_wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.title_card_inner_wrapper img:hover {
+  transform: scale(1.05);
+}
+
+/* Title Text */
+.title_card_inner_wrapper h3 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 5px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  margin: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+
+/* Navigation Arrows */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  height: 100px;
+  font-size: clamp(28px, 5vw, 48px);
+  padding: 0 5px;
+  cursor: pointer;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  opacity: 0.8;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.nav-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.nav-arrow.left {
+  right: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.nav-arrow.right {
+  left: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.nav-arrow.hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.8);
+}
+
+/* Image container */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Scrollable Row */
+.scrollable_cards_row {
+  direction: rtl;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(0, 0, 0) #222;
+  transition: opacity 0.3s ease;
+}
+
+/* Custom Scrollbar (Webkit) */
+.scrollable_cards_row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollable_cards_row::-webkit-scrollbar-thumb {
+  background-color: #457b9d;
+  border-radius: 10px;
+}
+
+.scrollable_cards_row::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+}
+
+/* Only apply fade-in effect to images inside scrollable_cards_row */
+.scrollable_cards_row img.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.scrollable_cards_row img.fade-in.visible {
+  opacity: 1;
+}
+
+/* Individual Card Styling */
+.scrollable_card {
+  width: 20rem;
+  border-radius: 7px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.scrollable_card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.scrollable_card img:hover {
+  transform: scale(1.05);
+}
+
+#scrollable_cards_container_id {
+  margin-bottom: 4vmax;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#scrollable_cards_container_id+#scrollable_cards_container_id {
+  margin-top: 30px;
+}
+
+/* Full-Screen Container */
+.full_screen_container {
+  direction: ltr;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.full_screen_container.visible {
+  opacity: 1;
+}
+
+.full_screen_image {
+  max-width: 90%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.full_screen_image.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.full_screen_image.fade-in {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+
+/* Exit Button */
+.exit_button {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  align-self: flex-end;
+  width: auto;
+  animation: zoomIn 0.5s ease;
+}
+
+.exit_button:hover {
+  background: #ff3333;
+}
+
+.full_screen_title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #ff2f00, #FFC300);
+  -webkit-background-clip: text;
+  line-height: 1.5;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  animation: zoomIn 0.5s ease;
+}
+
+.full_screen_title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(to right, #FF5733, #FFC300);
+  margin: 10px auto 0;
+  border-radius: 2px;
+  animation: zoomIn 0.5s ease;
+}
+
+/* Full-Screen Image */
+.full_screen_image {
+  background: transparent;
+  max-width: 80vw;
+  max-height: 60%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  animation: zoomIn 0.5s ease;
+}
+
+/* WhatsApp Button */
+.whatsapp_button {
+  background: #009235;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 1vmin 2vmin;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease;
+  width: fit-content;
+  text-align: center;
+  animation: zoomIn 0.5s ease;
+}
+
+.whatsapp_button:hover {
+  background: #20c357;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Fourth Section Style */
+.mughader_last_section {
+  background: linear-gradient(90deg, #00172e, #003c78);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mughader_last_section * {
+  color: white;
+  direction: rtl;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Email Subscription Section */
+.enter_your_email_for_our_news_div {
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+/* Call to Action Text */
+.cta_text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Email Subscription Form */
+.email_subscription_form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Input Field */
+.email_subscription_form input {
+  width: 70%;
+  padding: 10px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+  color: #003c78;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.email_subscription_form input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.email_subscription_form input:focus {
+  border-color: #00bcd4;
+  box-shadow: 0px 0px 8px rgba(0, 188, 212, 0.8);
+}
+
+/* Submit Button */
+.email_subscription_form button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #00bcd4, #0066cc);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.email_subscription_form button:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Customers omments Section */
+.mughader_customers_comments_section {
+  background: #f9f9f9;
+  padding-top: 0.5vmax;
+}
+
+.mughader_customers_comments_section h6 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #ff2f00, #FFC300);
+  -webkit-background-clip: text;
+  line-height: 1.5;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.mughader_customers_comments_section h6::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(to right, #FF5733, #FFC300);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+#user_clint_rate_area {
+  background: rgb(225, 227, 226);
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-shadow: 0 0 1px 0.5px black;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+#user_clint_rate_area.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user_card_rate_div {
+  background: rgb(46, 46, 46);
+  color: white;
+  min-width: 35rem;
+  margin: 0 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 3px;
+  box-shadow: 0 0 3px 0.5px rgb(0, 162, 255);
+  transition: all 0.5s ease-in-out;
+  scroll-snap-align: center;
+}
+
+.user_card_rate_div:hover {
+  box-shadow: 0 0 3px 0.5px rgb(0, 255, 0);
+}
+
+.card_clint_rate_date_div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card_clint_rate_date_div h3 {
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.card_clint_rate_info_div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card_clint_rate_info_div img {
+  width: 3.5rem;
+  border-radius: 50%;
+}
+
+.card_clint_rate_info_div h4 {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.card_clint_rate_comment_div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card_clint_rate_comment_div h5 {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.card_clint_rate_star_div {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 2rem;
+  color: gold;
+}
+
+/* Hide vertical scrollbar */
+#user_clint_rate_area::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Styling the main container */
+.user_insert_comment_form_div {
+  width: 55vw;
+  margin: 10px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Styling the heading */
+.user_insert_comment_form_div h3 {
+  font-size: 1.5rem;
+  color: black;
+  margin-bottom: 15px;
+}
+
+/* Form styling */
+#user_comment_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+}
+
+/* Label styling */
+#user_comment_form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+  text-align: right;
+}
+
+/* Input and textarea styling */
+#user_comment_username,
+#user_comment_text,
+#user_comment_stars {
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Textarea specific styling */
+#user_comment_text {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Select dropdown styling */
+#user_comment_stars {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+/* Submit button styling */
+#user_comment_form button {
+  background: linear-gradient(to top, rgb(0, 52, 82), rgb(0, 127, 200));
+  color: white;
+  font-size: 1rem;
+  padding: 5px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#new_comment_success_notification {
+  position: fixed;
+  top: 50%;
+  /* Start from the middle of the screen vertically */
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  /* Start from the center */
+  background-color: #4CAF50;
+  /* Green background */
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+/* Show animation */
+#new_comment_success_notification.show {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  /* Move up to center smoothly */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer Style */
+footer {
+  padding: 100px 0;
+  direction: ltr;
+  background: rgb(225, 227, 226);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 998;
+  position: relative;
+}
+
+footer img {
+  width: 16rem;
+}
+
+footer * {
+  color: black;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+
+
+
+
+
+
+
+
+
+/* Media Queries */
+/* 1250px */
+@media(max-width:1250px) {
+
+  /* Styling the main container */
+  .user_insert_comment_form_div {
+    width: 80vw;
+  }
+
+  /* Form styling */
+  #user_comment_form {
+    gap: 5px 0;
+  }
+
+}
+
+
+
+
+
+
+
+/* For Laptop Screen Size */
+@media (min-width: 1024px) {
+  .full_screen_container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+
+  .full_screen_image {
+    max-width: 70vw;
+    max-height: 70vh;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 950px) {
+  .neon_text_container {
+    width: 90vw;
+    padding: 10px 2px;
+  }
+
+  .neon_title {
+    font-size: 4.8vw;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  /* Offers Cards */
+  .title_card {
+    width: 25vw;
+    height: 25vw;
+  }
+  
+
+  .title_card h3 {
+    font-size: 2.5vw;
+  }
+
+
+
+
+
+
+  /* Offer Cards Section */
+  #scrollable_cards_section_id {
+    padding: 5px 2px;
+  }
+
+  .scrollable_section_title {
+    font-size: 4vw;
+    margin-bottom: 1vmax;
+  }
+
+  .scrollable_card {
+    width: 40vw;
+  }
+
+  #scrollable_cards_container {
+    margin-bottom: 0.1vmax;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  }
+
+
+
+
+
+
+
+
+  /* About Us Section */
+  .mughader_last_section * {
+    font-size: 2vw;
+  }
+
+  .cta_text {
+    font-size: 3vw;
+  }
+
+  .email_subscription_form button {
+    padding: 0.5vmax 1vmax;
+    font-size: 3vw;
+  }
+
+  .email_subscription_form input {
+    width: 75%;
+    padding: 5px;
+    font-size: 3.5vw;
+  }
+
+
+
+
+
+
+
+
+
+  .user_card_rate_div {
+    min-width: 65vw;
+    margin: 0 8px;
+    padding: 5px 2px;
+  }
+
+  .card_clint_rate_date_div h3 {
+    font-size: 2.5vw;
+  }
+
+  .card_clint_rate_info_div img {
+    width: 5.5vw;
+  }
+
+  .card_clint_rate_info_div h4 {
+    font-size: 2.5vw;
+  }
+
+  .card_clint_rate_comment_div h5 {
+    font-size: 2.5vw;
+  }
+
+  .card_clint_rate_star_div {
+    margin-top: 8px;
+    font-size: 3.5vw;
+  }
+
+  .user_insert_comment_form_div h3 {
+    font-size: 4vw;
+  }
+
+
+
+
+
+
+
+
+
+  /* WhatsApp Code */
+  .whatsapp_icon_div {
+    font-size: 2.8vw;
+  }
+
+  .whatsapp_icon_div ion-icon {
+    font-size: 4vw;
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mughader_desktop_nav {
+    display: none;
+    /* Hide desktop navigation */
+  }
+
+  .mughader_mobile_menu_icon {
+    display: block;
+    /* Show mobile menu icon */
+  }
+
+
+
+
+
+
+
+
+
+  /* First Section Subtitle Styling */
+  .neon_subtitle {
+    font-size: 4.5vw;
+  }
+
+  .background_image {
+    height: 100%;
+  }
+
+  .wow_location_icon {
+    margin-left: 0;
+    font-size: 9vw;
+  }
+
+  /* Our Location Address Links */
+  .our-location-address-div {
+    margin-top: 5px;
+  }
+
+  .our-location-address-div a {
+    padding: 1vw 2vw;
+    font-size: 3vw;
+  }
+
+  .neon_button {
+    margin-top: 5px;
+    padding: 1vw 2vw;
+    font-size: 3vw;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .full_screen_container {
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0;
+    gap: 15px;
+  }
+
+  .exit_button,
+  .full_screen_title,
+  .full_screen_image,
+  .whatsapp_button {
+    text-align: center;
+  }
+
+  .full_screen_image {
+    max-width: 95vw;
+    max-height: 50vh;
+  }
+
+  .exit_button {
+    width: fit-content;
+    padding: 2px 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+
+
+
+
+
+
+
+
+  /* WhatsApp Code */
+  .whatsapp_icon_div {
+    font-size: 3vw;
+  }
+
+  .whatsapp_icon_div ion-icon {
+    font-size: 4.2vw;
+  }
+
+
+
+
+
+
+  footer * {
+    font-size: 0.6rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+
+  /* Logo */
+  .mughader_header_logo {
+    width: 40vw;
+  }
+
+
+
+
+  .email_subscription_form input {
+    width: 100%;
+  }
+
+  .email_subscription_form {
+    flex-direction: column;
+  }
+
+  /* Page Intro Section */
+  .wow_effect_section {
+    height: 40vh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  footer {
+    padding: 50px 0;
+  }
+
+  footer img {
+    width: 40vw;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 400px) {
+  .mughader_header_container {
+    justify-content: space-between;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /* First Section Subtitle Styling */
+  .wow_effect_section {
+    height: 35vh;
+  }
+
+  .neon_text_container {
+    width: 95vw;
+    padding: 0 2px;
+  }
+
+  .our-location-address-div a {
+    font-size: 4vw;
+  }
+
+  .neon_button {
+    font-size: 4vw;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* Offers Cards */
+  .title_card {
+    width: 35vw;
+    height: 35vw;
+    margin: 0.2rem;
+  }
+
+  .title_cards_container {
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .title_card h3 {
+    font-size: 3.5vw;
+    padding: 5px;
+  }
+
+
+
+
+  /* Title */
+  .full_screen_title {
+    font-size: 5vw;
+    margin-bottom: 0;
+  }
+
+
+
+
+  /* About Us Section */
+  .mughader_last_section * {
+    font-size: 2.8vw;
+  }
+
+  .cta_text {
+    font-size: 3.8vw;
+  }
+
+  .email_subscription_form button {
+    font-size: 4.5vw;
+  }
+
+  .email_subscription_form input {
+    font-size: 4.5vw;
+    padding: 2px 3px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  .mughader_customers_comments_section h6 {
+    font-size: 5.5vw;
+  }
+
+  .user_card_rate_div {
+    min-width: 90vw;
+    margin: 0 5px;
+  }
+
+  .card_clint_rate_date_div h3 {
+    font-size: 3.5vw;
+  }
+
+  .card_clint_rate_info_div img {
+    width: 8.5vw;
+  }
+
+  .card_clint_rate_info_div h4 {
+    font-size: 3.5vw;
+  }
+
+  .card_clint_rate_comment_div h5 {
+    font-size: 3.5vw;
+  }
+
+  .card_clint_rate_star_div {
+    margin-top: 8px;
+    font-size: 5vw;
+  }
+
+  .user_insert_comment_form_div {
+    width: 100vw;
+  }
+
+  .user_insert_comment_form_div h3 {
+    font-size: 5vw;
+    margin-bottom: 5px;
+  }
+
+  #user_comment_form label {
+    font-size: 4vw;
+  }
+
+  #user_comment_form button {
+    font-size: 4vw;
+  }
+
+
+
+
+
+  /* WhatsApp Code */
+  .whatsapp_icon_div {
+    font-size: 4vw;
+  }
+
+  .whatsapp_icon_div ion-icon {
+    font-size: 5vw;
+  }
+}
