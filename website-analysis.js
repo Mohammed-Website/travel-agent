@@ -785,30 +785,30 @@ async function loadVisitorData() {
 
         // Check if we have visitor data
         if (!dataCache.visitorData) {
-            console.warn('No visitor data found for domain:', websiteDomainName);
+            console.warn('لم يتم العثور على بيانات لعدد زوار الموقع:', websiteDomainName);
             return renderOutput("👥 زوار الموقع", [
                 {
                     title: 'لاتوجد بيانات متاحة',
                     items: [
-                        { label: 'Status', value: 'لاتوجد بيانات متاحة لإسم الموقع هذا' },
-                        { label: 'Domain', value: websiteDomainName },
-                        { label: 'Tip', value: 'تأكد ان هذا الموقع مسجل في قاعدة البيانات' }
+                        { label: 'الحالة', value: 'لاتوجد بيانات متاحة لإسم الموقع هذا' },
+                        { label: 'اسم الموقع', value: websiteDomainName },
+                        { label: 'النصيحة', value: 'تأكد ان هذا الموقع مسجل في قاعدة البيانات' }
                     ]
                 }
             ]);
         }
 
-        console.log('Processing visitor data:', dataCache.visitorData);
+        console.log('جاري تحميل بيانات زوار الموقع:', dataCache.visitorData);
         return processVisitorData(dataCache.visitorData);
     } catch (error) {
         console.error('Error loading visitor data:', error);
         renderOutput("👥 زوار الموقع", [
             {
-                title: 'Error Loading Data',
+                title: 'خطأ في تحميل البيانات',
                 items: [
                     { label: 'خطأ', value: error.message },
-                    { label: 'الحل', value: 'Please check your network connection or try refreshing the page' },
-                    { label: 'الدومين', value: websiteDomainName }
+                    { label: 'الحل', value: 'يرجى التأكد من اتصالك بالانترنت وقم بتحديث الصفحة' },
+                    { label: 'اسم الموقع', value: websiteDomainName }
                 ]
             }
         ]);
