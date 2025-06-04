@@ -246,6 +246,7 @@ function createTitleCards(dataArray) {
     const mainTitle = document.createElement('h2');
     mainTitle.className = 'scrollable_section_title';
     mainTitle.textContent = 'عروضنا الخاصة';
+    mainTitle.style.textAlign = 'center';
     section.appendChild(mainTitle);
 
     const titlesContainer = document.createElement('div');
@@ -300,7 +301,17 @@ function createTitleCards(dataArray) {
 
         // Click handler
         titleCard.addEventListener('click', () => {
-            if (currentActiveIndex === index) return;
+            
+            if (currentActiveIndex === index) {
+                // Scroll to view
+                document.getElementById('scrollable_cards_container_id').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                return;
+            }
+
+
             document.querySelectorAll('.title_card').forEach(card => {
                 card.classList.remove('active');
             });
@@ -331,6 +342,7 @@ function showImagesForTitle(index, data) {
 
     currentActiveIndex = index;
 }
+
 
 function updateContent(container, index, data) {
     container.innerHTML = '';
@@ -385,7 +397,7 @@ function updateContent(container, index, data) {
 async function getAndTransformSupabaseData() {
     try {
         const { data, error } = await supabase
-            .from('sample_table')
+            .from('sample_travel_table')
             .select('*')
             .order('created_at', { ascending: false });
 
@@ -523,7 +535,8 @@ function openFullScreenImage(src, text, index = 0) {
     const whatsappButton = document.createElement('a');
     whatsappButton.className = 'whatsapp_button';
     whatsappButton.innerHTML = '<ion-icon name="logo-whatsapp"></ion-icon> إرسال هذا العرض';
-    whatsappButton.href = `https://wa.me/+966569446280?text=💎%20طلب%20حجز%20عرض%20جديد%20💎%0A%0Aسلام%20عليكم،%20حاب%20أسأل%20عن%20عرض%0A*${encodeURIComponent(fullscreenImages[currentFullscreenIndex]?.alt || text)}*%0Aوحاب%20أعرف%20تفاصيل%20أكثر%20عن%20عروضكم%20المشابهة.%0A%0A🔗%20رابط%20صورة%20العرض:%0A${window.location.origin}/${encodeURIComponent(fullscreenImages[currentFullscreenIndex]?.src || src)}%0A%0Aبإنتظار%20ردكم%20وشكرًا%20لكم`;
+    const imageUrl = fullscreenImages[currentFullscreenIndex]?.src || src;
+    whatsappButton.href = `https://wa.me/+966569446280?text=💎%20طلب%20حجز%20عرض%20جديد%20💎%0A%0Aسلام%20عليكم،%20حاب%20أسأل%20عن%20عرض%0A*${encodeURIComponent(fullscreenImages[currentFullscreenIndex]?.alt || text)}*%0Aوحاب%20أعرف%20تفاصيل%20أكثر%20عن%20عروضكم%20المشابهة.%0A%0A🔗%20رابط%20صورة%20العرض:%0A${encodeURIComponent(imageUrl)}%0A%0Aبإنتظار%20ردكم%20وشكرًا%20لكم`;
     whatsappButton.target = '_blank';
     whatsappButton.rel = 'noopener noreferrer';
 
@@ -608,7 +621,8 @@ function openFullScreenImage(src, text, index = 0) {
             // Update WhatsApp link
             const whatsappButton = fullScreenDiv.querySelector('.whatsapp_button');
             if (whatsappButton) {
-                whatsappButton.href = `https://wa.me/+966569446280?text=💎%20طلب%20حجز%20عرض%20جديد%20💎%0A%0Aسلام%20عليكم،%20حاب%20أسأل%20عن%20عرض%0A*${encodeURIComponent(currentImage.alt)}*%0Aوحاب%20أعرف%20تفاصيل%20أكثر%20عن%20عروضكم%20المشابهة.%0A%0A🔗%20رابط%20صورة%20العرض:%0A${window.location.origin}/${encodeURIComponent(currentImage.src)}%0A%0Aبإنتظار%20ردكم%20وشكرًا%20لكم`;
+                const imageUrl = currentImage.src;
+                whatsappButton.href = `https://wa.me/+966569446280?text=💎%20طلب%20حجز%20عرض%20جديد%20💎%0A%0Aسلام%20عليكم،%20حاب%20أسأل%20عن%20عرض%0A*${encodeURIComponent(currentImage.alt)}*%0Aوحاب%20أعرف%20تفاصيل%20أكثر%20عن%20عروضكم%20المشابهة.%0A%0A🔗%20رابط%20صورة%20العرض:%0A${encodeURIComponent(imageUrl)}%0A%0Aبإنتظار%20ردكم%20وشكرًا%20لكم`;
             }
 
             // Update arrow visibility
@@ -844,7 +858,7 @@ document.querySelectorAll('.mughader_dynamic_direction_input_class').forEach(inp
 /* Open WhatsApp */
 openWhatsAppNumber = function () {
 
-    insertNewClick('sample-website-domain');
+    insertNewClick('sample-travel-website-domain');
 
     const whatsappNumber = "+966569446280";
     const message = encodeURIComponent('سلام عليكم ورحمة الله وبركاته'); // Optional pre-filled message
@@ -938,7 +952,7 @@ document.querySelector('.email_subscription_form button').addEventListener('clic
         return;
     }
 
-    const domainColumn = 'sample-website-domain'; // Set your domain column here
+    const domainColumn = 'sample-travel-website-domain'; // Set your domain column here
     await saveEmailToDomainColumn(domainColumn, email);
 });
 
@@ -1042,4 +1056,4 @@ async function updateVisitorCount(website) {
 }
 
 // Run the website visitors counter
-updateVisitorCount('sample-website-domain');
+updateVisitorCount('sample-travel-website-domain');

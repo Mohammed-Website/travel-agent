@@ -385,22 +385,6 @@ label {
   font-size: 0.8rem;
 }
 
-/* Adjust remove button */
-.remove-btn {
-  grid-row: 1;
-  grid-column: 3;
-  position: relative;
-  top: auto;
-  left: auto;
-  margin: 0;
-  width: 24px;
-  height: 24px;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .image-field:hover {
   border-color: #9ca3af;
   background-color: #f9fafb;
@@ -477,9 +461,9 @@ label {
   background-color: #fcebea;
   color: #e3342f;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  padding: 0.5rem 0.8rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 0.4rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -779,11 +763,6 @@ label {
     grid-column: 1;
     justify-self: stretch;
   }
-  
-  .remove-btn {
-    grid-row: 3;
-    grid-column: 2;
-  }
 }
 
 @media (max-width: 480px) {
@@ -894,8 +873,7 @@ label {
   }
 
   .remove-btn {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .offer-title {

@@ -1,4 +1,4 @@
-const websiteDomainName = 'boarding-saudi-travel';
+const websiteDomainName = 'sample-travel-website-domain';
 
 // Cache for storing fetched data
 let dataCache = {
