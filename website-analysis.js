@@ -398,9 +398,9 @@ function processClickData(clickData) {
             {
                 title: 'نظرة عامة على النقرات',
                 items: [
-                    { label: 'إجمالي النقرات', value: totalClicks },
-                    { label: 'متوسط النقرات الشهري', value: Math.round(clickChartData.length ? totalClicks / 12 : 0) },
-                    { label: 'أعلى شهر', value: clickChartData.length ? Math.max(...clickChartData.map(item => item.clicks || 0)) : 0 }
+                    { label: 'إجمالي عدد التواصل', value: totalClicks },
+                    { label: 'متوسط عدد التواصل الشهري', value: Math.round(clickChartData.length ? totalClicks / 12 : 0) },
+                    { label: 'أعلى شهر عدد تواصل', value: clickChartData.length ? Math.max(...clickChartData.map(item => item.clicks || 0)) : 0 }
                 ]
             }
         ]);
