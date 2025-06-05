@@ -164,45 +164,65 @@ flatpickr("#departureDate", {
 
 
 
-// Data for the offers
-const offers = [
-    {
-        title: "شهر عسل اندونيسيا",
-        offerType: "شهر عسل",
-        countries: "اندونيسيا",
-        cities: "بونشاك-بالي-جاكرتا"
-    },
-    {
-        title: "عائلة تايلاند-ماليزيا",
-        offerType: "عائلة",
-        countries: "تايلاند-ماليزيا",
-        cities: "كوالالمبور-بانكوك-بوكيت"
-    },
-    {
-        title: "شباب تركيا",
-        offerType: "شباب",
-        countries: "تركيا",
-        cities: "اسطنبول-طرابزون-بورصة"
-    },
-    {
-        title: "بنات المالديف",
-        offerType: "بنات",
-        countries: "المالديف",
-        cities: "القاهرة-شرم الشيخ-الغردقة"
+// Data for the mostUsedOffers
+// Update the mostUsedOffers array with data from Supabase
+async function fetchMostUsedOffers() {
+    try {
+        const { data, error } = await supabase
+            .from('most_used_travel_offers')
+            .select('*')
+            .eq('id', 1)
+            .single();
+
+        if (error) throw error;
+
+        if (data && data['sample-travel-website-domain']) {
+            try {
+                // Clean and parse the offers data
+                let offersStr = data['sample-travel-website-domain'].trim();
+                offersStr = offersStr.replace(/,\s*([}\]]|$)/g, '$1');
+                if (!offersStr.startsWith('[')) {
+                    offersStr = `[${offersStr}]`;
+                }
+                const jsonStr = offersStr
+                    .replace(/([{\s])(\w+)(?=\s*:)/g, '$1"$2"')
+                    .replace(/'/g, '"');
+                
+                const parsedOffers = JSON.parse(jsonStr);
+                return Array.isArray(parsedOffers) ? parsedOffers : [];
+            } catch (parseError) {
+                console.error('Error parsing offers:', parseError);
+                return [];
+            }
+        }
+        return [];
+    } catch (error) {
+        console.error('Error fetching most used offers:', error);
+        return [];
     }
-];
+}
 
+// Initialize the offers
+let mostUsedOffers = [];
 
-offers.forEach(offer => {
-    const offerItem = document.createElement('div');
-    offerItem.className = 'offer-item';
-    offerItem.textContent = offer.title;
-    offerItem.onclick = () => selectOffer(offer); // Handle offer selection
-    offersList.appendChild(offerItem);
+// Load and display the offers when the page loads
+document.addEventListener('DOMContentLoaded', async () => {
+    mostUsedOffers = await fetchMostUsedOffers();
+
+    mostUsedOffers.forEach(offer => {
+        const offerItem = document.createElement('div');
+        offerItem.className = 'offer-item';
+        offerItem.textContent = offer.title;
+        offerItem.onclick = () => selectOffer(offer); // Handle offer selection
+        mostUsedOffersList.appendChild(offerItem);
+    });
 });
 
 
-// Handle offer selection
+
+
+
+
 // Handle offer selection
 function selectOffer(offer) {
     playSoundEffect('success');

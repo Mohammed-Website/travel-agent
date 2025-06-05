@@ -10,6 +10,7 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="website-analysis.css">
+    <link rel="stylesheet" href="most-used-offers.css">
     <link rel="stylesheet" href="manage-travel-offers.css">
 </head>
 
@@ -36,6 +37,20 @@
 
 
     <div class="container">
+        <h1 class="section-title">لوحة تحكم أكثر العروض طلباً</h1>
+
+        <button id="edit-most-used-offers" class="btn primary">تعديل العروض</button>
+
+        <div id="most-used-offers-container" class="d-flex flex-wrap"></div>
+    </div>
+
+
+
+
+
+
+
+    <div class="container">
         <h1 class="section-title">لوحة تحكم العروض السياحية</h1>
 
         <button id="add-offer" class="btn primary">إضافة عرض جديد</button>
@@ -45,6 +60,22 @@
 
 
 
+
+    <!-- Most Used Offers Modal -->
+    <div id="mostUsedOffersModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="mostUsedOffersList">
+                <!-- Offers will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn primary" id="addNewMostUsedOffers">إضافة عرض جديد</button>
+                <button type="button" class="btn primary" id="saveMostUsedOffers" style="background: rgb(0, 172, 0);">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
 
     <div id="editModal" class="modal">
         <div class="modal-content">
@@ -68,7 +99,7 @@
                         <img id="title-card-preview" src="" class="image-preview" alt="Title card preview"
                             style="display: none;" onclick="openFullscreenImage(this.src)">
                         <label class="file-label" id="title-card-label">
-                            اختر صورة
+                            اختر صورة بطاقة العرض
                             <input type="file" id="title-card-image" accept="image/*" style="display: none;" />
                         </label>
                         <button type="button" id="remove-title-card-image" class="remove-btn"
@@ -117,10 +148,8 @@
 
 
     <script src="website-analysis.js"></script>
+    <script src="most-used-offers.js"></script>
     <script src="manage-travel-offers.js"></script>
-
-
-
 </body>
 
 </html>

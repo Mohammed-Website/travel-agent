@@ -1171,7 +1171,7 @@ async function cleanupUnusedImages() {
     }
 }
 
-// Add this function to the window object so you can call it from the browser console
+// Call a function to delete all the unused images from the Supabase Storage Bucket
 cleanupUnusedImages();
 
 

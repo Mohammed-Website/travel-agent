@@ -153,7 +153,7 @@
 }
 
 
-#offersList {
+#mostUsedOffersList {
   display: flex;
   flex-direction: row;
   gap: 15px;
@@ -194,16 +194,16 @@
   transform: translateY(2px);
 }
 
-#offersList::-webkit-scrollbar {
+#mostUsedOffersList::-webkit-scrollbar {
   height: 10px;
 }
 
-#offersList::-webkit-scrollbar-thumb {
+#mostUsedOffersList::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
 
-#offersList::-webkit-scrollbar-track {
+#mostUsedOffersList::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
