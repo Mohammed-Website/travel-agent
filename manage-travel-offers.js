@@ -54,6 +54,7 @@ function setupEventListeners() {
     });
 }
 
+
 // Modal functions
 function showModal() {
     // Make modal visible before animation
@@ -65,10 +66,6 @@ function showModal() {
 
     // Start animation
     editModal.classList.add('show');
-
-    // Focus on first input field for better UX
-    const firstInput = offerForm.querySelector('input:not([type="hidden"])');
-    if (firstInput) firstInput.focus();
 }
 
 function hideModal() {
@@ -81,6 +78,7 @@ function hideModal() {
         document.body.style.overflow = 'auto';
     }, 300); // Match this with your CSS transition duration
 }
+
 
 
 // Load offers from Supabase
