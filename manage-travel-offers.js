@@ -21,16 +21,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupEventListeners();
 });
 
+// Setup event listeners
+function setupEventListeners() {
+    // Add offer button
+    addOfferBtn.addEventListener('click', () => {
+        document.getElementById('title-card-preview').style.display = 'none';
+        document.getElementById('title-card-preview').src = '';
+        currentOffer = null;
+        modalTitle.textContent = 'إضافة عرض جديد';
+        offerForm.reset();
+        showModal();
+    });
+
+
+    // Close modal buttons
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener('click', hideModal);
+    });
+
+
+    // Close when clicking outside modal
+    editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) {
+            hideModal();
+        }
+    });
+    
+
+    // Prevent modal content from closing the modal when clicked
+    document.querySelector('.modal-content').addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+}
+
 // Modal functions
 function showModal() {
+    // Make modal visible before animation
     editModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    document.body.style.overflow = 'hidden';
+
+    // Trigger reflow to ensure CSS applies before animation
+    void editModal.offsetWidth;
+
+    // Start animation
+    editModal.classList.add('show');
+
+    // Focus on first input field for better UX
+    const firstInput = offerForm.querySelector('input:not([type="hidden"])');
+    if (firstInput) firstInput.focus();
 }
 
 function hideModal() {
-    editModal.style.display = 'none';
-    document.body.style.overflow = ''; // Re-enable scrolling
+    // Start fade out animation
+    editModal.classList.remove('show');
+
+    // Wait for animation to complete before hiding completely
+    setTimeout(() => {
+        editModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }, 300); // Match this with your CSS transition duration
 }
+
 
 // Load offers from Supabase
 async function loadOffers() {
@@ -124,6 +175,8 @@ function renderOffers(offers) {
 function setupEventListeners() {
     // Add new offer
     addOfferBtn.addEventListener('click', () => {
+        document.getElementById('title-card-preview').style.display = 'none';
+        document.getElementById('title-card-preview').src = '';
         currentOffer = null;
         modalTitle.textContent = 'إضافة عرض جديد';
         offerForm.reset();

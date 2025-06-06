@@ -4,7 +4,7 @@
 // DOM Elements
 const mostUsedOffersContainer = document.getElementById('most-used-offers-container');
 const editButton = document.getElementById('edit-most-used-offers');
-const modal = document.getElementById('mostUsedOffersModal');
+const mostUsedOffersModal = document.getElementById('mostUsedOffersModal');
 const mostUsedOffersCloseModalBtns = document.querySelectorAll('.close-modal');
 const saveBtn = document.getElementById('saveMostUsedOffers');
 const offersList = document.getElementById('mostUsedOffersList');
@@ -13,84 +13,58 @@ const offersList = document.getElementById('mostUsedOffersList');
 let currentOffers = [];
 let currentEditingIndex = -1;
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function () {
-    // Modal elements
-    if (modal) {
-        // Open modal and show offers
-        if (editButton) {
-            editButton.addEventListener('click', async function () {
-                console.log('Edit button clicked');
-
-                try {
-                    // Toggle display of the offers container
-                    const container = document.getElementById('most-used-offers-container');
-                    console.log('Container element:', container);
-
-                    if (container) {
-                        const newDisplay = container.style.display === 'none' ? 'block' : 'none';
-                        console.log('Setting container display to:', newDisplay);
-                        container.style.display = newDisplay;
-                    } else {
-                        console.error('Container element not found');
-                    }
-
-                    // Show modal for editing
-                    console.log('Showing modal');
-                    if (modal) {
-                        modal.style.display = 'block';
-                        console.log('Modal displayed, fetching offers...');
-                        await fetchAndDisplayMostUsedOffers();
-                    } else {
-                        console.error('Modal element not found');
-                    }
-                } catch (error) {
-                    console.error('Error in edit button click handler:', error);
-                }
-            });
-        } else {
-            console.error('Edit button not found');
+// Open mostUsedOffersModal and show offers
+editButton.addEventListener('click', async function () {
+    console.log('Edit button clicked');
+    try {
+        // Toggle display of the offers container
+        const container = document.getElementById('most-used-offers-container');
+        if (container) {
+            const newDisplay = container.style.display === 'none' ? 'block' : 'none';
+            container.style.display = newDisplay;
         }
 
-        // Close modal
-        mostUsedOffersCloseModalBtns.forEach(btn => {
-            btn.addEventListener('click', function () {
-                modal.style.display = 'none';
-                document.getElementById('addNewMostUsedOffers').style.display = 'block';
-            });
-        });
-
-        // Close when clicking outside modal
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.getElementById('addNewMostUsedOffers').style.display = 'block';
-            }
-        });
-
-        // Save button handler
-        if (saveBtn) {
-            saveBtn.addEventListener('click', function () {
-                // Add save functionality here if needed
-                modal.style.display = 'none';
-            });
-        }
+        // Show modal for editing
+        showOffersModal();
+        await fetchAndDisplayMostUsedOffers();
+    } catch (error) {
+        console.error('Error in edit button click handler:', error);
     }
 });
 
-// Modal Functions
-function showOffersModal() {
-    if (!modal) return;
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    renderOffersList();
+// Close modal handlers
+function closeModal() {
+    mostUsedOffersModal.classList.remove('show');
+    document.body.style.overflow = 'auto';
 }
 
-function hideOffersModal() {
-    if (!modal) return;
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
+mostUsedOffersCloseModalBtns.forEach(btn => {
+    btn.addEventListener('click', closeModal);
+});
+
+// Close when clicking outside modal
+mostUsedOffersModal.addEventListener('click', function (event) {
+    if (event.target === mostUsedOffersModal) {
+        closeModal();
+    }
+});
+
+// Save button handler
+saveBtn.addEventListener('click', closeModal);
+
+// Modal Functions
+function showOffersModal() {
+    // Reset the modal position and opacity before showing
+    mostUsedOffersModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Trigger reflow
+    void mostUsedOffersModal.offsetHeight;
+
+    // Add show class to trigger the animation
+    mostUsedOffersModal.classList.add('show');
 }
+
 
 
 // Fetch and display most used offers in the modal
@@ -207,7 +181,7 @@ async function fetchAndDisplayMostUsedOffers() {
 }
 
 // Edit offer function
-window.editMostUsedOffer = function (index) {
+function editMostUsedOffer(index) {
     currentEditingIndex = index;
     const offer = currentOffers[index];
 
@@ -566,7 +540,13 @@ async function saveOffers() {
 
         // Update the display
         renderOffers();
-        hideOffersModal();
+
+
+        if (!mostUsedOffersModal) return;
+        // Remove show class to trigger fade out animation
+        mostUsedOffersModal.classList.remove('show');
+
+
     } catch (error) {
         console.error('Error saving offers:', error);
         alert('حدث خطأ أثناء حفظ التغييرات');
