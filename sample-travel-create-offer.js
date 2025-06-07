@@ -229,6 +229,7 @@ function selectOffer(offer) {
 
     // Set values in the form
     document.getElementById("offerType").value = offer.offerType;
+    document.getElementById("adults").value = offer.adultAmount;
     document.getElementById("countries").value = offer.countries;
     document.getElementById("cities").value = offer.cities;
 

@@ -284,7 +284,7 @@ saveNewMostUsedOffer = async function () {
         // Get form values
         const newOffer = {
             title: document.getElementById('new-offer-title').value.trim(),
-            offerType: document.getElementById('new-offer-type').value.trim(),
+            offerType: document.getElementById('edit-offerType').value.trim(),
             adultAmount: document.getElementById('new-offer-adultAmount').value.trim(),
             countries: document.getElementById('new-offer-countries').value.trim(),
             cities: document.getElementById('new-offer-cities').value.trim()
