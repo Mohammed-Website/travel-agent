@@ -844,6 +844,309 @@ header.hidden {
   transform: scale(1.05);
 }
 
+/* Offer Modal Styles */
+#offerModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 20, 40, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+}
+
+#offerModal.show {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  background: linear-gradient(90deg, #0056b3, #00a0a8)
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(20px);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  opacity: 0;
+  overflow: hidden;
+}
+
+#offerModal.show .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.close-btn:hover {
+  color: #1e293b;
+  background: rgba(100, 116, 139, 0.2);
+}
+
+#offersBar {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+  padding: 1.25rem 0;
+  margin-bottom: 2rem;
+  border: 1px solid #e2e8f0;
+}
+
+#offersBar h3 {
+  display: inline-block; /* Makes the element shrink-to-fit its content */
+  padding-right: 10px;
+  color: #1e293b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  position: relative;
+}
+
+#offersBar h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 110%; /* Now this will match the text width */
+  height: 2px;
+  background: linear-gradient(90deg, #0056b3, #00a0a8);
+}
+
+#mostUsedOffersList {
+  display: flex;
+  gap: 0.75rem;
+}
+
+#mostUsedOffersList .offer-tag {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#mostUsedOffersList .offer-tag:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  color: #1e293b;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.modal-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #0056b3, #00a0a8);
+  border-radius: 2px;
+}
+
+#offerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+#offerForm p {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+#offerForm input[type="text"],
+#offerForm input[type="number"],
+#offerForm input[type="email"],
+#offerForm select,
+#offerForm textarea {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #1e293b;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#offerForm input[type="text"]:focus,
+#offerForm input[type="number"]:focus,
+#offerForm input[type="email"]:focus,
+#offerForm select:focus,
+#offerForm textarea:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+#offerForm select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+  padding-right: 1.25rem;
+  cursor: pointer;
+  /* For Firefox */
+  text-indent: 0.01px;
+  text-overflow: '';
+}
+
+/* For IE10+ */
+#offerForm select::-ms-expand {
+  display: none;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.checkbox-item:hover {
+  background-color: #f8fafc;
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-left: 0.75rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #0056b3;
+  cursor: pointer;
+}
+
+.checkbox-item span {
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+#offerForm button[type="submit"] {
+  background: linear-gradient(135deg, #0056b3 0%, #003c71 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#offerForm button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, #004a99 0%, #00305a 100%);
+}
+
+#offerForm button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  #offerForm input[type="text"],
+  #offerForm input[type="number"],
+  #offerForm select,
+  #offerForm textarea {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  #offerForm button[type="submit"] {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Animation for form elements */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#offerForm > * {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+#offerForm > *:nth-child(1) { animation-delay: 0.1s; }
+#offerForm > *:nth-child(2) { animation-delay: 0.2s; }
+#offerForm > *:nth-child(3) { animation-delay: 0.3s; }
+#offerForm > *:nth-child(4) { animation-delay: 0.4s; }
+#offerForm > *:nth-child(5) { animation-delay: 0.5s; }
+#offerForm > *:nth-child(6) { animation-delay: 0.6s; }
+#offerForm > *:nth-child(7) { animation-delay: 0.7s; }
+#offerForm > *:nth-child(8) { animation-delay: 0.8s; }
+
 #scrollable_cards_container_id {
   margin-bottom: 4vmax;
   border-radius: 12px;
