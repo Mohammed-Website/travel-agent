@@ -36,6 +36,7 @@ editButton.addEventListener('click', async function () {
 function closeModal() {
     mostUsedOffersModal.classList.remove('show');
     document.body.style.overflow = 'auto';
+    document.getElementById('addNewMostUsedOffers').style.display = '';
 }
 
 mostUsedOffersCloseModalBtns.forEach(btn => {
@@ -145,6 +146,7 @@ async function fetchAndDisplayMostUsedOffers() {
                             <div>
                                 <h4>${offer.title || 'عنوان غير محدد'}</h4>
                                 ${offer.offerType ? `<p>${offer.offerType}</p>` : ''}
+                                ${offer.adultAmount ? `<p>البالغين: ${offer.adultAmount}</p>` : ''}
                                 ${offer.countries ? `<p>الدول: ${offer.countries}</p>` : ''}
                                 ${offer.cities ? `<p>المدن: ${offer.cities}</p>` : ''}
                             </div>
@@ -182,6 +184,11 @@ async function fetchAndDisplayMostUsedOffers() {
 
 // Edit offer function
 function editMostUsedOffer(index) {
+    /* Hide the add new most used offer button */
+    document.getElementById('addNewMostUsedOffers').style.display = 'none';
+
+    
+
     currentEditingIndex = index;
     const offer = currentOffers[index];
 
@@ -203,6 +210,10 @@ function editMostUsedOffer(index) {
                     <option value="شخصين" ${offer.offerType === 'شخصين' ? 'selected' : ''}>شخصين</option>
                     <option value="اخرى" ${offer.offerType === 'اخرى' ? 'selected' : ''}>أخرى</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-adultAmount">الدول (مفصولة بفاصلة)</label>
+                <input type="text" id="edit-adultAmount" value="${offer.adultAmount || ''}">
             </div>
             <div class="form-group">
                 <label for="edit-countries">الدول (مفصولة بفاصلة)</label>
@@ -235,8 +246,19 @@ function showAddOfferForm() {
                 <input type="text" id="new-offer-title" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="new-offer-type">نوع العرض</label>
-                <input type="text" id="new-offer-type" class="form-control">
+                <label for="edit-offerType">نوع العرض</label>
+                <select id="edit-offerType" class="form-control" required>
+                    <option value="شهر عسل">شهر عسل</option>
+                    <option value="عائلة">عائلة</option>
+                    <option value="شباب">شباب</option>
+                    <option value="بنات">بنات</option>
+                    <option value="شخصين">شخصين</option>
+                    <option value="اخرى">أخرى</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="new-offer-adultAmount">عدد البالغين</label>
+                <input type="number" id="new-offer-adultAmount" class="form-control">
             </div>
             <div class="form-group">
                 <label for="new-offer-countries">الدول (مفصولة بفاصلة)</label>
@@ -263,6 +285,7 @@ saveNewMostUsedOffer = async function () {
         const newOffer = {
             title: document.getElementById('new-offer-title').value.trim(),
             offerType: document.getElementById('new-offer-type').value.trim(),
+            adultAmount: document.getElementById('new-offer-adultAmount').value.trim(),
             countries: document.getElementById('new-offer-countries').value.trim(),
             cities: document.getElementById('new-offer-cities').value.trim()
         };
@@ -280,7 +303,7 @@ saveNewMostUsedOffer = async function () {
 
         // Convert to the required format for Supabase
         const offersString = currentOffers.map(offer =>
-            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
+            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        adultAmount: \"${offer.adultAmount}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
         ).join(',');
 
         // Update in Supabase
@@ -332,7 +355,7 @@ window.deleteMostUsedOffer = async function (index) {
 
         // Convert the updated array to the required format for Supabase
         const offersString = currentOffers.map(offer =>
-            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
+            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        adultAmount: \"${offer.adultAmount}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
         ).join(',');
 
         // Update in Supabase
@@ -380,6 +403,7 @@ window.saveOfferChanges = async function () {
         const updatedOffer = {
             title: document.getElementById('edit-title').value,
             offerType: document.getElementById('edit-offerType').value,
+            adultAmount: document.getElementById('edit-adultAmount').value,
             countries: document.getElementById('edit-countries').value,
             cities: document.getElementById('edit-cities').value
         };
@@ -436,6 +460,7 @@ function renderOffers() {
         offerElement.innerHTML = `
             <h3>${offer.title || 'عنوان غير محدد'}</h3>
             <p><strong>نوع العرض:</strong> ${offer.offerType || 'غير محدد'}</p>
+            <p><strong>عدد البالغين:</strong> ${offer.adultAmount || 'غير محدد'}</p>
             <p><strong>الدول:</strong> ${offer.countries || 'غير محدد'}</p>
             <p><strong>المدن:</strong> ${offer.cities || 'غير محدد'}</p>
         `;
@@ -461,6 +486,10 @@ function renderOffersList() {
             <div class="form-group">
                 <label>نوع العرض</label>
                 <input type="text" class="offer-type" value="${offer.offerType || ''}" required>
+            </div>
+            <div class="form-group">
+                <label>عدد البالغين</label>
+                <input type="number" class="offer-adultAmount" value="${offer.adultAmount || ''}">
             </div>
             <div class="form-group">
                 <label>الدول (مفصولة بشرطة - )</label>
@@ -491,6 +520,7 @@ function addOfferForm() {
     const newOffer = {
         title: '',
         offerType: '',
+        adultAmount: '',
         countries: '',
         cities: ''
     };
@@ -516,6 +546,7 @@ async function saveOffers() {
             updatedOffers.push({
                 title: item.querySelector('.offer-title').value,
                 offerType: item.querySelector('.offer-type').value,
+                adultAmount: item.querySelector('.offer-adultAmount').value,
                 countries: item.querySelector('.offer-countries').value,
                 cities: item.querySelector('.offer-cities').value
             });
@@ -525,7 +556,7 @@ async function saveOffers() {
 
         // Convert to the required format for Supabase
         const offersString = currentOffers.map(offer =>
-            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
+            `{\n        title: \"${offer.title}\",\n        offerType: \"${offer.offerType}\",\n        adultAmount: \"${offer.adultAmount}\",\n        countries: \"${offer.countries}\",\n        cities: \"${offer.cities}\"\n    }`
         ).join(',');
 
         // Update in Supabase

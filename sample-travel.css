@@ -870,7 +870,7 @@ header.hidden {
 
 .modal-content {
   position: relative;
-  background: linear-gradient(90deg, #0056b3, #00a0a8);
+  background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
   border-radius: 16px;
   width: 100%;
   max-width: 600px;
