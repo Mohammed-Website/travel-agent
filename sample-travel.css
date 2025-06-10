@@ -778,7 +778,7 @@ header.hidden {
 /* Only apply fade-in effect to images inside scrollable_cards_row */
 .scrollable_cards_row img.fade-in {
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .scrollable_cards_row img.fade-in.visible {
