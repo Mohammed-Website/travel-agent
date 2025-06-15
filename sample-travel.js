@@ -185,7 +185,7 @@ let sectionData = [];
 const preloadedImages = {};
 let currentActiveIndex = null;
 
-// Function to create title cards with pre-loading
+// Function to create title cards with pre-loading and offer details
 function createTitleCards(dataArray) {
     const section = document.getElementById("scrollable_cards_section_id");
     section.innerHTML = '';
@@ -230,34 +230,52 @@ function createTitleCards(dataArray) {
         title.textContent = cleanedTitle.trim();
         innerWrapper.appendChild(title);
 
+        // Add offer count if available
+        if (data.offers && data.offers.length > 0) {
+            const offerCount = document.createElement('div');
+            offerCount.className = 'offer-count';
+            offerCount.textContent = `${data.offers.length} عروض متاحة`;
+            innerWrapper.appendChild(offerCount);
+        }
+
         // Append innerWrapper to card
         titleCard.appendChild(innerWrapper);
 
-        // Store pre-loaded images
+        // Store pre-loaded offers
         preloadedImages[index] = [];
-        Object.keys(data).forEach(key => {
-            if (key.startsWith('image_')) {
-                const [src, alt] = data[key];
-                const img = new Image();
-                img.src = src;
-                img.alt = alt;
-                preloadContainer.appendChild(img);
-                preloadedImages[index].push({ src, alt, element: img });
-            }
-        });
+        if (data.offers && Array.isArray(data.offers)) {
+            data.offers.forEach(offer => {
+                if (offer.imageUrl) {
+                    const img = new Image();
+                    img.src = offer.imageUrl;
+                    img.alt = offer.description;
+                    preloadContainer.appendChild(img);
+                    preloadedImages[index].push({
+                        src: offer.imageUrl,
+                        alt: offer.description,
+                        element: img,
+                        stars: offer.stars,
+                        price: offer.price,
+                        currency: offer.currency,
+                        id: offer.id
+                    });
+                }
+            });
+        }
 
         // Click handler
         titleCard.addEventListener('click', () => {
-            
             if (currentActiveIndex === index) {
                 // Scroll to view
-                document.getElementById('scrollable_cards_container_id').scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
+                const container = document.getElementById('scrollable_cards_container_id');
+                if (container) {
+                    container.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
                 return;
             }
-
 
             document.querySelectorAll('.title_card').forEach(card => {
                 card.classList.remove('active');
@@ -282,14 +300,19 @@ function showImagesForTitle(index, data) {
         container = document.createElement('div');
         container.id = 'scrollable_cards_container_id';
         container.style.opacity = '0';
-        document.getElementById("scrollable_cards_section_id").appendChild(container);
+        document.getElementById("scrollable_cards_section_id").insertAdjacentElement('beforeend', container);
     }
 
-    updateContent(container, index, data);
 
-    currentActiveIndex = index;
+    // Add loading indicator
+    container.innerHTML = '<div class="loading-indicator">جاري التحميل...</div>';
+
+    // Small delay to allow DOM to update
+    setTimeout(() => {
+        updateContent(container, index, data);
+        currentActiveIndex = index;
+    }, 50);
 }
-
 
 function updateContent(container, index, data) {
     container.innerHTML = '';
@@ -300,30 +323,122 @@ function updateContent(container, index, data) {
     sectionTitle.textContent = data.title;
     container.appendChild(sectionTitle);
 
-    // Create row for images
+    // Create row for offers
     const row = document.createElement('div');
     row.className = 'scrollable_cards_row';
 
-    // Add pre-loaded images
-    if (preloadedImages[index]) {
-        preloadedImages[index].forEach(imgData => {
+    // Add pre-loaded offers
+    if (preloadedImages[index] && preloadedImages[index].length > 0) {
+        preloadedImages[index].forEach((offer, idx) => {
             const card = document.createElement('div');
             card.className = 'scrollable_card';
+            card.dataset.offerId = offer.id;
 
-            const img = imgData.element.cloneNode();
-            img.classList.add('fade-in');
-            img.style.display = 'block';
+            // Create image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'card-image-container';
 
-            img.addEventListener('click', () => openFullScreenImage(imgData.src, imgData.alt));
+            // Add image
+            const img = offer.element.cloneNode();
+            img.loading = 'lazy';
+            img.alt = offer.alt || 'عرض سياحي';
+            img.title = offer.alt || '';
 
-            setTimeout(() => {
-                img.classList.add('visible');
-            }, 10);
+            // Create badge for offer number
+            const badge = document.createElement('div');
+            badge.className = 'card-badge';
+            badge.textContent = `عرض ${idx + 1}`; // Changed to English for better alignment
 
+            // Create card content
+            const cardContent = document.createElement('div');
+            cardContent.className = 'card-content';
 
-            card.appendChild(img);
+            // Add title
+            const title = document.createElement('h3');
+            title.className = 'card-title';
+
+            // Clean and add title
+            const cleanedTitle = data.title
+                .replace(/^عروض\s*/g, '')
+                .replace(/عرض/g, '');
+
+            title.textContent = cleanedTitle.trim();
+
+            // Add description
+            const description = document.createElement('p');
+            description.className = 'card-description';
+            description.textContent = offer.alt || 'Tour offer details';
+
+            // Create footer for price and rating
+            const footer = document.createElement('div');
+            footer.className = 'card-footer';
+
+            // Add price
+            const priceContainer = document.createElement('div');
+            priceContainer.className = 'price-container';
+
+            const priceSpan = document.createElement('span');
+            priceSpan.className = 'card-price';
+            priceSpan.textContent = offer.price || '0';
+
+            const currencySpan = document.createElement('span');
+            currencySpan.className = 'card-currency';
+            currencySpan.textContent = offer.currency || 'USD';
+
+            priceContainer.appendChild(priceSpan);
+            priceContainer.appendChild(currencySpan);
+
+            // Add rating
+            const ratingContainer = document.createElement('div');
+            ratingContainer.className = 'card-rating';
+
+            if (offer.stars > 0) {
+                const ratingText = document.createElement('span');
+                ratingText.textContent = offer.stars.toFixed(1);
+
+                const starsSpan = document.createElement('span');
+                starsSpan.className = 'stars';
+                starsSpan.textContent = '★'.repeat(Math.floor(offer.stars));
+
+                ratingContainer.appendChild(ratingText);
+                ratingContainer.appendChild(starsSpan);
+            }
+
+            // Assemble the card
+            footer.appendChild(priceContainer);
+            if (offer.stars > 0) {
+                footer.appendChild(ratingContainer);
+            }
+
+            cardContent.appendChild(title);
+            cardContent.appendChild(description);
+            cardContent.appendChild(footer);
+
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(badge);
+
+            card.appendChild(imageContainer);
+            card.appendChild(cardContent);
+
+            // Add click handler for fullscreen
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.card-badge')) { // Don't open fullscreen when clicking badge
+                    openFullScreenImage(offer.src, offer.alt);
+                }
+            });
+
+            // Add to row
             row.appendChild(card);
         });
+    } else {
+        // No offers available
+        const noOffers = document.createElement('div');
+        noOffers.className = 'no-offers';
+        noOffers.textContent = 'لا توجد عروض متاحة حالياً';
+        noOffers.style.textAlign = 'center';
+        noOffers.style.padding = '20px';
+        noOffers.style.width = '100%';
+        row.appendChild(noOffers);
     }
 
     container.appendChild(row);
@@ -340,7 +455,7 @@ function updateContent(container, index, data) {
     });
 }
 
-// Modified getAndTransformSupabaseData
+// Modified getAndTransformSupabaseData to include all offer details
 async function getAndTransformSupabaseData() {
     try {
         const { data, error } = await supabase
@@ -354,17 +469,49 @@ async function getAndTransformSupabaseData() {
         return data.map(offer => {
             const result = {
                 title: offer.title,
-                title_card_image: offer.title_card_image
+                title_card_image: offer.title_card_image,
+                offers: [] // Array to store all offers with their details
             };
 
-            if (offer.sup_images_array) {
-                offer.sup_images_array.forEach((img, i) => {
-                    result[`image_${i + 1}`] = [
-                        img[0] || '',
-                        img[1] || offer.title
-                    ];
+            if (offer.sup_images_array && Array.isArray(offer.sup_images_array)) {
+                offer.sup_images_array.forEach((imgData, index) => {
+                    if (!imgData || !imgData[0]) return; // Skip invalid entries
+
+                    const [imageUrl, description, stars, price, currency] = imgData;
+
+                    // Handle different star rating formats
+                    let starCount = 0;
+
+                    if (typeof stars === 'string') {
+                        // Handle string format (e.g., "five stars")
+                        const starTextToNumber = {
+                            'one star': 1,
+                            'two stars': 2,
+                            'three stars': 3,
+                            'four stars': 4,
+                            'five stars': 5
+                        };
+                        starCount = starTextToNumber[stars.toLowerCase()] || 0;
+                    } else if (typeof stars === 'number') {
+                        // Handle numeric format (e.g., 5)
+                        starCount = Math.min(5, Math.max(0, Math.floor(stars)));
+                    } else if (stars) {
+                        // Fallback for any other non-null/undefined value
+                        starCount = 5; // Default to 5 stars for any unexpected value
+                    }
+
+                    result.offers.push({
+                        id: `offer_${index}`,
+                        imageUrl,
+                        description: description || offer.title,
+                        stars: starCount,
+                        price: price || '0',
+                        currency: currency || 'SAR',
+                        originalData: imgData // Keep original data for compatibility
+                    });
                 });
             }
+
 
             return result;
         });
