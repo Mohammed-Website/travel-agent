@@ -45,6 +45,24 @@
 
 
 
+/* Contact Info Styling */
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  direction: ltr;
+}
+
+.contact-info ion-icon {
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.contact-info p {
+  white-space: nowrap;
+}
+
 /* General Reset */
 * {
   font-family: 'Cairo', sans-serif;
@@ -96,9 +114,9 @@ html {
   align-items: center;
   /* This should center them vertically */
   gap: 3px;
-  background: rgb(225, 227, 226);
-  color: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  background: #1a1a2e;
+  color: white;
+  box-shadow: 0 1px 5px rgba(255, 255, 255, 0.5);
   border-radius: 30px;
   padding: 3px 10px;
   /* Increased horizontal padding */
@@ -140,177 +158,6 @@ html {
 
 
 
-/* Header Styling with Neon Background Animation */
-#mughader_header {
-  background: rgb(225, 227, 226);
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.5);
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden;
-}
-
-header.hidden {
-  transform: translateY(-100%);
-}
-
-.mughader_header_container {
-  direction: ltr;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
-}
-
-/* Logo */
-.mughader_header_logo {
-  width: 13rem;
-}
-
-/* Navigation Links (Desktop) */
-.mughader_desktop_nav {
-  display: flex;
-}
-
-.mughader_nav_links {
-  direction: rtl;
-  display: flex;
-  list-style: none;
-  gap: 20px;
-  /* Space between items */
-  align-items: center;
-  /* Ensures everything is centered */
-  padding: 0;
-  margin: 0;
-}
-
-/* Ensure social icons are in the same row */
-.mughader_social_icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Increase spacing slightly if needed */
-.mughader_nav_links li {
-  display: flex;
-  align-items: center;
-}
-
-/* Neon Text Effect */
-.mughader_nav_links a,
-.mughader_mobile_sidebar a {
-  color: black;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  font-weight: bold;
-}
-
-.mughader_nav_links a:hover,
-.mughader_mobile_sidebar a:hover {
-  color: #006495;
-}
-
-/* Neon Social Icons */
-.mughader_social_icon ion-icon {
-  background: linear-gradient(to right, #8a008a, #008888);
-  color: white;
-  font-size: 1.5rem;
-  padding: 5px;
-  border-radius: 10%;
-  transition: transform 0.3s ease-in-out;
-}
-
-.mughader_social_icon ion-icon:hover {
-  transform: scale(1.1);
-}
-
-/* Mobile Menu Icon */
-.mughader_mobile_menu_icon {
-  display: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: black;
-  transition: 0.3s ease-in-out;
-}
-
-/* Neon Sidebar */
-.mughader_mobile_sidebar {
-  background: black;
-}
-
-/* Sidebar (Mobile) */
-.mughader_mobile_sidebar {
-  background: rgb(225, 227, 226);
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  right: -250px;
-  width: 230px;
-  max-width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  transition: right 0.3s ease;
-}
-
-.mughader_mobile_sidebar ul {
-  list-style: none;
-  text-align: right;
-}
-
-.mughader_mobile_sidebar li {
-  margin: 2rem 15px 0.5rem 0;
-}
-
-.mughader_mobile_sidebar a {
-  text-decoration: none;
-  color: black;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.mughader_mobile_sidebar a:hover {
-  color: #007bff;
-}
-
-.mughader_mobile_social_icons_div {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-/* Close Icon */
-.mughader_mobile_sidebar .mughader_close_icon {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-/* Neon Close Icon */
-.mughader_close_icon {
-  color: black;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Cool Animated Background */
-@keyframes neonBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 
 
@@ -326,7 +173,7 @@ header.hidden {
 /* Enhanced Hero Section Styling */
 .neon_section {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -530,8 +377,15 @@ header.hidden {
 
 /* Floating Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Fade In Up Animation */
@@ -540,6 +394,7 @@ header.hidden {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -633,7 +488,7 @@ header.hidden {
   top: -4px;
   left: -4px;
   right: -4px;
-  bottom: -4px; 
+  bottom: -4px;
   border-radius: 50%;
   background: conic-gradient(#457b9d, #1d3557, #457b9d, #1d3557);
   z-index: 0;
@@ -652,6 +507,7 @@ header.hidden {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -888,7 +744,8 @@ header.hidden {
 }
 
 #offersBar h3 {
-  display: inline-block; /* Makes the element shrink-to-fit its content */
+  display: inline-block;
+  /* Makes the element shrink-to-fit its content */
   padding-right: 10px;
   color: #1e293b;
   font-size: 1.1rem;
@@ -903,7 +760,8 @@ header.hidden {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 110%; /* Now this will match the text width */
+  width: 110%;
+  /* Now this will match the text width */
   height: 2px;
   background: linear-gradient(90deg, #0056b3, #00a0a8);
 }
@@ -1068,11 +926,11 @@ header.hidden {
     padding: 1.5rem;
     margin: 1rem;
   }
-  
+
   .modal-content h2 {
     font-size: 1.5rem;
   }
-  
+
   #offerForm input[type="text"],
   #offerForm input[type="number"],
   #offerForm select,
@@ -1080,7 +938,7 @@ header.hidden {
     padding: 0.75rem 1rem;
     font-size: 0.95rem;
   }
-  
+
   #offerForm button[type="submit"] {
     padding: 0.875rem 1.5rem;
     font-size: 1rem;
@@ -1093,25 +951,49 @@ header.hidden {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-#offerForm > * {
+#offerForm>* {
   animation: fadeInUp 0.4s ease-out forwards;
   opacity: 0;
 }
 
-#offerForm > *:nth-child(1) { animation-delay: 0.1s; }
-#offerForm > *:nth-child(2) { animation-delay: 0.2s; }
-#offerForm > *:nth-child(3) { animation-delay: 0.3s; }
-#offerForm > *:nth-child(4) { animation-delay: 0.4s; }
-#offerForm > *:nth-child(5) { animation-delay: 0.5s; }
-#offerForm > *:nth-child(6) { animation-delay: 0.6s; }
-#offerForm > *:nth-child(7) { animation-delay: 0.7s; }
-#offerForm > *:nth-child(8) { animation-delay: 0.8s; }
+#offerForm>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+#offerForm>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+#offerForm>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+#offerForm>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+#offerForm>*:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+#offerForm>*:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+#offerForm>*:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
+#offerForm>*:nth-child(8) {
+  animation-delay: 0.8s;
+}
 
 #scrollable_cards_container_id {
   margin-bottom: 4vmax;
@@ -1289,21 +1171,6 @@ header.hidden {
 
 
 
-/* Fourth Section Style */
-.mughader_last_section {
-  background: linear-gradient(90deg, #00172e, #003c78);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.mughader_last_section * {
-  color: white;
-  direction: rtl;
-  font-size: 1rem;
-  text-align: center;
-}
 
 /* Email Subscription Section */
 .enter_your_email_for_our_news_div {
@@ -1316,34 +1183,21 @@ header.hidden {
   width: 100%;
 }
 
-/* Call to Action Text */
-.cta_text {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
 /* Email Subscription Form */
 .email_subscription_form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 /* Input Field */
 .email_subscription_form input {
-  width: 70%;
-  padding: 10px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 25px;
-  font-size: 1rem;
-  outline: none;
-  transition: 0.3s ease;
-  color: #003c78;
-  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 .email_subscription_form input::placeholder {
@@ -1357,21 +1211,19 @@ header.hidden {
 
 /* Submit Button */
 .email_subscription_form button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 0.8rem;
+  background-color: #e94560;
   color: white;
-  background: linear-gradient(90deg, #00bcd4, #0066cc);
   border: none;
-  border-radius: 25px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  font-family: 'Cairo', sans-serif;
 }
 
 .email_subscription_form button:active {
-  transform: scale(0.95);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #d13354;
 }
 
 
@@ -1465,7 +1317,7 @@ header.hidden {
 }
 
 .user_card_rate_div {
-  background: rgb(46, 46, 46);
+  background: #1a1a2e;
   color: white;
   min-width: 35rem;
   margin: 0 10px;
@@ -1640,7 +1492,6 @@ header.hidden {
 #new_comment_success_notification.show {
   opacity: 1;
   transform: translate(-50%, -50%);
-  /* Move up to center smoothly */
 }
 
 
@@ -1658,30 +1509,263 @@ header.hidden {
 
 
 
-/* Footer Style */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Arabic Footer Styles - RTL - Mobile First */
 footer {
-  padding: 100px 0;
-  direction: ltr;
-  background: rgb(225, 227, 226);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 998;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-family: 'Cairo', sans-serif;
+  padding: 3rem 0 0;
+  line-height: 1.6;
+  direction: rtl;
+  font-size: 1rem;
+}
+
+.footer-container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.footer-section {
+  margin-bottom: 1.5rem;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
   position: relative;
+  color: #ffffff;
 }
 
-footer img {
-  width: 16rem;
+.footer-title::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  width: 50px;
+  height: 3px;
+  background-color: #e94560;
 }
 
-footer * {
-  color: black;
+.footer-text {
+  color: #d1d1d1;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.mughader_social_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.mughader_social_icon:hover {
+  background-color: #e94560;
+  transform: translateY(-3px);
+}
+
+.mughader_social_icon ion-icon {
+  font-size: 1.4rem;
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.9rem;
+}
+
+.footer-links a {
+  color: #d1d1d1;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: 0.25rem 0;
+}
+
+.footer-links a:hover {
+  color: #e94560;
+  padding-right: 8px;
+}
+
+/* Newsletter Form */
+.email_subscription_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.email_subscription_form input {
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  text-align: right;
+  width: 100%;
+}
+
+.email_subscription_form input::placeholder {
+  color: #b8b8b8;
+  text-align: right;
+}
+
+.email_subscription_form button {
+  padding: 0.9rem 1.5rem;
+  background-color: #e94560;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.email_subscription_form button:hover {
+  background-color: #d13354;
+}
+
+/* Contact Info */
+.contact-info p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  color: #d1d1d1;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.contact-info ion-icon {
+  margin-top: 4px;
+  min-width: 20px;
+  font-size: 1.1rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.5rem 0;
   text-align: center;
-  font-size: 0.9rem;
 }
 
+.payment-methods {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #b8b8b8;
+  flex-wrap: wrap;
+}
 
+.payment-methods i {
+  font-size: 1.5rem;
+}
+
+.footer-bottom p {
+  color: #b8b8b8;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.footer-bottom a {
+  color: #d1d1d1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin: 0 0.25rem;
+}
+
+.footer-bottom a:hover {
+  color: #e94560;
+}
+
+.current-year {
+  display: inline-block;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  footer {
+    padding: 4rem 0 0;
+  }
+
+  .footer-container {
+    max-width: 1500px;
+    padding: 0 1rem;
+  }
+
+  .footer-content {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .email_subscription_form {
+    flex-direction: row;
+  }
+
+  .email_subscription_form input {
+    width: 70%;
+  }
+
+  .email_subscription_form button {
+    width: 30%;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .footer-content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
 
 
@@ -1761,7 +1845,7 @@ footer * {
     width: 25vw;
     height: 25vw;
   }
-  
+
 
   .title_card h3 {
     font-size: 2.5vw;
@@ -1799,25 +1883,7 @@ footer * {
 
 
 
-  /* About Us Section */
-  .mughader_last_section * {
-    font-size: 2vw;
-  }
 
-  .cta_text {
-    font-size: 3vw;
-  }
-
-  .email_subscription_form button {
-    padding: 0.5vmax 1vmax;
-    font-size: 3vw;
-  }
-
-  .email_subscription_form input {
-    width: 75%;
-    padding: 5px;
-    font-size: 3.5vw;
-  }
 
 
 
@@ -2029,21 +2095,8 @@ footer * {
 /* Responsive Adjustments */
 @media (max-width: 600px) {
 
-  /* Logo */
-  .mughader_header_logo {
-    width: 40vw;
-  }
 
 
-
-
-  .email_subscription_form input {
-    width: 100%;
-  }
-
-  .email_subscription_form {
-    flex-direction: column;
-  }
 
   /* Page Intro Section */
   .wow_effect_section {
@@ -2087,14 +2140,6 @@ footer * {
 
 /* Responsive Design */
 @media (max-width: 400px) {
-  .mughader_header_container {
-    justify-content: space-between;
-  }
-
-
-
-
-
 
 
 
@@ -2162,23 +2207,7 @@ footer * {
 
 
 
-  /* About Us Section */
-  .mughader_last_section * {
-    font-size: 2.8vw;
-  }
 
-  .cta_text {
-    font-size: 3.8vw;
-  }
-
-  .email_subscription_form button {
-    font-size: 4.5vw;
-  }
-
-  .email_subscription_form input {
-    font-size: 4.5vw;
-    padding: 2px 3px;
-  }
 
 
 

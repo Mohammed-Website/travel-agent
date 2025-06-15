@@ -2,59 +2,6 @@
 
 
 
-function toggleSidebar() {
-    const sidebar = document.getElementById("mughader_mobile_sidebar");
-    const overlay = document.getElementById("mughader_sidebar_overlay");
-
-    if (sidebar.style.right === "0px") {
-        closeSidebar();
-    } else {
-        sidebar.style.right = "0px"; // Show sidebar
-        overlay.classList.add("active"); // Show overlay
-        document.addEventListener("click", outsideClickListener); // Add event listener
-        window.removeEventListener("scroll", handleScroll); // Disable scroll event
-    }
-}
-
-function closeSidebar() {
-    const sidebar = document.getElementById("mughader_mobile_sidebar");
-    const overlay = document.getElementById("mughader_sidebar_overlay");
-
-    sidebar.style.right = "-250px"; // Hide sidebar
-    overlay.classList.remove("active"); // Hide overlay
-    document.removeEventListener("click", outsideClickListener); // Remove event listener
-    window.addEventListener("scroll", handleScroll); // Re-enable scroll event
-}
-
-function outsideClickListener(event) {
-    const sidebar = document.getElementById("mughader_mobile_sidebar");
-
-    // Check if the clicked target is outside the sidebar and the menu button
-    if (!sidebar.contains(event.target) && !event.target.closest(".mughader_mobile_menu_icon")) {
-        closeSidebar();
-    }
-}
-
-// Scroll event handler
-function handleScroll() {
-    const currentScrollPosition = window.scrollY;
-    const header = document.getElementById("mughader_header");
-
-    if (currentScrollPosition > lastScrollPosition) {
-        // Scrolling down
-        header.classList.add("hidden");
-    } else {
-        // Scrolling up
-        header.classList.remove("hidden");
-    }
-
-    lastScrollPosition = currentScrollPosition;
-}
-
-// Attach scroll event initially
-let lastScrollPosition = 0;
-window.addEventListener("scroll", handleScroll);
-
 
 
 

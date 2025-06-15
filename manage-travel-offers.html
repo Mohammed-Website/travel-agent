@@ -96,7 +96,7 @@
                 <input type="hidden" id="offer-id" />
 
                 <div class="form-group">
-                    <label for="offer-title">عنوان العرض</label>
+                    <label for="offer-title">عنوان بطاقة العروض</label>
                     <input type="text" id="offer-title" class="form-control" required />
                 </div>
 
@@ -104,14 +104,18 @@
                 <div class="form-group">
                     <label>صورة بطاقة العرض</label>
                     <div class="title-card-image-container">
+                        
                         <img id="title-card-preview" src="" class="image-preview" alt="Title card preview"
                             style="display: none;" onclick="openFullscreenImage(this.src)">
+                            
+                            <button type="button" id="remove-title-card-image" class="remove-btn"
+                            style="display: none;">X</button>
+
                         <label class="file-label" id="title-card-label">
                             اختر صورة بطاقة العرض
                             <input type="file" id="title-card-image" accept="image/*" style="display: none;" />
                         </label>
-                        <button type="button" id="remove-title-card-image" class="remove-btn"
-                            style="display: none;">X</button>
+
                     </div>
                 </div>
 
@@ -122,11 +126,11 @@
                             اختر ملف
                             <input type="file" style="display: none;" required />
                         </label>
-                        <button class="remove-btn">إزالة</button>
+                        <button class="remove-btn"></button>
                     </div>
                 </div>
 
-                <button type="button" id="add-image" class="btn secondary add-image-btn">إضافة صورة</button>
+                <button type="button" id="add-image" class="btn secondary add-image-btn">إضافة عرض</button>
 
                 <div class="form-actions">
                     <button type="button" id="save-offer" class="btn primary">💾 حفظ</button>

@@ -1,6 +1,37 @@
 
 
 
+// Helper function to get star rating from URL
+function getStarRatingFromUrl(url) {
+    try {
+        const urlObj = new URL(url);
+        const stars = urlObj.searchParams.get('stars');
+        return stars ? parseInt(stars, 10) : null;
+    } catch (e) {
+        console.error('Error parsing URL for star rating:', e);
+        return null;
+    }
+}
+
+// Helper function to get price from URL
+function getPriceFromUrl(url) {
+    try {
+        const urlObj = new URL(url);
+        const price = urlObj.searchParams.get('price');
+        const currency = urlObj.searchParams.get('currency') || 'SAR';
+
+        if (!price) return null;
+
+        return {
+            amount: parseFloat(price),
+            currency: currency
+        };
+    } catch (e) {
+        console.error('Error parsing URL for price:', e);
+        return null;
+    }
+}
+
 // DOM Elements
 const offersContainer = document.getElementById('offers-container');
 const addOfferBtn = document.getElementById('add-offer');
@@ -46,7 +77,7 @@ function setupEventListeners() {
             hideModal();
         }
     });
-    
+
 
     // Prevent modal content from closing the modal when clicked
     document.querySelector('.modal-content').addEventListener('click', (e) => {
@@ -175,6 +206,7 @@ function setupEventListeners() {
     addOfferBtn.addEventListener('click', () => {
         document.getElementById('title-card-preview').style.display = 'none';
         document.getElementById('title-card-preview').src = '';
+        document.getElementById('remove-title-card-image').style.display = 'none';
         currentOffer = null;
         modalTitle.textContent = 'إضافة عرض جديد';
         offerForm.reset();
@@ -241,8 +273,31 @@ async function editOffer(offerId, event) {
     imagesContainer.innerHTML = '';
     currentOffer.originalImages = [...data.sup_images_array];
 
+    // Add existing images with their details
     data.sup_images_array.forEach(image => {
+        // Extract star rating and price from the image URL if they exist
+        const starRating = getStarRatingFromUrl(image[0]);
+        const priceInfo = getPriceFromUrl(image[0]);
+
+        // Add the image with its description and other details
         addImageField(image[0], image[1], true);
+
+        // Set star rating and price for the newly added image field
+        const lastImageField = document.querySelector('.image-field:last-child');
+        if (lastImageField) {
+            const starSelect = lastImageField.querySelector('.star-rating-select');
+            const priceInput = lastImageField.querySelector('.price-input');
+            const currencySelect = lastImageField.querySelector('.currency-select');
+
+            if (starRating && starSelect) {
+                starSelect.value = starRating;
+            }
+
+            if (priceInfo && priceInput && currencySelect) {
+                priceInput.value = priceInfo.amount;
+                currencySelect.value = priceInfo.currency;
+            }
+        }
     });
 
     showModal();
@@ -347,14 +402,117 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
         setTimeout(() => fileInput.click(), 0);
     });
 
+    // Create description input container
+    const descContainer = document.createElement('div');
+    descContainer.className = 'desc-input-container';
+    
     // Create description input
     const descInput = document.createElement('input');
     descInput.type = 'text';
     descInput.className = 'desc-input';
-    descInput.placeholder = 'أدخل وصفًا للصورة';
+    descInput.placeholder = ' '; // Space is required for the floating label effect
     descInput.value = alt || '';
     descInput.required = true;
     descInput.ariaLabel = 'وصف الصورة';
+    
+    // Create floating label
+    const floatingLabel = document.createElement('span');
+    floatingLabel.className = 'floating-label';
+    floatingLabel.textContent = 'أدخل وصفًا للعرض';
+    
+    // Append elements
+    descContainer.appendChild(descInput);
+    descContainer.appendChild(floatingLabel);
+
+    // Create star rating input
+    const starRatingContainer = document.createElement('div');
+    starRatingContainer.className = 'star-rating-container';
+
+    const starRatingLabel = document.createElement('label');
+    starRatingLabel.textContent = 'عدد النجوم:';
+    starRatingLabel.htmlFor = `stars-${fileId}`;
+
+    const starRatingSelect = document.createElement('select');
+    starRatingSelect.className = 'star-rating-select';
+    starRatingSelect.id = `stars-${fileId}`;
+    starRatingSelect.name = 'star-rating';
+
+    // Add star options (1-5)
+    for (let i = 1; i <= 5; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = '★'.repeat(i);
+        starRatingSelect.appendChild(option);
+    }
+
+    // Set default value to 5 stars for new images, or use existing rating if editing
+    if (isExistingImage && url.startsWith('http')) {
+        const starRating = getStarRatingFromUrl(url);
+        if (starRating) {
+            starRatingSelect.value = starRating;
+        }
+    } else {
+        starRatingSelect.value = '5'; // Default to 5 stars for new images
+    }
+
+
+
+    starRatingContainer.appendChild(starRatingLabel);
+    starRatingContainer.appendChild(starRatingSelect);
+
+
+    // Create price input container
+    const priceContainer = document.createElement('div');
+    priceContainer.className = 'price-container';
+
+    const priceLabel = document.createElement('label');
+    priceLabel.textContent = 'سعر العرض:';
+    priceLabel.htmlFor = `price-${fileId}`;
+
+    const priceInput = document.createElement('input');
+    priceInput.type = 'number';
+    priceInput.className = 'price-input';
+    priceInput.id = `price-${fileId}`;
+    priceInput.placeholder = 'السعر';
+    priceInput.min = '0';
+    priceInput.step = '0.01';
+
+    // Set default price if editing
+    if (isExistingImage && url.startsWith('http')) {
+        const price = getPriceFromUrl(url);
+        if (price) {
+            priceInput.value = price.amount;
+        }
+    }
+
+    const currencySelect = document.createElement('select');
+    currencySelect.className = 'currency-select';
+    currencySelect.name = 'currency';
+
+    // Add currency options
+    const currencies = [
+        { value: 'SAR', symbol: 'ر.س' },
+        { value: 'BHD', symbol: 'د. ب' },
+        { value: 'USD', symbol: '$' },
+        { value: 'EUR', symbol: '€' }
+    ];
+
+    currencies.forEach(currency => {
+        const option = document.createElement('option');
+        option.value = currency.value;
+        option.textContent = `${currency.symbol} (${currency.value})`;
+        currencySelect.appendChild(option);
+    });
+
+    // Set default currency if editing
+    if (isExistingImage && url.startsWith('http')) {
+        const price = getPriceFromUrl(url);
+        if (price && price.currency) {
+            currencySelect.value = price.currency;
+        }
+    }
+
+
 
     // Create remove button
     const removeBtn = document.createElement('button');
@@ -363,6 +521,14 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
     removeBtn.innerHTML = '&times;';
     removeBtn.ariaLabel = 'إزالة الصورة';
     removeBtn.dataset.imageUrl = url || '';
+
+
+    priceContainer.appendChild(priceLabel);
+    priceContainer.appendChild(priceInput);
+    priceContainer.appendChild(currencySelect);
+    priceContainer.appendChild(removeBtn);
+
+
 
     // Create preview container
     const previewContainer = document.createElement('div');
@@ -434,11 +600,17 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
     });
 
     // Assemble the DOM elements
+    const fieldsContainer = document.createElement('div');
+    fieldsContainer.className = 'image-fields-container';
+
+    fieldsContainer.appendChild(descInput);
+    fieldsContainer.appendChild(starRatingContainer);
+    fieldsContainer.appendChild(priceContainer);
+
     div.appendChild(previewContainer);
-    div.appendChild(descInput);
     div.appendChild(fileLabel);
+    div.appendChild(fieldsContainer);
     div.appendChild(fileInput);
-    div.appendChild(removeBtn);
 
     // In the remove button click handler
     removeBtn.addEventListener('click', (e) => {
@@ -543,8 +715,8 @@ async function saveOffer() {
                         }
                     }
 
-                    // Upload the new image
-                    const { error: uploadError } = await supabase
+                    // Upload the image
+                    const { data: uploadData, error: uploadError } = await supabase
                         .storage
                         .from('sample-travel-bucket')
                         .upload(filePath, file, {
@@ -561,7 +733,26 @@ async function saveOffer() {
                         .from('sample-travel-bucket')
                         .getPublicUrl(filePath);
 
-                    titleCardImageUrl = publicUrl;
+                    // Create URL with query parameters
+                    const imageUrl = new URL(publicUrl);
+
+                    // Add star rating if available
+                    const starSelect = document.querySelector('.star-rating-select');
+                    if (starSelect?.value) {
+                        imageUrl.searchParams.set('stars', starSelect.value);
+                    }
+
+                    // Add price and currency if available
+                    const priceInput = document.querySelector('.price-input');
+                    const currencySelect = document.querySelector('.currency-select');
+                    if (priceInput?.value) {
+                        imageUrl.searchParams.set('price', priceInput.value);
+                        if (currencySelect?.value) {
+                            imageUrl.searchParams.set('currency', currencySelect.value);
+                        }
+                    }
+
+                    titleCardImageUrl = imageUrl.toString();
 
                 } catch (error) {
                     console.error('Error uploading title card image:', error);
@@ -591,14 +782,106 @@ async function saveOffer() {
         // Get the current images from the database
         const currentImages = currentOffer?.sup_images_array || [];
 
-        // Get all visible images from the form
-        const visibleImages = Array.from(document.querySelectorAll('.preview-container img'))
-            .map(img => ({
-                src: img.src,
-                alt: img.alt,
-                description: img.closest('.image-field')?.querySelector('input[type="text"]')?.value || ''
-            }));
+        // First, upload all new images and get their public URLs
+        const imageUploadPromises = [];
+        const imageElements = document.querySelectorAll('.image-field');
+        const imageUrlMap = new Map(); // Maps temp blob URLs to Supabase URLs
 
+        // Process each image field to upload new images
+        for (const div of imageElements) {
+            const fileInput = div.querySelector('input[type="file"]');
+            const img = div.querySelector('img');
+            const isExisting = div.dataset.isExisting === 'true';
+            const originalUrl = div.dataset.originalUrl;
+            const removeBtn = div.querySelector('.remove-btn');
+
+            // Skip if this image was removed
+            if (removeBtn?.style.display === 'none') continue;
+
+            // If this is a new image (blob URL), upload it to Supabase
+            if (img?.src.startsWith('blob:') && fileInput?.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `img-${Date.now()}-${Math.random().toString(36).substring(2, 10)}.${fileExt}`;
+                const filePath = fileName;
+
+                const uploadPromise = supabase.storage
+                    .from('sample-travel-bucket')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false,
+                        contentType: file.type
+                    })
+                    .then(({ data, error }) => {
+                        if (error) throw error;
+                        return supabase.storage
+                            .from('sample-travel-bucket')
+                            .getPublicUrl(filePath);
+                    })
+                    .then(({ data: { publicUrl } }) => {
+                        // Map the blob URL to the Supabase URL
+                        if (img) {
+                            imageUrlMap.set(img.src, publicUrl);
+                            // Store the URL in a data attribute for later use
+                            img.dataset.originalUrl = publicUrl;
+                        }
+                        return publicUrl;
+                    });
+
+                imageUploadPromises.push(uploadPromise);
+            } else if (img && !img.src.startsWith('blob:') && img.dataset.originalUrl) {
+                // For existing images, ensure we have the original URL
+                imageUrlMap.set(img.src, img.dataset.originalUrl);
+            }
+        }
+
+        // Wait for all uploads to complete
+        await Promise.all(imageUploadPromises);
+
+        // Now process all visible images with their final URLs
+        const visibleImages = Array.from(document.querySelectorAll('.preview-container img'))
+            .map(img => {
+                const imageField = img.closest('.image-field');
+                const descInput = imageField?.querySelector('.desc-input');
+                const starSelect = imageField?.querySelector('.star-rating-select');
+                const priceInput = imageField?.querySelector('.price-input');
+                const currencySelect = imageField?.querySelector('.currency-select');
+
+                // Get the final URL - either from the map or the original URL
+                let imageUrl = img.src;
+                if (imageUrl.startsWith('blob:')) {
+                    // If we still have a blob URL, try to get the uploaded URL from the map
+                    imageUrl = imageUrlMap.get(img.src) || '';
+                } else if (img.dataset.originalUrl) {
+                    // For existing images, use the original URL
+                    imageUrl = img.dataset.originalUrl;
+                }
+                
+                // Remove any query parameters
+                imageUrl = imageUrl.split('?')[0];
+                
+                // Convert star rating to text
+                const starText = {
+                    '1': 'one star',
+                    '2': 'two stars',
+                    '3': 'three stars',
+                    '4': 'four stars',
+                    '5': 'five stars'
+                }[starSelect?.value || '5'];
+
+                // Create the image data array in the required format
+                const imageData = [
+                    imageUrl, // Full image URL (Supabase public URL)
+                    descInput?.value || '', // Description
+                    starText, // Star rating as text (e.g., "five stars")
+                    priceInput?.value || '', // Price
+                    currencySelect?.value || 'SAR' // Currency
+                ];
+
+                console.log('Processed image data:', imageData);
+                return imageData;
+            })
+            .filter(imgData => imgData[0]); // Filter out any entries without a valid URL
 
         // Create a map of existing images for quick lookup and track their original indices
         const existingImagesMap = new Map();
@@ -617,10 +900,10 @@ async function saveOffer() {
         const removedImageUrls = new Set();
         const replacedImages = new Map(); // Track URL replacements (oldUrl -> newUrl)
 
-        // Process each image field
-        const imageElements = document.querySelectorAll('.image-field');
+        // Process each image field to upload new images
+        const imageFields = document.querySelectorAll('.image-field');
 
-        for (const div of imageElements) {
+        for (const div of imageFields) {
             const fileInput = div.querySelector('input[type="file"]');
             const descInput = div.querySelector('input[type="text"]');
             const isExisting = div.dataset.isExisting === 'true';
@@ -876,10 +1159,12 @@ async function saveOffer() {
         // 6. Prepare offer data
         const offerData = {
             title,
-            sup_images_array,
+            sup_images_array: visibleImages, // Use the visibleImages array we prepared earlier
             title_card_image: finalTitleCardImage,
             created_at: new Date().toISOString()
         };
+        
+        console.log('Saving offer data:', JSON.stringify(offerData, null, 2));
 
 
         if (offerId) {
