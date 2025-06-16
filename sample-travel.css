@@ -29,6 +29,34 @@
   }
 }
 
+/* Fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Scrollable cards container */
+#scrollable_cards_container_id {
+  animation: fadeIn 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+#scrollable_cards_container_id.fade-out {
+  animation: fadeOut 0.2s ease-in forwards;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 /* Fade-out and Zoom-out animation */
 @keyframes zoomOut {
   from {
@@ -1094,6 +1122,9 @@ html {
 }
 
 #scrollable_cards_container_id {
+  transition: opacity 0.3s ease-in-out;
+  width: 100%;
+  min-height: 200px; /* Prevents layout shift during loading */
   margin-bottom: 4vmax;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);

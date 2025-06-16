@@ -296,25 +296,44 @@ function showImagesForTitle(index, data) {
     let container = document.getElementById('scrollable_cards_container_id');
     const isNewContainer = !container;
 
-    if (isNewContainer) {
+    // If clicking the same title card, do nothing
+    if (currentActiveIndex === index) return;
+
+    // If container exists, fade out first
+    if (container && !isNewContainer) {
+        container.classList.add('fade-out');
+        
+        // Wait for fade out to complete before updating content
+        setTimeout(() => {
+            updateContent(container, index, data);
+            currentActiveIndex = index;
+        }, 200); // Match this with the fadeOut animation duration
+    } else {
+        // Create new container if it doesn't exist
         container = document.createElement('div');
         container.id = 'scrollable_cards_container_id';
         container.style.opacity = '0';
         document.getElementById("scrollable_cards_section_id").insertAdjacentElement('beforeend', container);
+        
+        // Add loading indicator
+        container.innerHTML = '<div class="loading-indicator">جاري التحميل...</div>';
+        
+        // Small delay to allow DOM to update
+        setTimeout(() => {
+            updateContent(container, index, data);
+            currentActiveIndex = index;
+        }, 50);
     }
-
-
-    // Add loading indicator
-    container.innerHTML = '<div class="loading-indicator">جاري التحميل...</div>';
-
-    // Small delay to allow DOM to update
-    setTimeout(() => {
-        updateContent(container, index, data);
-        currentActiveIndex = index;
-    }, 50);
 }
 
 function updateContent(container, index, data) {
+    // Remove fade-out class if it exists
+    container.classList.remove('fade-out');
+    
+    // Set initial opacity to 0 for fade-in effect
+    container.style.opacity = '0';
+    
+    // Clear the container
     container.innerHTML = '';
 
     // Add title
