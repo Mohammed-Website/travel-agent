@@ -363,6 +363,7 @@ function updateContent(container, index, data) {
             const card = document.createElement('div');
             card.className = 'scrollable_card';
             card.dataset.offerId = offer.id;
+            card.dataset.cardIndex = idx;  // Store the card index
 
             // Create image container
             const imageContainer = document.createElement('div');
@@ -452,8 +453,8 @@ function updateContent(container, index, data) {
 
             // Add click handler for fullscreen
             card.addEventListener('click', (e) => {
-                if (!e.target.closest('.card-badge')) { // Don't open fullscreen when clicking badge
-                    openFullScreenImage(offer.src, offer.alt);
+                if (!e.target.closest('.card-badge')) {
+                    openFullScreenImage(offer.src, offer.alt, idx);  // Pass the correct index
                 }
             });
 
@@ -583,9 +584,10 @@ function openFullScreenImage(src, text, index = 0) {
     if (!currentRow) return;
 
     const cards = Array.from(currentRow.querySelectorAll('.scrollable_card'));
-    fullscreenImages = cards.map(card => ({
+    fullscreenImages = cards.map((card, idx) => ({
         src: card.querySelector('img').src,
-        alt: card.querySelector('img').alt || text
+        alt: card.querySelector('img').alt || text,
+        cardIndex: idx  // Store the original card index
     }));
 
     currentFullscreenIndex = fullscreenImages.findIndex(img => img.src === src || img.src.endsWith(src));
@@ -641,28 +643,37 @@ function openFullScreenImage(src, text, index = 0) {
 
 
 
+
+
+    /* Open full screen image functionality */
     fullScreenImage.addEventListener("click", () => {
         const fullView = document.createElement("div");
-        fullView.style.position = "fixed";
-        fullView.style.top = "0";
-        fullView.style.left = "0";
-        fullView.style.width = "100%";
-        fullView.style.height = "100%";
-        fullView.style.background = "rgba(0, 0, 0, 0.95)";
-        fullView.style.zIndex = "10000";
-        fullView.style.display = "flex";
-        fullView.style.alignItems = "center";
-        fullView.style.justifyContent = "center";
-        fullView.style.cursor = "zoom-out";
-        fullView.innerHTML = `<img src="${fullScreenImage.src}" style="max-width: 95%; max-height: 95%; border-radius: 8px; box-shadow: 0 0 15px rgba(255,255,255,0.2);" />`;
+        fullView.className = "fullscreen-overlay fade-in"; // Fading animation here
+
+        const animatedImg = document.createElement("img");
+        animatedImg.src = fullScreenImage.src;
+        animatedImg.className = "fullscreen-image-content zoom-fade-in"; // Zoom + fade only on image
+
+        fullView.appendChild(animatedImg);
+        document.body.appendChild(fullView);
 
         // Close on click
         fullView.addEventListener("click", () => {
-            fullView.remove();
-        });
+            // Trigger both fade out (overlay) and zoom out (image)
+            fullView.classList.remove("fade-in");
+            fullView.classList.add("fade-out");
 
-        document.body.appendChild(fullView);
+            animatedImg.classList.remove("zoom-fade-in");
+            animatedImg.classList.add("zoom-fade-out");
+
+            animatedImg.addEventListener("animationend", () => {
+                fullView.remove();
+            }, { once: true });
+        });
     });
+
+
+
 
 
 
@@ -748,23 +759,53 @@ function openFullScreenImage(src, text, index = 0) {
         img.classList.add('fade-out');
 
         setTimeout(() => {
+            // Update image
             img.src = currentImage.src;
             img.alt = currentImage.alt;
             img.classList.remove('fade-out');
             img.classList.add('fade-in');
 
+            // Update title
             const title = fullScreenDiv.querySelector('.full_screen_title');
             if (title) title.textContent = currentImage.alt;
 
+            // Update WhatsApp link
             const whatsappButton = fullScreenDiv.querySelector('.whatsapp_button');
             if (whatsappButton) {
                 const imageUrl = currentImage.src;
                 whatsappButton.href = `https://wa.me/+966569446280?text=💎%20طلب%20حجز%20عرض%20جديد%20💎%0A%0Aسلام%20عليكم،%20حاب%20أسأل%20عن%20عرض%0A*${encodeURIComponent(currentImage.alt)}*%0Aوحاب%20أعرف%20تفاصيل%20أكثر%20عن%20عروضكم%20المشابهة.%0A%0A🔗%20رابط%20صورة%20العرض:%0A${encodeURIComponent(imageUrl)}%0A%0Aبإنتظار%20ردكم%20وشكرًا%20لكم`;
             }
 
+            // Update card details using the stored cardIndex
+            const currentRow = document.querySelector('.scrollable_cards_row:not([style*="display: none"])');
+            if (currentRow) {
+                const cards = Array.from(currentRow.querySelectorAll('.scrollable_card'));
+                const relatedCard = cards[currentImage.cardIndex];  // Use the stored index
+
+                const cardTitle = relatedCard?.querySelector('.card-title')?.textContent || '';
+                const cardDesc = relatedCard?.querySelector('.card-description')?.textContent || '';
+                const cardPrice = relatedCard?.querySelector('.card-price')?.textContent || '';
+                const cardCurrency = relatedCard?.querySelector('.card-currency')?.textContent || '';
+                const cardBadge = relatedCard?.querySelector('.card-badge')?.textContent || '';
+
+                const detailsContainer = fullScreenDiv.querySelector('.fullscreen_card_details');
+                if (detailsContainer) {
+                    detailsContainer.innerHTML = `
+                        <div class="badge">${cardBadge}</div>
+                        <h3 class="detail-title">${cardTitle}</h3>
+                        <p class="detail-description">${cardDesc}</p>
+                        <div class="price-info">
+                            <span class="price">${cardPrice}</span>
+                            <span class="currency">${cardCurrency}</span>
+                        </div>
+                    `;
+                }
+            }
+
             updateArrowVisibility();
         }, 200);
     }
+
 
     function updateArrowVisibility() {
         const leftArrow = fullScreenDiv.querySelector('.nav-arrow.left');
