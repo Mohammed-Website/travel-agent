@@ -80,7 +80,7 @@ function renderOutput(title, dataList, isTable = false) {
 
     // Clear previous content
     container.innerHTML = `
-        <h1 class="page-title">${title}</h1>
+        <h1 class="section-title">${title}</h1>
     `;
 
 
@@ -189,7 +189,7 @@ function renderTable(container, dataList) {
         // Create bar container
         const barContainer = document.createElement('div');
         barContainer.style.width = '100%';
-        barContainer.style.height = '180px';
+        barContainer.style.height = '100px';
         barContainer.style.display = 'flex';
         barContainer.style.alignItems = 'flex-end';
         barContainer.style.justifyContent = 'center';
@@ -722,7 +722,7 @@ async function loadClickData() {
         const output = document.getElementById('output');
         if (output) {
             output.innerHTML = `
-                <h1 class="page-title">عدد نقرات تواصل العملاء</h1>
+                <h1 class="section-title">عدد نقرات تواصل العملاء</h1>
                 <div id="content-container"></div>
             `;
         }

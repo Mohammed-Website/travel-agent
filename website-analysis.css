@@ -4,7 +4,7 @@
     right: 20px;
     background: #2c3e50;
     color: white;
-    padding: 12px 20px;
+    padding: 6px 12px;
     border-radius: 8px;
     z-index: 1001;
     cursor: pointer;
@@ -41,7 +41,7 @@
     width: 100%;
     padding: 15px;
     margin: 10px 0;
-    font-size: 18px;
+    font-size: 0.8rem;
     background: linear-gradient(135deg, #126094, #013e67);
     border: none;
     color: white;
@@ -279,15 +279,6 @@ tr:hover {
     margin: 0 auto;
 }
 
-/* Page title styles */
-.page-title {
-    text-align: center;
-    margin: 0 auto 30px;
-    padding: 0 15px;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .content {
@@ -310,11 +301,6 @@ tr:hover {
         padding-bottom: 15px;
     }
     
-    .page-title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
-    
     .sidebar {
         width: 85%;
     }
@@ -328,11 +314,6 @@ tr:hover {
     .horizontal-chart-wrapper {
         gap: 6px;
         padding: 0 5px 10px;
-    }
-    
-    .page-title {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
     }
     
     .data-card {

@@ -869,99 +869,105 @@ function openFullScreenImage(src, text, index = 0) {
 document.getElementById("user_comment_form").addEventListener("submit", async function (event) {
     event.preventDefault();
     const button = document.querySelector("#user_comment_form button[type='submit']");
-
-    // Disable button to prevent multiple submissions
     button.disabled = true;
     button.style.background = "gray";
     button.innerText = "جاري النشر";
 
-    // Get input values
     let reviewer_name = document.getElementById("user_comment_username").value.trim();
     let comment = document.getElementById("user_comment_text").value.trim();
     let stars = parseInt(document.getElementById("user_comment_stars").value);
-    let review_date = new Date().toISOString().split("T")[0]; // format: YYYY-MM-DD
+    let review_date = new Date().toISOString().split("T")[0];
+
+    const newComment = {
+        review_date,
+        reviewer_name,
+        comment,
+        stars
+    };
 
     try {
-        // Get the current highest ID
-        let { data: existingReviews, error: selectError } = await supabase
-            .from("sample_customers_comments")
-            .select("id")
-            .order("id", { ascending: false })
-            .limit(1);
+        // Target column name
+        const column = "khalil_travel_company";
 
-        if (selectError) throw selectError;
+        // Fetch existing array in that column (assume row with id = 1)
+        const { data, error: fetchError } = await supabase
+            .from("all_customers_comments")
+            .select(column)
+            .eq("id", 1)
+            .single();
 
-        let nextId = existingReviews.length ? existingReviews[0].id + 1 : 1;
+        if (fetchError) throw fetchError;
 
-        // Insert new review manually with the next ID
-        const { error: insertError } = await supabase.from("sample_customers_comments").insert([{
-            id: nextId,
-            review_date,
-            reviewer_name,
-            comment,
-            stars
-        }]);
+        const existingArray = data[column] || [];
 
-        if (insertError) throw insertError;
+        const updatedArray = [newComment, ...existingArray];
+
+        // Update the column with the new array
+        const { error: updateError } = await supabase
+            .from("all_customers_comments")
+            .update({ [column]: updatedArray })
+            .eq("id", 1);
+
+        if (updateError) throw updateError;
 
         document.getElementById("user_comment_form").reset();
-        await fetchReviews(); // Refresh UI
+        await fetchReviews(); // Optional: refresh UI
         showSuccessNotification();
 
     } catch (error) {
-        console.error("Error submitting comment:", error.message);
+        console.error("Error inserting comment:", error.message);
     } finally {
-        // Re-enable button
         button.disabled = false;
         button.style.background = "linear-gradient(to top, rgb(106, 75, 31), rgb(194, 156, 102))";
         button.innerText = "إرسال";
     }
 });
 
+
 // Function to Fetch and Display Reviews
 async function fetchReviews() {
     try {
+        const column = "khalil_travel_company";
+
         const { data, error } = await supabase
-            .from('sample_customers_comments')
-            .select('*')
-            .order('review_date', { ascending: false });
+            .from("all_customers_comments")
+            .select(column)
+            .eq("id", 1)
+            .single();
 
         if (error) throw error;
 
-        let user_clint_rate_area = document.getElementById("user_clint_rate_area");
-        user_clint_rate_area.innerHTML = ""; // Clear old reviews
+        const reviews = data[column] || [];
 
-        data.forEach(item => {
+        let user_clint_rate_area = document.getElementById("user_clint_rate_area");
+        user_clint_rate_area.innerHTML = "";
+
+        reviews.forEach(item => {
             const { review_date, reviewer_name, comment, stars } = item;
 
             if (!comment.trim()) return;
 
-            let clintRateDiv = document.createElement("div");
-            clintRateDiv.classList.add("user_card_rate_div");
-
-            clintRateDiv.innerHTML = `
-                <div class="card_clint_rate_date_div">
-                    <h3>${review_date}</h3>
-                </div>
+            const div = document.createElement("div");
+            div.classList.add("user_card_rate_div");
+            div.innerHTML = `
+                <div class="card_clint_rate_date_div"><h3>${review_date}</h3></div>
                 <div class="card_clint_rate_info_div">
-                    <img src="مكتب-سياحي/مكتب-سياحي.webp" alt="وقت الصعود للسفر والسياحة - مكتب سياحي" title="وقت الصعود للسفر والسياحة - مكتب سياحي">
+                    <img src="مكتب-سياحي/مكتب-سياحي.webp" alt="..." title="...">
                     <h4>${reviewer_name}</h4>
                 </div>
-                <div class="card_clint_rate_comment_div">
-                    <h5>${comment}</h5>
-                </div>
+                <div class="card_clint_rate_comment_div"><h5>${comment}</h5></div>
                 <div class="card_clint_rate_star_div">
                     ${"★".repeat(stars)}${"☆".repeat(5 - stars)}
                 </div>
             `;
-
-            user_clint_rate_area.appendChild(clintRateDiv);
+            user_clint_rate_area.appendChild(div);
         });
 
     } catch (error) {
         console.error("Error fetching reviews:", error.message);
     }
 }
+
 
 // Function to Show Floating Success Notification
 function showSuccessNotification() {
