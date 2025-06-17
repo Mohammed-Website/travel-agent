@@ -44,20 +44,14 @@
 #scrollable_cards_container_id {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   opacity: 1;
   transition: opacity 0.3s ease;
+  overflow: hidden;
 }
 
-.scrollable_card {
-  opacity: 0;
-  animation: fadeIn 0.3s ease-out forwards;
-  animation-delay: 0.1s;
-}
 
-.scrollable_card.fade-out {
-  animation: fadeOut 0.3s ease-in forwards;
-}
 
 .loading-indicator {
   text-align: center;
@@ -455,8 +449,6 @@ html {
 
 
 
-
-
 /* Section Styling */
 #scrollable_cards_section_id {
   padding: 1rem;
@@ -474,7 +466,6 @@ html {
   border-radius: 5px;
   padding-right: 10px;
   background: linear-gradient(90deg, #457b9d, #1d3557, #457b9d, #1d3557);
-  background-size: 300% 100%;
   animation: animate-bg 10s linear infinite;
 }
 
@@ -638,49 +629,40 @@ html {
   overflow: hidden;
 }
 
-/* Scrollable Row */
+/* Scrollable Row Container */
 .scrollable_cards_row {
-  direction: rtl;
   display: flex;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #457b9d #f0f0f0;
-  transition: opacity 0.3s ease;
+  flex-wrap: nowrap;
+  overflow-x: auto;                  /* Enable horizontal scroll */
+  overflow-y: hidden;               /* Prevent vertical overflow */
+  max-width: 100vw;                 /* Prevent exceeding viewport */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-/* Custom Scrollbar (Webkit) */
-.scrollable_cards_row::-webkit-scrollbar {
-  height: 8px;
-}
-
-.scrollable_cards_row::-webkit-scrollbar-thumb {
-  background-color: #457b9d;
-  border-radius: 10px;
-}
-
-.scrollable_cards_row::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
-  border-radius: 10px;
-}
-
-/* Individual Card Styling - Base */
+/* Individual Cards */
 .scrollable_card {
-  width: 100%;
-  min-width: fit-content;
+  min-width: 260px;                 /* Fixed base width */
   max-width: 320px;
+  width: 100%;                     /* Remove this if it's causing stretch */
   min-height: 380px;
+  flex-shrink: 0;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   background: #fff;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative;
-  margin: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+  animation-delay: 0.1s;
 }
 
 .scrollable_card:hover {
@@ -688,6 +670,9 @@ html {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
+.scrollable_card.fade-out {
+  animation: fadeOut 0.3s ease-in forwards;
+}
 
 .scrollable_card img {
   width: 100%;
@@ -1117,23 +1102,6 @@ html {
 
 #offerForm>*:nth-child(8) {
   animation-delay: 0.8s;
-}
-
-#scrollable_cards_container_id {
-  transition: opacity 0.3s ease-in-out;
-  width: 100%;
-  min-height: 200px; /* Prevents layout shift during loading */
-  margin-bottom: 4vmax;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-#scrollable_cards_container_id+#scrollable_cards_container_id {
-  margin-top: 30px;
 }
 
 

@@ -187,7 +187,7 @@ function editMostUsedOffer(index) {
     /* Hide the add new most used offer button */
     document.getElementById('addNewMostUsedOffers').style.display = 'none';
 
-    
+
 
     currentEditingIndex = index;
     const offer = currentOffers[index];
@@ -324,6 +324,10 @@ saveNewMostUsedOffer = async function () {
 
         // Refresh the display
         await fetchAndDisplayMostUsedOffers();
+
+
+        document.getElementById('addNewMostUsedOffers').style.display = '';
+
 
     } catch (error) {
         console.error('Error in saveNewOffer:', error);

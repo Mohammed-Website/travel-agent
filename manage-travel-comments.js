@@ -210,9 +210,6 @@ function openModal() {
         const today = new Date().toISOString().split('T')[0];
         editReviewDate.value = today;
     }
-
-    // Focus on the first input
-    editReviewerName.focus();
 }
 
 // Close modal
@@ -303,13 +300,11 @@ async function saveComment() {
     // Basic validation
     if (!commentData.reviewer_name) {
         showToast('الرجاء إدخال اسم المستخدم', 'error');
-        editReviewerName.focus();
         return;
     }
 
     if (!commentData.comment) {
         showToast('الرجاء إدخال نص التعليق', 'error');
-        editCommentText.focus();
         return;
     }
 

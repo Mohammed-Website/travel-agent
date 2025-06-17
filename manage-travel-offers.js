@@ -274,29 +274,71 @@ async function editOffer(offerId, event) {
     currentOffer.originalImages = [...data.sup_images_array];
 
     // Add existing images with their details
-    data.sup_images_array.forEach(image => {
-        // Extract star rating and price from the image URL if they exist
-        const starRating = getStarRatingFromUrl(image[0]);
-        const priceInfo = getPriceFromUrl(image[0]);
+    if (!Array.isArray(data.sup_images_array)) {
+        console.warn('sup_images_array is not an array or is undefined');
+        return;
+    }
+    
+    data.sup_images_array.forEach((image, index) => {
+        try {
+            // Safely extract values with fallbacks
+            const imageUrl = Array.isArray(image) && image.length > 0 ? image[0] : '';
+            const title = Array.isArray(image) && image.length > 1 ? image[1] : '';
+            const starRating = Array.isArray(image) && image.length > 2 ? image[2] : '5'; // Default to 5 stars
+            const price = Array.isArray(image) && image.length > 3 ? image[3] : '';
+            const currency = Array.isArray(image) && image.length > 4 ? image[4] : 'BHD'; // Default to BHD
 
-        // Add the image with its description and other details
-        addImageField(image[0], image[1], true);
+            console.log(`Processing image ${index + 1}:`, { 
+                imageUrl: imageUrl.substring(0, 50) + (imageUrl.length > 50 ? '...' : ''), 
+                title, 
+                starRating, 
+                price, 
+                currency 
+            });
 
-        // Set star rating and price for the newly added image field
-        const lastImageField = document.querySelector('.image-field:last-child');
-        if (lastImageField) {
-            const starSelect = lastImageField.querySelector('.star-rating-select');
-            const priceInput = lastImageField.querySelector('.price-input');
-            const currencySelect = lastImageField.querySelector('.currency-select');
 
-            if (starRating && starSelect) {
-                starSelect.value = starRating;
+            // Add the image with its description and other details
+            addImageField(imageUrl, title, true);
+
+            // Get the newly added image field
+            const imageFields = document.querySelectorAll('.image-field');
+            const lastImageField = imageFields[imageFields.length - 1];
+            
+            if (lastImageField) {
+                // Use setTimeout to ensure the DOM is fully updated
+                setTimeout(() => {
+                    const starSelect = lastImageField.querySelector('.star-rating-select');
+                    const priceInput = lastImageField.querySelector('.price-input');
+                    const currencySelect = lastImageField.querySelector('.currency-select');
+                    const descInput = lastImageField.querySelector('.desc-input');
+
+                    // Set the values
+                    if (starSelect) {
+                        starSelect.value = starRating;
+                        console.log(`Set star rating for image ${index + 1} to:`, starRating);
+                    }
+                    
+                    if (priceInput && price) {
+                        priceInput.value = price;
+                        console.log(`Set price for image ${index + 1} to:`, price);
+                    }
+                    
+                    if (currencySelect) {
+                        currencySelect.value = currency;
+                        console.log(`Set currency for image ${index + 1} to:`, currency);
+                    }
+                    
+                    if (descInput && title) {
+                        descInput.value = title;
+                        // Trigger any floating label updates if needed
+                        const event = new Event('input', { bubbles: true });
+                        descInput.dispatchEvent(event);
+                    }
+                }, 100); // Small delay to ensure DOM is ready
             }
-
-            if (priceInfo && priceInput && currencySelect) {
-                priceInput.value = priceInfo.amount;
-                currencySelect.value = priceInfo.currency;
-            }
+        } catch (error) {
+            console.error(`Error processing image ${index + 1}:`, error);
+            // Continue with the next image even if one fails
         }
     });
 
@@ -405,7 +447,7 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
     // Create description input container
     const descContainer = document.createElement('div');
     descContainer.className = 'desc-input-container';
-    
+
     // Create description input
     const descInput = document.createElement('input');
     descInput.type = 'text';
@@ -414,12 +456,12 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
     descInput.value = alt || '';
     descInput.required = true;
     descInput.ariaLabel = 'وصف الصورة';
-    
+
     // Create floating label
     const floatingLabel = document.createElement('span');
     floatingLabel.className = 'floating-label';
     floatingLabel.textContent = 'أدخل وصفًا للعرض';
-    
+
     // Append elements
     descContainer.appendChild(descInput);
     descContainer.appendChild(floatingLabel);
@@ -856,10 +898,10 @@ async function saveOffer() {
                     // For existing images, use the original URL
                     imageUrl = img.dataset.originalUrl;
                 }
-                
+
                 // Remove any query parameters
                 imageUrl = imageUrl.split('?')[0];
-                
+
                 // Convert star rating to text
                 const starText = {
                     '1': 'one star',
@@ -1163,7 +1205,7 @@ async function saveOffer() {
             title_card_image: finalTitleCardImage,
             created_at: new Date().toISOString()
         };
-        
+
         console.log('Saving offer data:', JSON.stringify(offerData, null, 2));
 
 
