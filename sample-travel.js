@@ -410,11 +410,14 @@ function updateContent(container, index, data) {
 
             const priceSpan = document.createElement('span');
             priceSpan.className = 'card-price';
-            priceSpan.textContent = offer.price || '0';
+            priceSpan.textContent = offer.price
+                ? Number(offer.price).toLocaleString('en-US')
+                : 'تواصل معنا للحصول على السعر';
+
 
             const currencySpan = document.createElement('span');
             currencySpan.className = 'card-currency';
-            currencySpan.textContent = offer.currency || 'USD';
+            currencySpan.textContent = offer.currency || '';
 
             priceContainer.appendChild(priceSpan);
             priceContainer.appendChild(currencySpan);
