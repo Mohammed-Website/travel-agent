@@ -93,7 +93,7 @@ document.getElementById("offerForm").addEventListener("submit", function (e) {
     message += `\n💳 ميزانية العرض: ${budgetType}\n\nيرجى تزويدي بأفضل عرض متوفر. شكرًا!`;
 
     const encoded = encodeURIComponent(message);
-    const phone = "+966506411444"; // استبدل هذا برقمك
+    const phone = "+966569446280"; // استبدل هذا برقمك
     window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
 });
 

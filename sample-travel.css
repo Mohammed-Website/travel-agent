@@ -1192,6 +1192,26 @@ html {
   font-size: 1rem;
 }
 
+.fullscreen-rating {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fullscreen-rating .stars {
+  color: #FFD700;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.fullscreen-rating span:first-child {
+  font-weight: bold;
+  color: #f0f0f0;
+  font-size: 0.95rem;
+}
+
 .fullscreen_card_details .badge {
   background-color: #f39c12;
   color: #fff;

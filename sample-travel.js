@@ -702,6 +702,7 @@ function openFullScreenImage(src, text, index = 0) {
         const cardPrice = clickedCard.querySelector('.card-price')?.textContent || '';
         const cardCurrency = clickedCard.querySelector('.card-currency')?.textContent || '';
         const cardBadge = clickedCard.querySelector('.card-badge')?.textContent || '';
+        const cardRating = clickedCard.querySelector('.card-rating')?.cloneNode(true);
 
         detailsContainer.innerHTML = `
             <div class="badge">${cardBadge}</div>
@@ -712,6 +713,14 @@ function openFullScreenImage(src, text, index = 0) {
                 <span class="currency">${cardCurrency}</span>
             </div>
         `;
+        
+        // Add star rating if it exists
+        if (cardRating) {
+            const ratingContainer = document.createElement('div');
+            ratingContainer.className = 'fullscreen-rating';
+            ratingContainer.innerHTML = cardRating.innerHTML;
+            detailsContainer.appendChild(ratingContainer);
+        }
     }
 
     fullScreenDiv.appendChild(exitButton);
@@ -790,6 +799,7 @@ function openFullScreenImage(src, text, index = 0) {
                 const cardPrice = relatedCard?.querySelector('.card-price')?.textContent || '';
                 const cardCurrency = relatedCard?.querySelector('.card-currency')?.textContent || '';
                 const cardBadge = relatedCard?.querySelector('.card-badge')?.textContent || '';
+                const cardRating = relatedCard?.querySelector('.card-rating')?.cloneNode(true);
 
                 const detailsContainer = fullScreenDiv.querySelector('.fullscreen_card_details');
                 if (detailsContainer) {
@@ -802,6 +812,14 @@ function openFullScreenImage(src, text, index = 0) {
                             <span class="currency">${cardCurrency}</span>
                         </div>
                     `;
+                    
+                    // Add star rating if it exists
+                    if (cardRating) {
+                        const ratingContainer = document.createElement('div');
+                        ratingContainer.className = 'fullscreen-rating';
+                        ratingContainer.innerHTML = cardRating.innerHTML;
+                        detailsContainer.appendChild(ratingContainer);
+                    }
                 }
             }
 
