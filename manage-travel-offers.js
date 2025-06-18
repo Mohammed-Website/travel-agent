@@ -234,6 +234,21 @@ function setupEventListeners() {
     });
 }
 
+// Helper function to convert star rating text to numeric value
+function getNumericStarRating(ratingText) {
+    if (!ratingText) return '5'; // Default to 5 stars if no rating
+    
+    const ratingMap = {
+        'one star': '1',
+        'two stars': '2',
+        'three stars': '3',
+        'four stars': '4',
+        'five stars': '5'
+    };
+    
+    return ratingMap[ratingText.toLowerCase()] || '5'; // Default to 5 if no match
+}
+
 // Edit existing offer with title card image
 async function editOffer(offerId, event) {
     const clickedButton = event.currentTarget;
@@ -314,8 +329,9 @@ async function editOffer(offerId, event) {
 
                     // Set the values
                     if (starSelect) {
-                        starSelect.value = starRating;
-                        console.log(`Set star rating for image ${index + 1} to:`, starRating);
+                        const numericRating = getNumericStarRating(starRating);
+                        starSelect.value = numericRating;
+                        console.log(`Set star rating for image ${index + 1} to:`, numericRating, '(original:', starRating + ')');
                     }
                     
                     if (priceInput && price) {
