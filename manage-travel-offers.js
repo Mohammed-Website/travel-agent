@@ -550,7 +550,9 @@ function addImageField(url = '', alt = '', isExistingImage = false) {
     // Add currency options
     const currencies = [
         { value: 'SAR', symbol: 'ر.س' },
-        { value: 'BHD', symbol: 'د. ب' },
+        { value: 'BHD', symbol: 'د.ب' },
+        { value: 'AED', symbol: 'د.ع' },
+        { value: 'KWD', symbol: 'د.ك' },
         { value: 'USD', symbol: '$' },
         { value: 'EUR', symbol: '€' }
     ];
