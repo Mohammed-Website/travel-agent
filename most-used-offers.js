@@ -212,7 +212,7 @@ function editMostUsedOffer(index) {
                 </select>
             </div>
             <div class="form-group">
-                <label for="edit-adultAmount">الدول (مفصولة بفاصلة)</label>
+                <label for="edit-adultAmount">عدد البالغين</label>
                 <input type="text" id="edit-adultAmount" value="${offer.adultAmount || ''}">
             </div>
             <div class="form-group">

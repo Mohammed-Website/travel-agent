@@ -1583,15 +1583,8 @@ html {
   overflow-x: auto;
   overflow-y: hidden;
   box-shadow: 0 0 1px 0.5px black;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-}
-
-#user_clint_rate_area.show {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .user_card_rate_div {
