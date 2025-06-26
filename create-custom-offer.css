@@ -1,0 +1,251 @@
+/* Base mobile-first styles */
+#create-custom-offer-modal-id {
+    z-index: 9999;
+    font-family: 'Cairo', Tahoma, sans-serif;
+    direction: rtl;
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 41, 59, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(0.5rem, 1vw, 2.5rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(.4, 0, .2, 1);
+    backdrop-filter: blur(4px);
+}
+
+#create-custom-offer-modal-id.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: modalFadeIn 0.5s cubic-bezier(.4, 0, .2, 1);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#create-custom-offer-modal-id .modal-content {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2.2rem 1rem 2rem 1rem;
+    width: 95%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+    gap: 1.2rem;
+    animation: fade-in 0.3s ease-out;
+}
+
+@media (min-width: 550px) {
+    #create-custom-offer-modal-id .modal-content {
+        width: 60%;
+    }
+}
+
+#create-custom-offer-modal-id .modal-content h2 {
+    font-size: clamp(1rem, 2vw, 2.5rem);
+    border-bottom: 2px solid #a1a1a1;
+    width: fit-content;
+}
+
+#offerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#offerForm>div,
+#offerForm>label,
+#offerForm>input,
+#offerForm>select {
+    margin-bottom: 0.5rem;
+}
+
+#offerForm input,
+#offerForm select {
+    font-family: inherit;
+    width: 100%;
+    border: 1.5px solid #e5e7eb;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.7rem;
+    background: #f9fafb;
+    font-size: 1.05rem;
+    transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 0.2rem;
+}
+
+#offerForm input:focus,
+#offerForm select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px #3b82f633;
+    outline: none;
+    background: #fff;
+}
+
+#offerForm label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+    display: block;
+}
+
+#offerForm .checkbox-item {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    color: #000000;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid #ffe0c3;
+}
+
+#offerForm .checkbox-item input[type="checkbox"] {
+    accent-color: #ff512f;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 0.3em;
+}
+
+#offerForm .checkbox-item input[type="checkbox"]:checked+span {
+    color: #dd2476;
+}
+
+#offerForm button[type="submit"] {
+    background: linear-gradient(90deg, #ff512f 0%, #dd2476 100%);
+    color: white;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 0.7rem;
+    transition: background 0.3s, transform 0.2s;
+    width: 100%;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 12px 0 rgba(221, 36, 118, 0.10);
+}
+
+#offerForm button[type="submit"]:hover {
+    background: linear-gradient(90deg, #dd2476 0%, #ff512f 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+#offerForm input[type="number"]::-webkit-inner-spin-button,
+#offerForm input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#create-custom-offer-modal-id .close-btn {
+    position: absolute;
+    top: clamp(0.5rem, 1vw, 1.2rem);
+    left: clamp(0.5rem, 1vw, 1.2rem);
+    width: clamp(25px, 2.5vw, 2.5rem);
+    height: clamp(25px, 2.5vw, 2.5rem);
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
+    color: #b24e00;
+    background-color: #fff5ec;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.2);
+    z-index: 2;
+  }
+  
+  #create-custom-offer-modal-id .close-btn:hover {
+    background-color: #ff512f;
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(255, 81, 47, 0.3);
+  }
+  
+
+#offerForm .form-group {
+    display: flex;
+    flex-direction: column;
+    background: #f3f4f6;
+    border-radius: 0.7rem;
+    padding: 1rem 0.7rem 0.7rem 0.7rem;
+    margin-bottom: 0.7rem;
+    box-shadow: 0 1px 4px #0001;
+}
+
+@media (min-width: 550px) {
+    #offerForm .form-group {
+        flex-direction: row;
+    }
+}
+
+#offerForm .form-group label {
+    margin-bottom: 0.3rem;
+}
+
+#offerForm .form-row {
+    display: flex;
+    gap: clamp(0.1px, 1rem, 1rem);
+    flex-wrap: wrap;
+}
+
+#offerForm .form-row>* {
+    flex: 1 1 120px;
+    min-width: 120px;
+}
+
+#childrenAges {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+#offerForm .icon-input {
+    position: relative;
+    width: 100%;
+}
+
+#offerForm .icon-input input,
+#offerForm .icon-input select {
+    padding-right: 2.5rem;
+}
+
+#offerForm .icon-input .input-icon {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff512f;
+    font-size: 1.2em;
+    pointer-events: none;
+}
+
+#offerForm .form-section-title {
+    font-size: 1.1rem;
+    color: #dd2476;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top: 1.2rem;
+    letter-spacing: 0.5px;
+}

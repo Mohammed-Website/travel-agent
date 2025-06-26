@@ -1,77 +1,62 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
-<head id="mughader_head">
-
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>اسم الشركة للسفر والسياحة</title>
-
-    <!-- ionicons Library -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
-
-    <link rel="stylesheet" href="sample-travel.css" />
-    <link rel="stylesheet" href="sample-travel-create-offer.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>رحلات وسياحة</title>
+    <link rel="stylesheet" href="create-custom-offer.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
-
 </head>
 
-<body id="mughader_body">
+<body>
 
 
 
 
+    <!-- Update the header section -->
+    <header>
+        <div class="logo-container">
+            <img src="" alt="شعار الشركة" class="logo-img">
+            <div class="logo-text">اسم الشركة</div>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-heart" id="favorites-icon"><span class="favorites-count">0</span></i>
+            <i class="fas fa-shopping-cart" id="cart-icon">
+                <span class="cart-count">0</span>
+            </i>
+        </div>
+    </header>
 
-
-
-
-
-
-
-    <section class="neon_section">
-        <img src="1.png" alt="Neon Background" class="background_image">
-        <div class="neon_overlay">
-            <div class="neon_text_container">
-
-                <h1 class="neon_title" title="شركة سياحية">اسم الشركة للسفر والسياحة</h1>
-
-                <p class="neon_subtitle">موقعنا: (؟)</p>
-
-                <div class="our-location-address-div">
-                    <a href="" target="_blank">الفرع الاول</a>
-                    <a href="" target="_blank">الفرع الثاني</a>
+    <!-- Highlighted Offer Section -->
+    <section class="highlighted-offer" id="highlighted-offer">
+        <div class="highlighted-offer-container">
+            <div class="highlighted-offer-content">
+                <div class="highlighted-offer-badge">
+                    <i class="fas fa-star"></i>
+                    <span>عرض مميز</span>
                 </div>
-
-                <a onclick="scrollToMiddleOfElement('scrollable_section_title')" class="neon_button">تصفح العروض
-                    السياحية</a>
-
-
-                <!-- الزر الرئيسي -->
-                <p class="neon_button" onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
-                    أنشئ عرضك السياحي
+                <h2 class="highlighted-offer-title" id="highlighted-offer-title">عرض مميز</h2>
+                <p class="highlighted-offer-description" id="highlighted-offer-description">احجز الآن واحصل على خصم 20%
                 </p>
-
-
+                <div class="highlighted-offer-pricing-dates">
+                    <span class="highlighted-offer-price" id="highlighted-offer-price"></span>
+                    <span class="highlighted-offer-oldPrice" id="highlighted-offer-oldPrice"></span>
+                    <span class="highlighted-offer-dates" id="highlighted-offer-dates"></span>
+                </div>
+                <div class="highlighted-offer-actions">
+                    <button class="highlighted-offer-btn primary" id="highlighted-offer-btn">
+                        <i class="fas fa-calendar-check"></i>
+                        تفاصيل العرض
+                    </button>
+                </div>
+            </div>
+            <div>
+                <img id="highlighted-offer-image" src="" alt="عرض مميز">
             </div>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -79,103 +64,129 @@
 
 
     <!-- الطبقة العلوية (المودال) -->
-    <div id="offerModal">
+    <div id="create-custom-offer-modal-id">
         <div class="modal-content" dir="rtl">
-            <button onclick="closeModal()" class="close-btn">&times;</button>
-
-
-
-            <div id="offersBar">
-                <h3>أكثر العروض طلباً:</h3>
-                <div id="mostUsedOffersList"></div>
-            </div>
-
-
-
+            <button onclick="closeModal()" class="close-btn" aria-label="إغلاق">&times;</button>
             <h2>أنشئ عرضك السياحي الخاص</h2>
-
-            <!-- النموذج -->
             <form id="offerForm">
-
-
-                <!-- نوع العرض -->
-                <div style="margin-bottom: 20px;">
-                    <p>نوع العرض:</p>
-                    <select id="offerType" style="cursor: pointer;">
-                        <option value="شهر عسل">شهر عسل</option>
-                        <option value="عائلة">عائلة</option>
-                        <option value="شباب">شباب</option>
-                        <option value="بنات">بنات</option>
-                        <option value="شخصين">شخصين</option>
-                        <option value="اخرى">اخرى</option>
-                    </select>
+                <div class="form-group" style="flex-direction: column !important;">
+                    <label for="offerType"><i class="fas fa-tags input-icon"></i> نوع العرض:</label>
+                    <div class="icon-input">
+                        <select id="offerType" style="cursor: pointer;">
+                            <option value="شهر عسل">شهر عسل</option>
+                            <option value="عائلة">عائلة</option>
+                            <option value="شباب">شباب</option>
+                            <option value="بنات">بنات</option>
+                            <option value="شخصين">شخصين</option>
+                            <option value="اخرى">اخرى</option>
+                        </select>
+                        <i class="fas fa-chevron-down input-icon"></i>
+                    </div>
                 </div>
-
-
-                <!-- عدد البالغين والأطفال -->
-                <div>
-                    <p>العدد:</p>
-                    <input type="number" id="adults" min="1" placeholder="عدد البالغين" required>
-                    <input type="number" id="children" min="0" placeholder="عدد الأطفال">
+                <div class="form-group form-row">
+                    <div class="icon-input">
+                        <label for="adults"><i class="fas fa-user input-icon"></i> عدد البالغين:</label>
+                        <input type="number" id="adults" min="1" placeholder="عدد البالغين" required>
+                    </div>
+                    <div class="icon-input">
+                        <label for="children"><i class="fas fa-child input-icon"></i> عدد الأطفال:</label>
+                        <input type="number" id="children" min="0" placeholder="عدد الأطفال">
+                    </div>
                 </div>
-
-                <!-- أعمار الأطفال -->
-                <div id="childrenAges"></div>
-
-                <!-- تاريخ الذهاب وعدد الأيام -->
-                <div style="margin-bottom: 20px;">
-                    <label for="departureDate">تاريخ المغادرة:</label>
-                    <input type="text" id="departureDate" placeholder="اختر التاريخ">
-
-                    <label>عدد الأيام:</label>
-                    <input type="number" id="totalDays" placeholder="عدد الأيام" required>
+                <div id="childrenAges" class="form-row"></div>
+                <div class="form-group form-row">
+                    <div class="icon-input">
+                        <label for="departureDate"><i class="fas fa-calendar-alt input-icon"></i> تاريخ
+                            المغادرة:</label>
+                        <input type="text" id="departureDate" placeholder="اختر التاريخ">
+                    </div>
+                    <div class="icon-input">
+                        <label for="total-nights-input-id"><i class="fas fa-moon input-icon"></i> عدد الليالي:</label>
+                        <input type="number" id="total-nights-input-id" placeholder="عدد الليالي" required>
+                    </div>
                 </div>
-
-                <p style="margin-bottom: 20px;">تاريخ العودة: <span id="returnDate">-</span></p>
-
-                <!-- الوجهات -->
-                <input type="text" id="countries" placeholder="الدول المفضلة (افصل بينها بفاصلة)" required>
-                <input type="text" id="cities" placeholder="المدن المفضلة (افصل بينها بفاصلة)">
-
-                <!-- خيارات الباقة -->
-                <div style="margin-top: 20px;">
-                    <p class="font-semibold">تشمل الباقة:</p>
+                <div class="form-group">
+                    <label>تاريخ العودة:</label>
+                    <span id="returnDate" style="margin-right: 10px;">-</span>
+                </div>
+                <div class="form-group form-row">
+                    <div class="icon-input">
+                        <label for="countries"><i class="fas fa-globe input-icon"></i> الدول المفضلة:</label>
+                        <input type="text" id="countries" placeholder="الدول المفضلة (افصل بينها بفاصلة)" required>
+                    </div>
+                    <div class="icon-input">
+                        <label for="cities"><i class="fas fa-city input-icon"></i> المدن المفضلة:</label>
+                        <input type="text" id="cities" placeholder="المدن المفضلة (افصل بينها بفاصلة)">
+                    </div>
+                </div>
+                <div class="form-group" style="flex-direction: column !important;">
+                    <span class="form-section-title">تشمل الباقة:</span>
                     <label class="checkbox-item" onclick="playSoundEffect('click')">
-                        <input type="checkbox" value="فندق مع الإفطار" checked> <span>فندق مع
-                            الإفطار</span>
+                        <input type="checkbox" value="فندق مع الإفطار" checked> <span>فندق مع الإفطار</span>
                     </label>
                     <label class="checkbox-item" onclick="playSoundEffect('click')">
-                        <input type="checkbox" value="تذاكر داخلية" checked> <span>تذاكر طيران
-                            داخلية</span>
+                        <input type="checkbox" value="تذاكر داخلية" checked> <span>تذاكر طيران داخلية</span>
                     </label>
                     <label class="checkbox-item" onclick="playSoundEffect('click')">
-                        <input type="checkbox" value="مواصلات مع إنترنت" checked> <span>مواصلات مع
-                            إنترنت</span>
+                        <input type="checkbox" value="مواصلات مع إنترنت" checked> <span>مواصلات مع إنترنت</span>
                     </label>
                     <label class="checkbox-item" onclick="playSoundEffect('click')">
                         <input type="checkbox" value="تذاكر دولية"> <span>تذاكر طيران دولية</span>
                     </label>
                 </div>
-
-
-                <!-- ميزانية العرض -->
-                <div style="margin-bottom: 20px;">
-                    <p>ميزانية العرض:</p>
-                    <select id="budgetType" style="cursor: pointer;">
-                        <option value="اقتصادي">اقتصادي</option>
-                        <option value="متوسط">متوسط</option>
-                        <option value="فاخر">فاخر</option>
-                    </select>
+                <div class="form-group" style="flex-direction: column !important;">
+                    <label for="budgetType"><i class="fas fa-wallet input-icon"></i> ميزانية العرض:</label>
+                    <div class="icon-input">
+                        <select id="budgetType" style="cursor: pointer;">
+                            <option value="اقتصادي">اقتصادي</option>
+                            <option value="متوسط">متوسط</option>
+                            <option value="فاخر">فاخر</option>
+                        </select>
+                        <i class="fas fa-chevron-down input-icon"></i>
+                    </div>
                 </div>
-
-                <!-- زر الإرسال -->
-                <button type="submit">إرسال عبر واتساب</button>
+                <button type="submit"><i class="fab fa-whatsapp"></i> إرسال عبر واتساب</button>
             </form>
         </div>
     </div>
 
 
 
+    <!-- Custom Package Call-to-Action -->
+    <section class="custom-package-cta">
+        <div class="cta-content">
+            <span class="cta-text">انشئ بكجك الخاص بكل سهولة</span>
+            <button class="cta-btn" id="create-package-btn" onclick="openModal()">
+                <i class="fas fa-magic"></i>
+                أنشئ بكجك الآن
+            </button>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <nav class="categories">
+        <div class="categories-container">
+            <button class="category-btn active" data-category="all">الكل</button>
+            <button class="category-btn" data-category="popular">الأكثر طلباً</button>
+            <button class="category-btn" data-category="newest">أحدث العروض</button>
+            <button class="category-btn" data-category="honeymoon">عروض شهر العسل</button>
+            <button class="category-btn" data-category="family">عروض العائلات</button>
+            <button class="category-btn" data-category="girls">عروض البنات</button>
+            <button class="category-btn" data-category="guys">عروض الشباب</button>
+        </div>
+    </nav>
+
+    <main class="offers-container">
+        <!-- Offers will be loaded here by JavaScript -->
+    </main>
 
 
 
@@ -189,11 +200,78 @@
 
 
 
+    <section class="benefits">
+        <h2 class="section-title">لماذا تختارنا؟</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <i class="fas fa-clock"></i>
+                <h3>الدقة بالمواعيد</h3>
+                <p>نلتزم بالوقت المحدد لجميع خدماتنا</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-headset"></i>
+                <h3>خدمة عملاء مميزة</h3>
+                <p>فريق خدمة عملاء متاح 24/7 لمساعدتك</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-lock"></i>
+                <h3>الدفع بأمان</h3>
+                <p>أنظمة دفع آمنة ومشفرة</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-star"></i>
+                <h3>جودة عالية</h3>
+                <p>نقدم أفضل الخدمات بمعايير الجودة العالية</p>
+            </div>
+        </div>
+    </section>
 
 
 
-    <section id="scrollable_cards_section_id">
-        <!-- Dynamic JS Code -->
+
+
+
+
+
+
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+            <div>
+                <h2 class="section-title">رأي <span style="color: var(--accent-color);">عملائنا</span></h2>
+            </div>
+
+
+
+            <div id="user_clint_rate_area">
+                <!-- JavaScript Dynamic Code -->
+            </div>
+
+
+            <div class="user_insert_comment_form_div">
+                <h3 class="section-title">شاركنا تجربتك</h3>
+                <form id="user_comment_form">
+                    <label for="user_comment_username">الإسم:</label>
+                    <input type="text" id="user_comment_username" required>
+
+                    <label for="user_comment_text">التعليق:</label>
+                    <textarea id="user_comment_text" required></textarea>
+
+                    <label for="user_comment_stars">التقييم:</label>
+                    <select id="user_comment_stars" required>
+                        <option value="5">★★★★★ (5)</option>
+                        <option value="4">★★★★☆ (4)</option>
+                        <option value="3">★★★☆☆ (3)</option>
+                        <option value="2">★★☆☆☆ (2)</option>
+                        <option value="1">★☆☆☆☆ (1)</option>
+                    </select>
+
+                    <button type="submit">إرسال</button>
+                </form>
+            </div>
+
+
+            <div id="new_comment_success_notification">You Comment Has Been Added Successfully</div>
     </section>
 
 
@@ -206,155 +284,134 @@
 
 
 
+    <!-- Offer Details Modal -->
+    <div class="ready-to-use-offer-modal-class" id="ready-to-use-offer-modal">
+        <div class="ready-to-use-offer-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="offer-images">
+                <div class="main-image">
+                    <img id="modal-main-image" src="" alt="عرض سياحي">
+                </div>
+                <div class="thumbnail-container" id="thumbnails">
+                    <!-- Thumbnails will be added here -->
+                </div>
+            </div>
+            <div class="offer-details">
+                <h2 id="modal-offer-title"></h2>
+                <div class="rating">
+                    <div class="stars" id="modal-rating">
+                        <!-- Stars will be added here -->
+                    </div>
+                    <span id="modal-review-count"></span>
+                </div>
+                <p class="price" id="modal-price"></p>
+                <p class="dates" id="modal-dates"></p>
+                <p class="description" id="modal-description"></p>
+                <p class="note" id="modal-note"></p>
 
-
-
-
-
-
-
-    <!-- Custormers Comments -->
-    <section class="mughader_customers_comments_section">
-
-        <h6>أراء عملائنا</h6>
-
-
-        <div id="user_clint_rate_area">
-            <!-- JavaScript Dynamic Code -->
+                <div class="offer-actions">
+                    <button class="add-to-fav" id="add-to-fav">
+                        <i class="far fa-heart"></i> المفضلة
+                    </button>
+                    <button class="add-to-cart" id="add-to-cart">
+                        <i class="fas fa-cart-plus"></i> أضف للسلة
+                    </button>
+                    <button class="whatsapp-btn" id="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> واتساب
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <div class="user_insert_comment_form_div">
-            <h3>شارك تجربتك مع اسم الشركة</h3>
-            <form id="user_comment_form">
-                <label for="user_comment_username">إسمك:</label>
-                <input type="text" id="user_comment_username" required>
-
-                <label for="user_comment_text">رأيك:</label>
-                <textarea id="user_comment_text" required></textarea>
-
-                <label for="user_comment_stars">تقييمك:</label>
-                <select id="user_comment_stars" required>
-                    <option value="5">★★★★★ (5)</option>
-                    <option value="4">★★★★☆ (4)</option>
-                    <option value="3">★★★☆☆ (3)</option>
-                    <option value="2">★★☆☆☆ (2)</option>
-                    <option value="1">★☆☆☆☆ (1)</option>
-                </select>
-
-                <button type="submit">إرسال</button>
-            </form>
-        </div>
-
-
-        <div id="new_comment_success_notification">تمت إضافة تعليقك بنجاح</div>
-
-    </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- WhatsApp Code -->
-    <div class="whatsapp_icon_div" onclick="openWhatsAppNumber()">
-        <ion-icon name="logo-whatsapp"></ion-icon>
-        <p>للحجز والإستفسار</p>
     </div>
 
+    <!-- Favorites Sidebar -->
+    <div class="sidebar" id="favorites-sidebar">
+        <div class="sidebar-header">
+            <h3>المفضلة</h3>
+            <span class="close-sidebar">&times;</span>
+        </div>
+        <div class="sidebar-content" id="favorites-content">
+            <!-- Favorites will be loaded here -->
+        </div>
+    </div>
 
+    <!-- Cart Sidebar -->
+    <div class="sidebar" id="cart-sidebar">
+        <div class="sidebar-header">
+            <h3>سلة التسوق</h3>
+            <span class="close-sidebar">&times;</span>
+        </div>
+        <div class="sidebar-content" id="cart-content">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>المجموع:</span>
+                <span id="cart-total-price">0 ر.س</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">
+                <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+            </button>
+        </div>
+    </div>
 
+    <!-- Fullscreen Image Overlay -->
+    <div id="fullscreen-image-overlay"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; transition:opacity 0.3s;">
+        <img id="fullscreen-image" src="" alt="صورة العرض"
+            style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 4px 32px #0008; transition:transform 0.3s;">
+        <button class="close-fullscreen-image" aria-label="إغلاق"
+            style="position:absolute; top:30px; left:30px; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; width:44px; height:44px; font-size:2rem; cursor:pointer; z-index:10001; display:flex; align-items:center; justify-content:center;">&times;</button>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
+    <!-- Add this before the closing body tag -->
     <footer>
         <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section about">
-                    <h3 class="footer-title">من نحن</h3>
-                    <p class="footer-text">شركة سياحية تأخذك إلى حيث ما تريد عبر عروضها وبرامجها السياحيه لتسافر حول
-                        العالم وتستمتع برحلاتك. ننسق لك رحلتك من جميع الجوانب، حجز التذاكر واختيار أفضل الفنادق والجولات
-                        السياحيه
-                        بأسعار تتناسب مع ميزانيتك. كما توفر اسم الشركة خدمات مميزه و برامج للشركات وقطاع الأعمال بتكاليف
-                        مثالية من
-                        خلال خبراءنا في المؤسسة.</p>
-                    <div class="social-icons">
-                        <a target="_blank" class="mughader_social_icon" aria-label="إنستغرام">
-                            <ion-icon name="logo-instagram"></ion-icon>
-                        </a>
-                        <a target="_blank" class="mughader_social_icon" aria-label="تويتر">
-                            <ion-icon name="logo-twitter"></ion-icon>
-                        </a>
-                        <a target="_blank" class="mughader_social_icon" aria-label="تيك توك">
-                            <ion-icon name="logo-tiktok"></ion-icon>
-                        </a>
-                        <a onclick="openWhatsAppNumber()" class="mughader_social_icon" aria-label="واتساب">
-                            <ion-icon name="logo-whatsapp"></ion-icon>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-section links">
-                    <h3 class="footer-title">روابط سريعة</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a onclick="scrollToMiddleOfElement('scrollable_section_title')">بكجات سياحية</a></li>
-                        <li><a onclick="openWhatsAppNumber()">اتصل بنا</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section newsletter">
-                    <h3 class="footer-title">النشرة البريدية</h3>
-                    <p class="footer-text">اشترك للحصول عل اجدد العروض والبكجات السياحية ونصائح عن السفر.</p>
-                    <form class="email_subscription_form">
-                        <input type="email" placeholder="أدخل بريدك الإلكتروني" aria-label="أدخل بريدك الإلكتروني"
-                            required>
-                        <button type="submit">اشتراك</button>
-                    </form>
-                </div>
-
-                <div class="footer-section contact">
-                    <h3 class="footer-title">اتصل بنا</h3>
-                    <div class="contact-info">
-                        <p><ion-icon name="call-outline"></ion-icon> +966 569446280</p>
-                        <p><ion-icon name="mail-outline"></ion-icon> travel.company@gmail.com</p>
-                        <p><ion-icon name="location-outline"></ion-icon> :عنوان الفرع الرئيسي<br>(...)</p>
-                    </div>
+            <div class="footer-section">
+                <h3>عن الشركة</h3>
+                <p style="cursor: text;">نقدم أفضل العروض السياحية بأسعار تنافسية وجودة عالية</p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a onclick="document.getElementById('highlighted-offer')?.scrollIntoView({ behavior: 'smooth', block: 'center' });">الصفحة الرئيسية</a></li>
+                    <li><a onclick="document.querySelector('.offers-category-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });">العروض</a></li>
+                    <li><a href="https://wa.me/966569446280" target="_blank">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <ul>
+                    <li style="direction: ltr;">+966 569446280 <i class="fas fa-phone"></i></li>
+                    <li><i class="fas fa-envelope"></i> companyName@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> موقع الشركة</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تابعنا</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
                 </div>
             </div>
-
-            <div class="footer-bottom">
-                <div class="payment-methods">
-                    <i class="fab fa-cc-visa" aria-hidden="true"></i>
-                    <i class="fab fa-cc-mastercard" aria-hidden="true"></i>
-                    <i class="fab fa-cc-amex" aria-hidden="true"></i>
-                    <i class="fab fa-cc-paypal" aria-hidden="true"></i>
-                    <i class="fab fa-cc-apple-pay" aria-hidden="true"></i>
-                </div>
-                <p>© <span class="current-year">2025</span> اسم الشركة للسفر والسياحة. جميع الحقوق محفوظة. | <a
-                        href="#">سياسة الخصوصية</a> | <a href="#">شروط
-                        الخدمة</a></p>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>اسم الشركة - جميع الحقوق محفوظة 2025 &copy;</p>
         </div>
     </footer>
 
 
+
+
+
+
+
+    <!-- Script for date picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
 
 
 
@@ -372,19 +429,8 @@
 
 
 
-
-
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
-
-
-
-    <script src="sample-travel-create-offer.js"></script>
-    <script src="sample-travel.js"></script>
-
+    <script src="create-custom-offer.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

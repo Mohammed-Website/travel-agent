@@ -1,24 +1,63 @@
 function openModal() {
-    const modal = document.getElementById("offerModal");
-    modal.classList.add("show");
-    modal.style.opacity = '1';
+    const createCustomOfferModal = document.getElementById("create-custom-offer-modal-id");
+    createCustomOfferModal.classList.add("show");
+    createCustomOfferModal.style.opacity = '1';
     document.body.classList.add("overflow-hidden"); // Disable main page scroll
+    // Focus first input
+    setTimeout(() => {
+        const firstInput = createCustomOfferModal.querySelector('input, select, textarea, button');
+        if (firstInput) firstInput.focus();
+    }, 100);
+    // Trap focus
+    trapFocus(createCustomOfferModal);
 }
 
 function closeModal() {
-    const modal = document.getElementById("offerModal");
-    modal.style.opacity = '0';
-
+    const createCustomOfferModal = document.getElementById("create-custom-offer-modal-id");
+    createCustomOfferModal.classList.remove("show");
+    document.body.classList.remove("overflow-hidden");
     setTimeout(() => {
-        modal.classList.remove("show");
-        document.body.classList.remove("overflow-hidden"); // Re-enable scroll
-    }, 500);
+        createCustomOfferModal.style.opacity = '0';
+    }, 5);
 }
-const modal = document.getElementById('offerModal');
 
-modal.addEventListener('click', function (e) {
+// Trap focus inside modal
+function trapFocus(modal) {
+    const focusable = modal.querySelectorAll('input, select, textarea, button, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    function handleTab(e) {
+        if (e.key === 'Tab') {
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        } else if (e.key === 'Escape') {
+            closeModal();
+        }
+    }
+    modal.addEventListener('keydown', handleTab);
+    // Remove listener on close
+    modal.addEventListener('transitionend', function cleanup() {
+        if (!modal.classList.contains('show')) {
+            modal.removeEventListener('keydown', handleTab);
+            modal.removeEventListener('transitionend', cleanup);
+        }
+    });
+}
+
+const createCustomOfferModal = document.getElementById('create-custom-offer-modal-id');
+
+createCustomOfferModal.addEventListener('click', function (e) {
     // Check if the click was directly on the background, not inside the modal content
-    if (e.target === modal) {
+    if (e.target === createCustomOfferModal) {
         closeModal();
     }
 });
@@ -27,13 +66,13 @@ modal.addEventListener('click', function (e) {
 // تحديث تاريخ العودة تلقائيًا
 function updateReturnDate() {
     const depDateStr = document.getElementById("departureDate").value;
-    const days = parseInt(document.getElementById("totalDays").value);
+    const nights = parseInt(document.getElementById("total-nights-input-id").value);
 
     const depDate = parseArabicDate(depDateStr);
     const returnDateEl = document.getElementById("returnDate");
 
-    if (depDate && !isNaN(days) && days > 0) {
-        depDate.setDate(depDate.getDate() + days);
+    if (depDate && !isNaN(nights) && nights > 0) {
+        depDate.setDate(depDate.getDate() + nights);
         returnDateEl.innerText = formatArabicDate(depDate);
     } else {
         returnDateEl.innerText = "-";
@@ -42,7 +81,7 @@ function updateReturnDate() {
 
 
 document.getElementById("departureDate").addEventListener("input", updateReturnDate);
-document.getElementById("totalDays").addEventListener("input", updateReturnDate);
+document.getElementById("total-nights-input-id").addEventListener("input", updateReturnDate);
 
 // أعمار الأطفال
 document.getElementById("children").addEventListener("input", () => {
@@ -73,7 +112,7 @@ document.getElementById("offerForm").addEventListener("submit", function (e) {
     const children = document.getElementById("children").value;
     const childAges = Array.from(document.getElementById("childrenAges").querySelectorAll('input')).map(i => i.value).filter(a => a);
     const departure = document.getElementById("departureDate").value;
-    const totalDays = document.getElementById("totalDays").value;
+    const totalNights = document.getElementById("total-nights-input-id").value;
     const returnDate = document.getElementById("returnDate").innerText;
     const countries = document.getElementById("countries").value;
     const cities = document.getElementById("cities").value;
@@ -87,7 +126,7 @@ document.getElementById("offerForm").addEventListener("submit", function (e) {
     if (children && parseInt(children) > 0 && childAges.length > 0) {
         message += ` (أعمارهم: ${childAges.join(', ')})`;
     }
-    message += `\n📅 تاريخ الذهاب: ${departure}\n🕒 عدد الأيام: ${totalDays}\n🔙 تاريخ العودة: ${returnDate}`;
+    message += `\n📅 تاريخ الذهاب: ${departure}\n🕒 عدد الليالي: ${totalNights}\n🔙 تاريخ العودة: ${returnDate}`;
     message += `\n🌍 الوجهات: ${countries} (${cities})`;
     message += `\n✈️ تشمل الباقة: ${inclusions.join(', ') || 'بدون'}`;
     message += `\n💳 ميزانية العرض: ${budgetType}\n\nيرجى تزويدي بأفضل عرض متوفر. شكرًا!`;
@@ -155,101 +194,3 @@ flatpickr("#departureDate", {
         }
     }
 });
-
-
-
-
-
-
-
-
-
-// Data for the mostUsedOffers
-// Update the mostUsedOffers array with data from Supabase
-async function fetchMostUsedOffers() {
-    try {
-        const { data, error } = await supabase
-            .from('most_used_travel_offers')
-            .select('*')
-            .eq('id', 1)
-            .single();
-
-        if (error) throw error;
-
-        if (data && data['sample-travel-website-domain']) {
-            try {
-                // Clean and parse the offers data
-                let offersStr = data['sample-travel-website-domain'].trim();
-                offersStr = offersStr.replace(/,\s*([}\]]|$)/g, '$1');
-                if (!offersStr.startsWith('[')) {
-                    offersStr = `[${offersStr}]`;
-                }
-                const jsonStr = offersStr
-                    .replace(/([{\s])(\w+)(?=\s*:)/g, '$1"$2"')
-                    .replace(/'/g, '"');
-                
-                const parsedOffers = JSON.parse(jsonStr);
-                return Array.isArray(parsedOffers) ? parsedOffers : [];
-            } catch (parseError) {
-                console.error('Error parsing offers:', parseError);
-                return [];
-            }
-        }
-        return [];
-    } catch (error) {
-        console.error('Error fetching most used offers:', error);
-        return [];
-    }
-}
-
-// Initialize the offers
-let mostUsedOffers = [];
-
-// Load and display the offers when the page loads
-document.addEventListener('DOMContentLoaded', async () => {
-    mostUsedOffers = await fetchMostUsedOffers();
-
-    mostUsedOffers.forEach(offer => {
-        const offerItem = document.createElement('div');
-        offerItem.className = 'offer-item';
-        offerItem.textContent = offer.title;
-        offerItem.onclick = () => selectOffer(offer); // Handle offer selection
-        mostUsedOffersList.appendChild(offerItem);
-    });
-});
-
-
-
-
-
-
-// Handle offer selection
-function selectOffer(offer) {
-    playSoundEffect('success');
-
-    // Set values in the form
-    document.getElementById("offerType").value = offer.offerType;
-    document.getElementById("adults").value = offer.adultAmount;
-    document.getElementById("countries").value = offer.countries;
-    document.getElementById("cities").value = offer.cities;
-
-    // Get all offer items
-    const allOffers = document.querySelectorAll('.offer-item');
-
-    // Reset color of all offer items
-    allOffers.forEach(item => {
-        item.style.backgroundColor = ''; // Reset background color
-        item.style.color = ''; // Reset text color
-    });
-
-    // Get the clicked offer item
-    const offerItem = event.target;
-
-    // Apply the animation directly with JavaScript
-    offerItem.style.transition = 'background-color 0.3s ease, color 0.3s ease'; // Set the transition
-    offerItem.style.backgroundColor = '#4CAF50'; // Set background color to green
-    offerItem.style.color = 'white'; // Set text color to white
-}
-
-
-
