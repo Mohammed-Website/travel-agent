@@ -104,7 +104,7 @@ document.getElementById("offerForm").addEventListener("submit", function (e) {
 
 
     /* insert a new click count in the Supbase database */
-    insertNewClick('sample-table');
+    insertNewClick('your-travel-company.com');
 
 
 

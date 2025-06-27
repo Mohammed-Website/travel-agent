@@ -997,3 +997,62 @@ function showSuccessNotification() {
 
 
 fetchReviews();
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Insert new click data in the Supabase */
+async function insertNewClick(website) {
+
+    // Step 1: Get current month name
+    const monthNames = [
+        "january", "february", "march", "april",
+        "may", "june", "july", "august",
+        "september", "october", "november", "december"
+    ];
+    const currentMonth = monthNames[new Date().getMonth()];
+
+    // Step 2: Fetch the current row for the website
+    const { data, error } = await supabase
+        .from("click_counter")
+        .select("*")
+        .eq("website", website)
+        .single();
+
+    if (error) {
+        console.error("Error fetching data:", error.message);
+        return;
+    }
+
+    // Step 3: Parse the current value (e.g., "Clicks 4")
+    let rawValue = data[currentMonth];
+    let currentCount = 0;
+
+    if (rawValue && typeof rawValue === "string" && rawValue.startsWith("Clicks ")) {
+        currentCount = parseInt(rawValue.replace("Clicks ", ""), 10) || 0;
+    }
+
+    // Step 4: Increment the value
+    let newCount = currentCount + 1;
+    let newValue = `Clicks ${newCount}`;
+
+    // Step 5: Update the table
+    const { error: updateError } = await supabase
+        .from("click_counter")
+        .update({ [currentMonth]: newValue })
+        .eq("website", website);
+
+    if (updateError) {
+        console.error("Error updating value:", updateError.message);
+        return;
+    }
+}
