@@ -321,7 +321,7 @@ header {
 }
 
 .logo-img {
-    height: clamp(40px, 7vw, 100px);
+    height: clamp(60px, 7vw, 200px);
     width: auto;
 }
 
