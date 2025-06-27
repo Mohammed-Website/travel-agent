@@ -951,6 +951,7 @@ footer {
     border-radius: 10px;
     overflow: hidden;
     animation: modalopen 0.5s;
+    position: relative;
 }
 
 @keyframes modalopen {
@@ -1360,7 +1361,7 @@ footer {
     box-shadow: 0 4px 24px 0 rgba(252, 182, 159, 0.13);
 }
 
-.custom-package-cta *{
+.custom-package-cta * {
     animation: ctaFadeIn 2s;
 }
 
