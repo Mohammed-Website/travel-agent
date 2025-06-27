@@ -777,11 +777,11 @@ function checkout() {
 - السعر القديم: ${formatNumber(item.oldPrice)} ر.س
 - السعر الحالي: ${formatNumber(item.price)} ر.س
 المجموع: ${formatNumber(item.price * item.quantity)} ر.س
-${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n`;
+${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n\n`;
         total += item.price * item.quantity;
     });
 
-    message += `*المجموع الكلي: ${formatNumber(total)} ر.س*\n\nالرجاء التواصل معي لإتمام الحجز.`;
+    message += `*المجموع الكلي: ${formatNumber(total)} ر.س*\n\nالرجاء تزويدي بتوافر هذه العروض.`;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
