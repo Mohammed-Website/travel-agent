@@ -77,18 +77,16 @@ header {
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
-    animation: fadeInUp 0.8s ease-out;
+    animation: fadeInUp 2s ease-out;
 }
 
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -265,6 +263,26 @@ header {
     overflow: hidden;
 }
 
+/* Special Offer Ribbon */
+.special-offer-ribbon {
+    position: absolute;
+    top: 0px;
+    right: -20px;
+    background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
+    color: #b8860b;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    padding: clamp(0.5rem, 0.4vw, 1rem) clamp(1rem, 1vw, 2rem);
+    box-shadow: 0 4px 16px #ffd70055;
+    border-radius: 8px;
+    z-index: 3;
+    letter-spacing: 1px;
+    border: 2px solid #fffbe6;
+    text-shadow: 0 1px 4px #fff8;
+    animation: slideInRight 0.6s ease-out 0.4s both;
+    transform: rotate(-20deg);
+}
+
 @media (min-width: 550px) {
     #highlighted-offer-image {
         width: clamp(15rem, 25vw, 35rem);
@@ -305,6 +323,18 @@ header {
 }
 
 @keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRightWithRotation {
     from {
         opacity: 0;
         transform: translateX(30px);
@@ -1328,7 +1358,10 @@ footer {
     position: relative;
     z-index: 10;
     box-shadow: 0 4px 24px 0 rgba(252, 182, 159, 0.13);
-    animation: ctaFadeIn 1s;
+}
+
+.custom-package-cta *{
+    animation: ctaFadeIn 2s;
 }
 
 @keyframes ctaFadeIn {
@@ -1411,6 +1444,7 @@ footer {
     margin-bottom: 10px;
     margin-top: 10px;
     flex-wrap: wrap;
+    animation: slideInRight 0.6s ease-out 0.4s both;
 }
 
 .highlighted-offer-price {
@@ -1467,14 +1501,19 @@ footer {
 }
 
 #fullscreen-image {
-    max-width: 100vw;
-    max-height: 100vh;
+    max-width: 98vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: auto;
     border-radius: 12px;
     box-shadow: 0 4px 32px #0008;
+    background: #fff;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     transform: scale(0.96);
-    background: #fff;
 }
 
 #fullscreen-image-overlay.active #fullscreen-image {
@@ -1519,23 +1558,4 @@ footer {
         height: 36px;
         font-size: 1.5rem;
     }
-}
-
-/* Special Offer Ribbon */
-.special-offer-ribbon {
-    position: absolute;
-    top: 0px;
-    right: -20px;
-    background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
-    color: #b8860b;
-    font-weight: bold;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    padding: clamp(0.5rem, 0.4vw, 1rem) clamp(1rem, 1vw, 2rem);
-    transform: rotate(-20deg);
-    box-shadow: 0 4px 16px #ffd70055;
-    border-radius: 8px;
-    z-index: 3;
-    letter-spacing: 1px;
-    border: 2px solid #fffbe6;
-    text-shadow: 0 1px 4px #fff8;
 }

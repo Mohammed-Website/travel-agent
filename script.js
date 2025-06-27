@@ -1,3 +1,13 @@
+// function to format numbers with commas
+function formatNumber(num) {
+    if (num === null || num === undefined || num === '') return '';
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+
+
+
+
 // Sample array data (will be replaced with JSON)
 let offersData = {};
 
@@ -106,7 +116,7 @@ function displayHighlightedOffer() {
 
         // Title
         if (highlightedOfferTitle) {
-            highlightedOfferTitle.textContent = highlightData.highlightOffer_title || highlightData.title || 'عرض مميز';
+            highlightedOfferTitle.textContent = highlightData.title || 'عرض مميز';
         }
 
         // Description
@@ -116,8 +126,8 @@ function displayHighlightedOffer() {
 
         // Image
         if (highlightedOfferImage) {
-            highlightedOfferImage.src = highlightData.highlightOffer_image || highlightData.image || 'https://via.placeholder.com/400x300?text=عرض+مميز';
-            highlightedOfferImage.alt = highlightData.highlightOffer_title || highlightData.title || 'عرض مميز';
+            highlightedOfferImage.src = highlightData.images[0];
+            highlightedOfferImage.alt = highlightData.title || 'عرض مميز';
         }
 
         // Price, Old Price, Dates
@@ -125,15 +135,15 @@ function displayHighlightedOffer() {
         const oldPriceElem = document.getElementById('highlighted-offer-oldPrice');
         const datesElem = document.getElementById('highlighted-offer-dates');
         if (priceElem) {
-            const price = highlightData.highlightOffer_price || highlightData.price;
-            priceElem.textContent = price ? `${price} ر.س` : '';
+            const price = highlightData.price || '?';
+            priceElem.textContent = price ? `${formatNumber(price)} ر.س` : '';
         }
         if (oldPriceElem) {
-            const oldPrice = highlightData.highlightOffer_oldPrice || highlightData.oldPrice;
-            oldPriceElem.textContent = oldPrice ? `${oldPrice} ر.س` : '';
+            const oldPrice = highlightData.oldPrice || '?';
+            oldPriceElem.textContent = oldPrice ? `${formatNumber(oldPrice)} ر.س` : '';
         }
         if (datesElem) {
-            datesElem.textContent = highlightData.highlightOffer_dates || highlightData.dates || '';
+            datesElem.textContent = highlightData.dates || 'ترايخ العرض ليس محدد بعد';
         }
     }
 }
@@ -315,7 +325,7 @@ function displayOffers(category) {
                         </div>
                         <div class="offer-info">
                             <h3 class="offer-title">${offer.title}</h3>
-                            <p class="offer-price">${offer.price} ر.س <span class="old-price">${offer.oldPrice} ر.س</span></p>
+                            <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.oldPrice)} ر.س</span></p>
                             <p class="offer-dates">${offer.dates}</p>
                             <div class="offer-rating">
                                 ${generateStars(offer.rating)} (${offer.reviews})
@@ -371,7 +381,7 @@ function displayOffers(category) {
             </div>
             <div class="offer-info">
                 <h3 class="offer-title">${offer.title}</h3>
-                <p class="offer-price">${offer.price} ر.س <span class="old-price">${offer.oldPrice} ر.س</span></p>
+                <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.oldPrice)} ر.س</span></p>
                 <p class="offer-dates">${offer.dates}</p>
                 <div class="offer-rating">
                     ${generateStars(offer.rating)} (${offer.reviews})
@@ -407,15 +417,15 @@ function openOfferModal(offer) {
     currentOffer = offer;
 
     // Fallbacks for highlightOffer fields
-    const images = offer.images || (offer.highlightOffer_image ? [offer.highlightOffer_image] : []);
-    const title = offer.title || offer.highlightOffer_title || 'عرض مميز';
-    const price = offer.price || offer.highlightOffer_price || '';
-    const oldPrice = offer.oldPrice || offer.highlightOffer_oldPrice || '';
+    const images = offer.images || (offer.highlightData.images[0] ? [offer.highlightData.images[0]] : []);
+    const title = offer.title || offer.title || 'عرض مميز';
+    const price = offer.price || '?';
+    const oldPrice = offer.oldPrice || '?';
     const description = offer.description || offer.highlightOffer_description || '';
-    const dates = offer.dates || offer.highlightOffer_dates || '';
-    const note = offer.note || offer.highlightOffer_note || '';
-    const rating = offer.rating || offer.highlightOffer_rating || 0;
-    const reviews = offer.reviews || offer.highlightOffer_reviews || 0;
+    const dates = offer.dates || '';
+    const note = offer.note || '';
+    const rating = offer.rating || 0;
+    const reviews = offer.reviews || 0;
 
     // Set main image
     modalMainImage.src = images[0] || '';
@@ -451,8 +461,8 @@ function openOfferModal(offer) {
     modalRating.innerHTML = generateStars(rating);
     modalReviewCount.textContent = `(${reviews})`;
     modalPrice.innerHTML = `
-        ${price} ر.س 
-        <span class="old-price">${oldPrice} ر.س</span>
+        ${formatNumber(price)} ر.س 
+        <span class="old-price">${formatNumber(oldPrice)} ر.س</span>
     `;
     modalDates.textContent = dates;
     modalDescription.textContent = description;
@@ -520,7 +530,7 @@ function displayFavorites() {
             <img src="${offer.images[0]}" alt="${offer.title}" class="fav-item-img" loading="lazy" width="80" height="80">
             <div class="fav-item-details">
                 <h4 class="fav-item-title">${offer.title}</h4>
-                <p class="fav-item-price">${offer.price} ر.س</p>
+                <p class="fav-item-price">${formatNumber(offer.price)} ر.س</p>
                 <button class="add-to-cart-btn" data-id="${offer.id}">
                     <i class="fas fa-cart-plus"></i> أضف للسلة
                 </button>
@@ -643,7 +653,7 @@ function displayCart() {
             <img src="${itemImage}" alt="${itemTitle}" class="cart-item-img" loading="lazy" width="80" height="80">
             <div class="cart-item-details">
                 <h4 class="cart-item-title">${itemTitle}</h4>
-                <p class="cart-item-price">${itemPrice} ر.س</p>
+                <p class="cart-item-price">${formatNumber(itemPrice)} ر.س</p>
                 <div class="cart-item-actions">
                     <div class="quantity-control">
                         <button class="quantity-btn minus" data-id="${itemId}">-</button>
@@ -661,7 +671,7 @@ function displayCart() {
 
     // Update total
     console.log("Calculated total:", total); // Debug log
-    cartTotalPrice.textContent = `${total} ر.س`;
+    cartTotalPrice.textContent = `${formatNumber(total)} ر.س`;
 
     // Add event listeners to dynamically created buttons
     document.querySelectorAll('.quantity-btn.minus').forEach(button => {
@@ -735,16 +745,19 @@ function shareOnWhatsApp() {
     if (!currentOffer) return;
 
     const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
-    const message = `أهلاً بك، أرغب في الاستفسار عن العرض التالي:
+    const message = `أهلاً، حاب استفسر عن العرض التالي:
     
 *${currentOffer.title}*
-السعر: ${currentOffer.price} ر.س (السعر القديم: ${currentOffer.oldPrice} ر.س)
+- السعر القديم: ${formatNumber(currentOffer.oldPrice)} ر.س
+- السعر الحالي: ${formatNumber(currentOffer.price)} ر.س
 ${currentOffer.description}
 
 ${currentOffer.dates}
 ${currentOffer.note ? 'ملاحظة: ' + currentOffer.note : ''}
 
-الرجاء التواصل معي للتفاصيل.`;
+${currentOffer.images && currentOffer.images.length > 0 ? `صورة العرض: ${currentOffer.images[0]}` : ''}
+
+الرجاء تزويدي بتوافر العرض او بالعروض المشابهة.`;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -755,18 +768,20 @@ function checkout() {
     if (cart.length === 0) return;
 
     const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
-    let message = `أهلاً بك، أرغب في حجز العروض التالية:\n\n`;
+    let message = `أهلاً، حاب احجز العروض التالية:\n\n`;
     let total = 0;
 
     cart.forEach(item => {
         message += `*${item.title}*
 الكمية: ${item.quantity}
-السعر: ${item.price} ر.س
-المجموع: ${item.price * item.quantity} ر.س\n\n`;
+- السعر القديم: ${formatNumber(item.oldPrice)} ر.س
+- السعر الحالي: ${formatNumber(item.price)} ر.س
+المجموع: ${formatNumber(item.price * item.quantity)} ر.س
+${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n`;
         total += item.price * item.quantity;
     });
 
-    message += `*المجموع الكلي: ${total} ر.س*\n\nالرجاء التواصل معي لإتمام الحجز.`;
+    message += `*المجموع الكلي: ${formatNumber(total)} ر.س*\n\nالرجاء التواصل معي لإتمام الحجز.`;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -788,7 +803,8 @@ function shareHighlightedOfferOnWhatsApp() {
     }
 
     if (highlightData.price && highlightData.oldPrice) {
-        message += `السعر: ${highlightData.price} ر.س (السعر القديم: ${highlightData.oldPrice} ر.س)\n`;
+        message += `السعر القديم: ${formatNumber(highlightData.oldPrice)} ر.س\n`;
+        message += `السعر الحالي: ${formatNumber(highlightData.price)} ر.س\n`;
     }
 
     if (highlightData.dates) {
@@ -799,7 +815,11 @@ function shareHighlightedOfferOnWhatsApp() {
         message += `الخصم: ${highlightData.discount}\n\n`;
     }
 
-    message += `الرجاء التواصل معي للتفاصيل.`;
+    if (highlightData.images && highlightData.images.length > 0) {
+        message += `صورة العرض: ${highlightData.images[0]}\n\n`;
+    }
+
+    message += `الرجاء تزويدي بتوافر العرض او بالعروض المشابهة.`;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
