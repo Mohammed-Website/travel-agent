@@ -310,7 +310,7 @@ function displayOffers(category) {
                     offerCard.className = 'offer-card';
                     offerCard.innerHTML = `
                         <div class="offer-image-wrapper" style="position:relative;">
-                            <img src="${offer.images[0]}" alt="${offer.title}" class="offer-image">
+                            <img src="${offer.images[0]}" alt="${offer.title}" class="offer-image" loading="lazy" width="220" height="120">
                             ${offer.label ? `<span class="offer-label-badge">${offer.label}</span>` : ''}
                         </div>
                         <div class="offer-info">
@@ -366,7 +366,7 @@ function displayOffers(category) {
         offerCard.className = 'offer-card';
         offerCard.innerHTML = `
             <div class="offer-image-wrapper" style="position:relative;">
-                <img src="${offer.images[0]}" alt="${offer.title}" class="offer-image">
+                <img src="${offer.images[0]}" alt="${offer.title}" class="offer-image" loading="lazy" width="220" height="120">
                 ${offer.label ? `<span class="offer-label-badge">${offer.label}</span>` : ''}
             </div>
             <div class="offer-info">
@@ -433,6 +433,9 @@ function openOfferModal(offer) {
         thumbnail.src = image;
         thumbnail.alt = title;
         thumbnail.className = 'thumbnail' + (index === 0 ? ' active' : '');
+        thumbnail.loading = 'lazy';
+        thumbnail.width = 60;
+        thumbnail.height = 60;
         thumbnail.addEventListener('click', () => {
             modalMainImage.src = image;
             document.querySelectorAll('.thumbnail').forEach(thumb =>
@@ -514,7 +517,7 @@ function displayFavorites() {
         const favItem = document.createElement('div');
         favItem.className = 'fav-item';
         favItem.innerHTML = `
-            <img src="${offer.images[0]}" alt="${offer.title}" class="fav-item-img">
+            <img src="${offer.images[0]}" alt="${offer.title}" class="fav-item-img" loading="lazy" width="80" height="80">
             <div class="fav-item-details">
                 <h4 class="fav-item-title">${offer.title}</h4>
                 <p class="fav-item-price">${offer.price} ر.س</p>
@@ -637,7 +640,7 @@ function displayCart() {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
-            <img src="${itemImage}" alt="${itemTitle}" class="cart-item-img">
+            <img src="${itemImage}" alt="${itemTitle}" class="cart-item-img" loading="lazy" width="80" height="80">
             <div class="cart-item-details">
                 <h4 class="cart-item-title">${itemTitle}</h4>
                 <p class="cart-item-price">${itemPrice} ر.س</p>
