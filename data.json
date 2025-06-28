@@ -2,8 +2,16 @@
     "companyLogo": {
         "image": "شركة-سياحية/شركة-سياحية.webp"
     },
-    "highlightOffer": {
+    "webIntroImages": {
         "id": 1,
+        "images": [
+            "https://www.guidedolomiti.com/wp-content/uploads/walk-around-the-tre-cime.webp",
+            "https://divetrips.id/wp-content/uploads/2023/11/Padar-Island-Labuan-Bajo-scaled.webp",
+            "https://worldwildschooling.com/wp-content/uploads/2024/05/Mountains-in-the-US_Grand-Teton-Wyoming_Kennytong_Adobe-Stock-Photo_67602283.webp"
+        ]
+    },
+    "highlightOffer": {
+        "id": 2,
         "highlightOffer_description": "احجز الآن واحصل على خصم 20% على رحلة شاملة إلى شرم الشيخ مع إقامة فاخرة في فندق 5 نجوم",
         "title": "رحلة إلى شرم الشيخ",
         "price": 2500,
@@ -40,9 +48,9 @@
                 "popular"
             ],
             "images": [
-                "https://storage.georgia.travel/images/abasha-waterfall-gnta.webp",
-                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/kirkjufellsfoss_with_kirkjufell_martin_jernberg_unsplash_jpg_3ce4649205.webp",
-                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/lupines_vatnajokull_national_park_jpg_56e8cca984.webp"
+                "https://www.widerangegalleries.com/images/960/20191101-Dawn-over-the-Dolomites-webp.webp",
+                "https://storage.georgia.travel/images/shaori-lake-gnta.webp",
+                "https://storage.georgia.travel/images/alazani-floodplain-forests-natural-monument-gnta.webp"
             ]
         },
         {
@@ -62,13 +70,13 @@
                 "popular"
             ],
             "images": [
-                "https://www.widerangegalleries.com/images/960/20191101-Dawn-over-the-Dolomites-webp.webp",
-                "https://storage.georgia.travel/images/shaori-lake-gnta.webp",
-                "https://storage.georgia.travel/images/alazani-floodplain-forests-natural-monument-gnta.webp"
+                "https://storage.georgia.travel/images/abasha-waterfall-gnta.webp",
+                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/kirkjufellsfoss_with_kirkjufell_martin_jernberg_unsplash_jpg_3ce4649205.webp",
+                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/lupines_vatnajokull_national_park_jpg_56e8cca984.webp"
             ]
         },
         {
-            "id": 6,
+            "id": 5,
             "title": "استرخاء فاخر في المالديف",
             "label": "تخفيضات",
             "price": 3721,
@@ -90,7 +98,7 @@
             ]
         },
         {
-            "id": 7,
+            "id": 6,
             "title": "جولة تاريخية في روما",
             "label": "موصى به",
             "price": 5088,
@@ -111,7 +119,7 @@
             ]
         },
         {
-            "id": 8,
+            "id": 7,
             "title": "مغامرة في جبال الألب",
             "label": "حصري",
             "price": 5032,
@@ -132,7 +140,7 @@
             ]
         },
         {
-            "id": 10,
+            "id": 8,
             "title": "رحلة استكشافية إلى المغرب",
             "label": "مميز",
             "price": 3946,
@@ -153,7 +161,7 @@
             ]
         },
         {
-            "id": 11,
+            "id": 9,
             "title": "رحلة عائلية إلى سنغافورة",
             "label": "حصري",
             "price": 4546,
@@ -167,13 +175,13 @@
                 "guys"
             ],
             "images": [
-                "https://ichef.bbci.co.uk/images/ic/1024xn/p0knc95s.jpg.webp",
+                "https://www.belmondo-travel.com/upld/xl/103/bled.webp",
                 "https://ichef.bbci.co.uk/images/ic/1024xn/p0kncjqg.jpg.webp",
                 "https://media-gadventures.global.ssl.fastly.net/media-server/dynamic/blogs/posts/G-Adventures/2025/02/blog-pakistan-karakoram-hunza-river.webp"
             ]
         },
         {
-            "id": 12,
+            "id": 10,
             "title": "مغامرة في جبال الألب",
             "label": "مميز",
             "price": 4305,
@@ -193,7 +201,7 @@
             ]
         },
         {
-            "id": 13,
+            "id": 11,
             "title": "رحلة استكشافية إلى المغرب",
             "label": "موصى به",
             "price": 2293,
@@ -207,13 +215,13 @@
                 "guys"
             ],
             "images": [
-                "https://storage.georgia.travel/images/abasha-waterfall-gnta.webp",
+                "https://www.belmondo-travel.com/upld/xl/466/dubrovnik.webp",
                 "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/kirkjufellsfoss_with_kirkjufell_martin_jernberg_unsplash_jpg_3ce4649205.webp",
                 "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/lupines_vatnajokull_national_park_jpg_56e8cca984.webp"
             ]
         },
         {
-            "id": 15,
+            "id": 12,
             "title": "رحلة رومانسية إلى باريس",
             "label": "مميز",
             "price": 2033,
@@ -227,13 +235,13 @@
                 "girls"
             ],
             "images": [
-                "https://storage.georgia.travel/images/abasha-waterfall-gnta.webp",
-                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/kirkjufellsfoss_with_kirkjufell_martin_jernberg_unsplash_jpg_3ce4649205.webp",
-                "https://res.cloudinary.com/icelandtours/g_auto,f_auto,c_fill,w_750,q_auto:good/lupines_vatnajokull_national_park_jpg_56e8cca984.webp"
+                "https://storage.georgia.travel/images/why-georgia-nature.webp",
+                "https://images6.alphacoders.com/546/thumb-350-546174.webp",
+                "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/5a9d/live/ff3455b0-5295-11f0-8541-4746d30440d4.jpg.webp"
             ]
         },
         {
-            "id": 16,
+            "id": 13,
             "title": "رحلة استكشافية إلى المغرب",
             "label": "حصري",
             "price": 5428,
@@ -247,13 +255,13 @@
                 "girls"
             ],
             "images": [
-                "https://storage.georgia.travel/images/shaori-lake-gnta.webp",
                 "https://storage.georgia.travel/images/alazani-floodplain-forests-natural-monument-gnta.webp",
+                "https://storage.georgia.travel/images/shaori-lake-gnta.webp",
                 "https://www.widerangegalleries.com/images/960/20191101-Dawn-over-the-Dolomites-webp.webp"
             ]
         },
         {
-            "id": 17,
+            "id": 14,
             "title": "جولة تاريخية في روما",
             "label": "عرض محدود",
             "price": 2966,
@@ -267,9 +275,9 @@
                 "girls"
             ],
             "images": [
-                "https://ichef.bbci.co.uk/images/ic/1024xn/p0knc95s.jpg.webp",
-                "https://ichef.bbci.co.uk/images/ic/1024xn/p0kncjqg.jpg.webp",
-                "https://media-gadventures.global.ssl.fastly.net/media-server/dynamic/blogs/posts/G-Adventures/2025/02/blog-pakistan-karakoram-hunza-river.webp"
+                "https://www.belmondo-travel.com/upld/xl/556/roman-time-arena-in-pula-detail-croatia.webp",
+                "https://www.belmondo-travel.com/upld/xl/1211/balkan.webp",
+                "https://www.belmondo-travel.com/upld/xl/771/view-of-the-macedonia-square-dominated-by-statue-of-alexander-the-great-in-skopje.webp"
             ]
         }
     ]
