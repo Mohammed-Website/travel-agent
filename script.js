@@ -891,22 +891,6 @@ function initializeLayout() {
     updateViewportHeight();
 }
 
-// Update on window resize and orientation change
-window.addEventListener('resize', () => {
-    updateHeaderHeight();
-    updateCategoriesStickyTop();
-    updateViewportHeight();
-});
-
-// Handle orientation change on mobile devices
-window.addEventListener('orientationchange', () => {
-    setTimeout(() => {
-        updateHeaderHeight();
-        updateCategoriesStickyTop();
-        updateViewportHeight();
-    }, 100);
-});
-
 // Initialize on DOM content loaded
 window.addEventListener('DOMContentLoaded', initializeLayout);
 
