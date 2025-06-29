@@ -86,7 +86,7 @@ let currentOffer = null;
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Update the init function to include scroll animations
+// Update the init function to include slider initialization
 async function init() {
     try {
         // Wait for data to load before initializing the slider
@@ -119,10 +119,6 @@ async function init() {
 
         // Fetch reviews after data is loaded
         fetchReviews();
-
-        // Initialize scroll animations
-        addAnimationClasses();
-        initializeScrollAnimations();
     } catch (error) {
         console.error('Initialization error:', error);
     }
@@ -1069,63 +1065,156 @@ function initializeIntroSection() {
     };
 }
 
-// Initialize scroll-triggered animations
-function initializeScrollAnimations() {
-    const animatedElements = document.querySelectorAll('.scroll-slide-left, .scroll-slide-right');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                // Once animated, we can stop observing
-                observer.unobserve(entry.target);
-            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to initialize intro section with images from JSON data
+function initializeIntroSection() {
+    const introImagesContainer = document.getElementById('introImages');
+    const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta');
+    const scrollHint = document.getElementById('scrollHint');
+
+    // Get images from the loaded data, fallback to default images
+    const imagesData = offersData.webIntroImages.images;
+
+    // Clear existing images
+    if (introImagesContainer) {
+        introImagesContainer.innerHTML = '';
+    }
+
+    // Create image elements
+    imagesData.forEach((imageUrl, index) => {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = `Travel destination ${index + 1}`;
+        img.classList.add('intro-image');
+        if (index === 0) img.classList.add('active');
+        if (introImagesContainer) {
+            introImagesContainer.appendChild(img);
+        }
+    });
+
+    // Image switching logic
+    const images = document.querySelectorAll('.intro-image');
+    let currentImageIndex = 0;
+
+    function switchImage() {
+        if (images.length === 0) return;
+
+        // Remove active class from current image
+        images[currentImageIndex].classList.remove('active');
+
+        // Move to next image
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+
+        // Add active class to new image
+        images[currentImageIndex].classList.add('active');
+    }
+
+    // Start image switching every 5 seconds
+    const imageInterval = setInterval(switchImage, 5000);
+
+    // Animate elements on page load
+    setTimeout(() => {
+        headlines.forEach(headline => {
+            headline.classList.add('active');
         });
-    }, {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: '0px 0px -50px 0px' // Start animation slightly before element is fully visible
-    });
+        if (scrollHint) {
+            scrollHint.classList.add('active');
+        }
+    }, 500);
 
-    // Observe all elements with animation classes
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
+    // Return cleanup function
+    return () => {
+        clearInterval(imageInterval);
+    };
 }
 
-// Function to add animation classes to elements
-function addAnimationClasses() {
-    // Add scroll-slide-left to elements that should animate from left
-    const leftElements = document.querySelectorAll('.highlighted-offer-content, .benefit-card:nth-child(odd), .footer-section:nth-child(odd), .section-title');
-    leftElements.forEach(element => {
-        element.classList.add('scroll-slide-left');
-    });
+// DOM elements
+const introImagesContainer = document.getElementById('introImages');
+const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta');
+const scrollHint = document.getElementById('scrollHint');
 
-    // Add scroll-slide-right to elements that should animate from right
-    const rightElements = document.querySelectorAll('.highlighted-offer-image, .benefit-card:nth-child(even), .footer-section:nth-child(even), .user_insert_comment_form_div');
-    rightElements.forEach(element => {
-        element.classList.add('scroll-slide-right');
-    });
+// Create image elements (fallback initialization)
+imagesData.forEach((imageUrl, index) => {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = `Travel destination ${index + 1}`;
+    img.classList.add('intro-image');
+    if (index === 0) img.classList.add('active');
+    if (introImagesContainer) {
+        introImagesContainer.appendChild(img);
+    }
+});
 
-    // Add staggered delays to benefit cards
-    const benefitCards = document.querySelectorAll('.benefit-card');
-    benefitCards.forEach((card, index) => {
-        if (card.classList.contains('scroll-slide-left')) {
-            card.classList.add(`delay-${(index % 4) + 1}`);
-        } else {
-            card.classList.add(`delay-${(index % 4) + 1}`);
-        }
-    });
+// Image switching logic
+const images = document.querySelectorAll('.intro-image');
+let currentImageIndex = 0;
 
-    // Add staggered delays to footer sections
-    const footerSections = document.querySelectorAll('.footer-section');
-    footerSections.forEach((section, index) => {
-        if (section.classList.contains('scroll-slide-left')) {
-            section.classList.add(`delay-${(index % 4) + 1}`);
-        } else {
-            section.classList.add(`delay-${(index % 4) + 1}`);
-        }
-    });
+function switchImage() {
+    if (images.length === 0) return;
+
+    // Remove active class from current image
+    images[currentImageIndex].classList.remove('active');
+
+    // Move to next image
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+
+    // Add active class to new image
+    images[currentImageIndex].classList.add('active');
 }
+
+// Start image switching every 5 seconds
+setInterval(switchImage, 5000);
+
+// Animate elements on page load
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        headlines.forEach(headline => {
+            headline.classList.add('active');
+        });
+        if (scrollHint) {
+            scrollHint.classList.add('active');
+        }
+    }, 500);
+});
 
 // Handle mobile viewport height
 function adjustViewportHeight() {
@@ -1333,5 +1422,3 @@ async function insertNewClick(website) {
         return;
     }
 }
-
-
