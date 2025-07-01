@@ -538,10 +538,11 @@ function displayFavorites() {
         return;
     }
 
-    favorites.forEach(offer => {
+    favorites.forEach((offer, index) => {
         const favItem = document.createElement('div');
         favItem.className = 'fav-item';
         favItem.innerHTML = `
+            <span class="item-serial">${index + 1}</span>
             <img src="${offer.images[0]}" alt="${offer.title}" class="fav-item-img" loading="lazy" width="80" height="80">
             <div class="fav-item-details">
                 <h4 class="fav-item-title">${offer.title}</h4>
@@ -554,7 +555,6 @@ function displayFavorites() {
                 </button>
             </div>
         `;
-
         favoritesContent.appendChild(favItem);
     });
 
@@ -643,16 +643,12 @@ function displayCart() {
 
     let total = 0;
 
-    cart.forEach(item => {
-        console.log("Processing cart item:", item); // Debug log
-
+    cart.forEach((item, index) => {
         // Safely get values with fallbacks
         const itemId = item.id || 'unknown';
         const itemTitle = item.title || item.name || 'عنوان غير معروف';
         const itemPrice = item.price || 0;
         const itemQuantity = item.quantity || 1;
-
-        // Handle images - use first available image or placeholder
         let itemImage;
         if (item.images && item.images.length > 0 && item.images[0]) {
             itemImage = item.images[0];
@@ -661,10 +657,10 @@ function displayCart() {
         } else {
             itemImage = 'https://via.placeholder.com/150?text=No+Image';
         }
-
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
+            <span class="item-serial">${index + 1}</span>
             <img src="${itemImage}" alt="${itemTitle}" class="cart-item-img" loading="lazy" width="80" height="80">
             <div class="cart-item-details">
                 <h4 class="cart-item-title">${itemTitle}</h4>
@@ -679,7 +675,6 @@ function displayCart() {
                 </div>
             </div>
         `;
-
         cartContent.appendChild(cartItem);
         total += itemPrice * itemQuantity;
     });
