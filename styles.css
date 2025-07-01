@@ -844,14 +844,6 @@ footer {
     transform: translateY(-2px);
 }
 
-.footer-bottom {
-    background-color: #1a252f;
-    text-align: center;
-    padding-top: 15px;
-    font-size: 0.85rem;
-    color: #bdc3c7;
-}
-
 .trusted-site-label {
     margin-top: 20px;
     width: 100%;
@@ -869,6 +861,14 @@ footer {
     font-size: 1.2em;
 }
 
+.footer-bottom {
+    background-color: #1a252f;
+    text-align: center;
+    padding-top: 15px;
+    font-size: clamp(0.85rem, 2vw, 0.85rem);
+    color: #bdc3c7;
+}
+
 .payment-methods {
     background: white;
     margin-top: 10px;
@@ -876,6 +876,7 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 18px;
+    padding: 10px 0;
 }
 
 .payment-methods img {
