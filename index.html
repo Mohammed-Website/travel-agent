@@ -71,19 +71,19 @@
     <section class="highlighted-offer" id="highlighted-offer">
         <div class="highlighted-offer-container">
             <div class="highlighted-offer-content">
-                <div class="highlighted-offer-badge">
+                <div class="highlighted-offer-badge animate-on-scroll from-right">
                     <i class="fas fa-star"></i>
                     <span>عرض مميز</span>
                 </div>
-                <h2 class="highlighted-offer-title" id="highlighted-offer-title">عرض مميز</h2>
-                <p class="highlighted-offer-description" id="highlighted-offer-description">احجز الآن واحصل على خصم 20%
+                <h2 class="highlighted-offer-title  animate-on-scroll from-left" id="highlighted-offer-title"></h2>
+                <p class="highlighted-offer-description  animate-on-scroll from-bottom" id="highlighted-offer-description">
                 </p>
-                <div class="highlighted-offer-pricing-dates">
+                <div class="highlighted-offer-pricing-dates animate-on-scroll from-left">
                     <span class="highlighted-offer-price" id="highlighted-offer-price"></span>
                     <span class="highlighted-offer-oldPrice" id="highlighted-offer-oldPrice"></span>
                     <span class="highlighted-offer-dates" id="highlighted-offer-dates"></span>
                 </div>
-                <div class="highlighted-offer-actions">
+                <div class="highlighted-offer-actions animate-on-scroll from-bottom">
                     <button class="highlighted-offer-btn primary" id="highlighted-offer-btn">
                         <i class="fas fa-calendar-check"></i>
                         تفاصيل العرض
@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div>
-                <div style="position:relative; display:inline-block;">
+                <div style="position:relative; display:inline-block;" class="animate-on-scroll from-right">
                     <div class="special-offer-ribbon">عرض مميز</div>
                     <img id="highlighted-offer-image" src="" alt="عرض مميز" loading="lazy" width="400" height="300">
                 </div>
@@ -196,8 +196,8 @@
     <!-- Custom Package Call-to-Action -->
     <section class="custom-package-cta">
         <div class="cta-content">
-            <span class="cta-text">انشئ بكجك الخاص بكل سهولة</span>
-            <button class="cta-btn" id="create-package-btn" onclick="openModal()">
+            <span class="cta-text animate-on-scroll from-bottom">انشئ بكجك الخاص بكل سهولة</span>
+            <button class="cta-btn animate-on-scroll from-left" id="create-package-btn" onclick="openModal()">
                 <i class="fas fa-magic"></i>
                 أنشئ بكجك الآن
             </button>
@@ -214,10 +214,10 @@
 
 
     <nav class="categories">
-        <div class="categories-container">
+        <div class="categories-container animate-on-scroll from-bottom">
             <button class="category-btn active" data-category="all">الكل</button>
-            <button class="category-btn" data-category="popular">الأكثر طلباً</button>
             <button class="category-btn" data-category="newest">أحدث العروض</button>
+            <button class="category-btn" data-category="popular">الأكثر طلباً</button>
             <button class="category-btn" data-category="honeymoon">عروض شهر العسل</button>
             <button class="category-btn" data-category="family">عروض العائلات</button>
             <button class="category-btn" data-category="girls">عروض البنات</button>
@@ -248,26 +248,26 @@
     <section class="our-survice-gaols-and-achievements-numbers">
         <div class="our-survice-gaols">
             <!-- Background Images Container -->
-            <div class="service-goals-images" id="serviceGoalsImages"></div>
+            <div class="service-goals-images animate-on-scroll from-left" id="serviceGoalsImages"></div>
 
             <!-- Overlay with content -->
             <div class="service-goals-overlay">
                 <div class="service-goals-content">
-                    <h2>هدفنا هو تحقيق رحلة أحلامك بطريقة ابداعية تميزنا عن غيرنا</h2>
+                    <h2 class="animate-on-scroll from-right">هدفنا هو تحقيق رحلة أحلامك بطريقة ابداعية تميزنا عن غيرنا</h2>
                 </div>
             </div>
         </div>
 
         <div class="our-achievements-numbers-div">
-            <div class="achievement-card fadeInUp delay-1">
+            <div class="achievement-card animate-on-scroll from-bottom">
                 <span class="achievement-number" data-target="+18704">0</span>
                 <p class="achievement-label">مسافرين سعداء</p>
             </div>
-            <div class="achievement-card fadeInUp delay-2">
+            <div class="achievement-card animate-on-scroll from-bottom">
                 <span class="achievement-number" data-target="+21">0</span>
                 <p class="achievement-label">وكلائنا بالخارج</p>
             </div>
-            <div class="achievement-card fadeInUp delay-3">
+            <div class="achievement-card animate-on-scroll from-bottom">
                 <span class="achievement-number" data-target="+74">0</span>
                 <p class="achievement-label">فريق عملنا</p>
             </div>
@@ -301,8 +301,8 @@
 
     <!-- Benefits Section -->
     <section class="benefits">
-        <h2 class="section-title">لماذا تختارنا؟</h2>
-        <div class="benefits-grid">
+        <h2 class="section-title animate-on-scroll from-left">لماذا تختارنا؟</h2>
+        <div class="benefits-grid animate-on-scroll from-right">
             <div class="benefit-card">
                 <i class="fas fa-clock"></i>
                 <h3>الدقة بالمواعيد</h3>
@@ -338,19 +338,19 @@
     <!-- Testimonials Section -->
     <section id="testimonials">
         <div>
-            <h2 class="section-title">رأي <span style="color: var(--accent-color);">عملائنا</span></h2>
+            <h2 class="section-title animate-on-scroll from-bottom">رأي <span style="color: rgb(255, 61, 61);">عملائنا</span></h2>
         </div>
 
 
 
-        <div id="user_clint_rate_area">
+        <div id="user_clint_rate_area" class="animate-on-scroll from-right">
             <!-- JavaScript Dynamic Code -->
         </div>
 
 
         <div class="user_insert_comment_form_div">
-            <h3 class="section-title">شاركنا تجربتك</h3>
-            <form id="user_comment_form">
+            <h3 class="section-title animate-on-scroll from-bottom">شاركنا تجربتك</h3>
+            <form id="user_comment_form" class="animate-on-scroll from-left">
                 <label for="user_comment_username">الإسم:</label>
                 <input type="text" id="user_comment_username" required>
 
@@ -465,12 +465,12 @@
     <footer>
         <div class="footer-container">
             <div class="footer-section">
-                <h3>عن الشركة</h3>
-                <p style="cursor: text;">نقدم أفضل العروض السياحية بأسعار تنافسية وجودة عالية</p>
+                <h3 class="animate-on-scroll from-right">عن الشركة</h3>
+                <p class="animate-on-scroll from-bottom" style="cursor: text;">نقدم أفضل العروض السياحية بأسعار تنافسية وجودة عالية</p>
             </div>
             <div class="footer-section">
-                <h3>روابط سريعة</h3>
-                <ul>
+                <h3 class="animate-on-scroll from-right">روابط سريعة</h3>
+                <ul class="animate-on-scroll from-bottom">
                     <li><a
                             onclick="document.getElementById('highlighted-offer')?.scrollIntoView({ behavior: 'smooth', block: 'center' });">الصفحة
                             الرئيسية</a></li>
@@ -481,20 +481,20 @@
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>اتصل بنا</h3>
-                <ul>
+                <h3 class="animate-on-scroll from-right">اتصل بنا</h3>
+                <ul class="animate-on-scroll from-bottom">
                     <li style="direction: ltr;">+966 569446280 <i class="fas fa-phone"></i></li>
                     <li><i class="fas fa-envelope"></i> bandar.abo.tariq@gmail.com</li>
                     <li><i class="fas fa-map-marker-alt"></i> شركة اونلاين للسفر والسياحة</li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>تابعنا</h3>
+                <h3 class="animate-on-scroll from-right">تابعنا</h3>
                 <div class="social-icons">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+                    <a class="animate-on-scroll from-bottom" href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a class="animate-on-scroll from-bottom" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a class="animate-on-scroll from-bottom" href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a class="animate-on-scroll from-bottom" href="#" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
                 </div>
             </div>
         </div>

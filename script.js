@@ -1003,108 +1003,6 @@ function animateNumber(element, targetNumber) {
     requestAnimationFrame(updateNumber);
 }
 
-// Function to initialize service goals section with images from JSON data
-function initializeIntroSection() {
-    const introImagesContainer = document.getElementById('introImages');
-    const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta');
-    const scrollHint = document.getElementById('scrollHint');
-
-    // Get images from the loaded data, fallback to default images
-    const imagesData = offersData.webIntroImages.images;
-
-    // Clear existing images
-    if (introImagesContainer) {
-        introImagesContainer.innerHTML = '';
-    }
-
-    // Create image elements
-    imagesData.forEach((imageUrl, index) => {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = `Travel destination ${index + 1}`;
-        img.classList.add('intro-image');
-        if (index === 0) img.classList.add('active');
-        if (introImagesContainer) {
-            introImagesContainer.appendChild(img);
-        }
-    });
-
-    // Image switching logic
-    const images = document.querySelectorAll('.intro-image');
-    let currentImageIndex = 0;
-
-    function switchImage() {
-        if (images.length === 0) return;
-
-        // Remove active class from current image
-        images[currentImageIndex].classList.remove('active');
-
-        // Move to next image
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-
-        // Add active class to new image
-        images[currentImageIndex].classList.add('active');
-    }
-
-    // Start image switching every 5 seconds
-    const imageInterval = setInterval(switchImage, 5000);
-
-    // Animate elements on page load
-    setTimeout(() => {
-        headlines.forEach(headline => {
-            headline.classList.add('active');
-        });
-        if (scrollHint) {
-            scrollHint.classList.add('active');
-        }
-    }, 500);
-
-    // Return cleanup function
-    return () => {
-        clearInterval(imageInterval);
-    };
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Function to initialize intro section with images from JSON data
 function initializeIntroSection() {
     const introImagesContainer = document.getElementById('introImages');
@@ -1166,55 +1064,6 @@ function initializeIntroSection() {
         clearInterval(imageInterval);
     };
 }
-
-// DOM elements
-const introImagesContainer = document.getElementById('introImages');
-const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta');
-const scrollHint = document.getElementById('scrollHint');
-
-// Create image elements (fallback initialization)
-imagesData.forEach((imageUrl, index) => {
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = `Travel destination ${index + 1}`;
-    img.classList.add('intro-image');
-    if (index === 0) img.classList.add('active');
-    if (introImagesContainer) {
-        introImagesContainer.appendChild(img);
-    }
-});
-
-// Image switching logic
-const images = document.querySelectorAll('.intro-image');
-let currentImageIndex = 0;
-
-function switchImage() {
-    if (images.length === 0) return;
-
-    // Remove active class from current image
-    images[currentImageIndex].classList.remove('active');
-
-    // Move to next image
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-
-    // Add active class to new image
-    images[currentImageIndex].classList.add('active');
-}
-
-// Start image switching every 5 seconds
-setInterval(switchImage, 5000);
-
-// Animate elements on page load
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        headlines.forEach(headline => {
-            headline.classList.add('active');
-        });
-        if (scrollHint) {
-            scrollHint.classList.add('active');
-        }
-    }, 500);
-});
 
 // Handle mobile viewport height
 function adjustViewportHeight() {
@@ -1422,3 +1271,35 @@ async function insertNewClick(website) {
         return;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+function animateOnScroll() {
+    const triggerPoint = window.innerHeight * 0.9;
+
+    animatedElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+
+        if (midpoint < triggerPoint) {
+            el.classList.add('in-view');
+        }
+    });
+}
+
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('resize', animateOnScroll);
+document.addEventListener('DOMContentLoaded', animateOnScroll); // safer than immediate call
+
+
