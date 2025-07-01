@@ -10,7 +10,7 @@
 /* Base state for all animated elements */
 .animate-on-scroll {
     opacity: 0;
-    filter: blur(5px);
+    filter: blur(5px) grayscale(100%);
     transition: all 1s ease;
 }
 
@@ -38,7 +38,7 @@
 .animate-on-scroll.from-right.in-view,
 .animate-on-scroll.from-bottom.in-view {
     transform: translate(0, 0);
-    filter: blur(0);
+    filter: blur(0) grayscale(0);
 }
 
 
