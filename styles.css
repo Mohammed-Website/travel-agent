@@ -768,7 +768,7 @@ footer {
     display: grid;
     grid-template-columns: 1fr;
     gap: clamp(10px, 2vw, 30px);
-    padding: 0 20px 30px;
+    padding: 0 20px 5px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -847,10 +847,46 @@ footer {
 .footer-bottom {
     background-color: #1a252f;
     text-align: center;
-    padding: 15px 10px;
+    padding-top: 15px;
     font-size: 0.85rem;
     color: #bdc3c7;
 }
+
+.trusted-site-label {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: #27ae60;
+    font-weight: 700;
+}
+
+.trusted-site-label i {
+    color: #27ae60;
+    font-size: 1.2em;
+}
+
+.payment-methods {
+    background: white;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.payment-methods img {
+    transition: transform 0.3s ease;
+}
+
+/* Optional: add a subtle hover effect */
+.payment-methods img:hover {
+    transform: scale(1.05);
+}
+
 
 /* Tablet: 2 columns */
 @media (min-width: 576px) {
@@ -1286,8 +1322,8 @@ footer {
     transition: right 0.3s;
     z-index: 300;
     overflow-y: auto;
-    border-top-left-radius: 18px;
-    border-bottom-left-radius: 18px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     display: flex;
     flex-direction: column;
 }
@@ -1300,13 +1336,13 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 20px 16px 20px;
+    padding: 18px 20px 16px 10px;
     background: #2c3e50;
     color: white;
     position: sticky;
     top: 0;
     z-index: 2;
-    border-top-left-radius: 18px;
+    border-top-left-radius: 10px;
     border-bottom: 1.5px solid #e3e6f3;
     box-shadow: 0 2px 8px #0001;
 }
