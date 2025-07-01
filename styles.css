@@ -60,7 +60,17 @@
     }
 }
 
+@keyframes scrollPulse {
+    0% {
+        opacity: 1;
+        transform: translateY(-3px) translateX(-50%);
+    }
 
+    100% {
+        opacity: 0;
+        transform: translateY(40px) translateX(-50%);
+    }
+}
 
 
 
@@ -308,6 +318,7 @@ header {
     height: 4px;
     background: white;
     border-radius: 50%;
+    animation: scrollPulse 2s infinite;
 }
 
 
