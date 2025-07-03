@@ -289,6 +289,25 @@ function setupEventListeners() {
             e.stopPropagation();
         });
     }
+
+    // Scroll Note Button functionality
+    const scrollNoteBtn = document.getElementById('scroll-note-btn');
+    const scrollNoteBox = document.getElementById('scroll-note-box');
+
+    if (scrollNoteBtn && scrollNoteBox) {
+        scrollNoteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            scrollNoteBox.classList.toggle('active');
+        });
+        // Hide note box if clicking outside
+        document.addEventListener('click', (e) => {
+            if (scrollNoteBox.classList.contains('active')) {
+                if (!scrollNoteBox.contains(e.target) && e.target !== scrollNoteBtn) {
+                    scrollNoteBox.classList.remove('active');
+                }
+            }
+        });
+    }
 }
 
 function getCategoryName(category) {
@@ -1001,7 +1020,7 @@ function animateNumber(element, targetNumber) {
 // Function to initialize intro section with images from JSON data
 function initializeIntroSection() {
     const introImagesContainer = document.getElementById('introImages');
-    const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta');
+    const headlines = document.querySelectorAll('.intro-headline, .intro-subhead, .intro-cta, #scroll-note-btn');
     const scrollHint = document.getElementById('scrollHint');
 
     // Get images from the loaded data, fallback to default images
@@ -1047,10 +1066,20 @@ function initializeIntroSection() {
     // Animate elements on page load
     setTimeout(() => {
         headlines.forEach(headline => {
-            headline.classList.add('active');
+            // Animate intro-headline, intro-subhead, intro-cta immediately
+            if (!headline.id || headline.id !== 'scroll-note-btn') {
+                headline.classList.add('active', 'in-view');
+            }
         });
         if (scrollHint) {
             scrollHint.classList.add('active');
+        }
+        // Animate scroll-note-btn after intro-cta (extra delay)
+        const scrollNoteBtn = document.getElementById('scroll-note-btn');
+        if (scrollNoteBtn) {
+            setTimeout(() => {
+                scrollNoteBtn.classList.add('active', 'in-view');
+            }, 900); // 400ms after the rest
         }
     }, 500);
 
@@ -1299,5 +1328,13 @@ function animateOnScroll() {
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('resize', animateOnScroll);
 document.addEventListener('DOMContentLoaded', animateOnScroll); // safer than immediate call
+
+
+
+
+
+
+
+
 
 

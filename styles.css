@@ -272,6 +272,10 @@ header {
 }
 
 .intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2046,4 +2050,72 @@ footer {
     z-index: 2;
     letter-spacing: 0.5px;
     border: 2px solid #fff;
+}
+
+
+
+
+
+
+
+/* Scroll Note Button Animation (like intro-headline/subhead/cta) */
+.scroll-note-btn {
+    margin: 10px 0;
+    padding: clamp(6px, 2vw, 12px) clamp(12px, 2vw, 18px);
+    background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+    color: #886100;
+    font-weight: 700;
+    border: none;
+    border-radius: 20px;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    box-shadow: 0 2px 8px #ffd70033;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-note-btn.active,
+.scroll-note-btn.in-view {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+.scroll-note-btn:hover,
+.scroll-note-btn:focus {
+    background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+    color: #a67c00;
+    box-shadow: 0 4px 16px #ffd70055;
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Scroll Note Box Animation (fade/slide, no display:none) */
+.scroll-note-box {
+    opacity: 0;
+    margin: 10px 0;
+    background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+    color: #886100;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: clamp(5px, 2vw, 22px) clamp(10px, 2vw, 22px);
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    box-shadow: 0 4px 24px #ffd70033, 0 1px 4px #0001;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(10px) scale(0.98);
+    pointer-events: none;
+    max-width: 90vw;
+}
+
+.scroll-note-box.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
 }

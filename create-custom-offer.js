@@ -194,3 +194,12 @@ flatpickr("#departureDate", {
         }
     }
 });
+
+
+
+
+
+
+
+
+
