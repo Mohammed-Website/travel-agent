@@ -1277,7 +1277,7 @@ async function insertNewClick(website) {
 
 
 
-
+/* Elements Animation On Scroll */
 const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
 function animateOnScroll() {
