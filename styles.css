@@ -458,7 +458,6 @@ header {
 .highlighted-offer-description {
     font-size: clamp(0.9rem, 1vw, 2.2rem);
     margin-bottom: 20px;
-    opacity: 0.9;
     line-height: 1.5;
 }
 
