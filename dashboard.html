@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الشركة السياحية</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>لوحة التحكم</h1>
+            <div class="header-left">
+                <img src="" alt="Company Logo" id="company-logo-preview" class="logo-preview">
+            </div>
+        </header>
+
+        <nav class="dashboard-nav">
+            <button class="nav-btn active" data-section="company-info">
+                <i class="mdi mdi-information"></i> معلومات الشركة
+            </button>
+            <button class="nav-btn" data-section="highlight-offer">
+                <i class="mdi mdi-star"></i> العرض المميز
+            </button>
+            <button class="nav-btn" data-section="offers">
+                <i class="mdi mdi-tag"></i> العروض
+            </button>
+
+        </nav>
+
+        <main class="dashboard-main">
+            <!-- Company Info Section -->
+            <section id="company-info" class="content-section active">
+                <h2><i class="mdi mdi-information"></i> معلومات الشركة</h2>
+                <div class="form-group">
+                    <label for="company-logo">شعار الشركة:</label>
+                    <input type="file" id="company-logo" accept="image/*">
+                    <div class="image-preview-container">
+                        <img id="company-logo-preview-main" src="" alt="Company Logo Preview" class="image-preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>صور المقدمة:</label>
+                    <div id="intro-images-container" class="images-container">
+                        <!-- Intro images will be loaded here -->
+                    </div>
+                    <button id="add-intro-image" class="add-image-btn">
+                        <i class="mdi mdi-plus"></i> إضافة صورة
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button id="save-company-info" class="save-btn">حفظ التغييرات</button>
+                </div>
+            </section>
+
+            <!-- Highlight Offer Section -->
+            <section id="highlight-offer" class="content-section">
+                <h2><i class="mdi mdi-star"></i> العرض المميز</h2>
+                <div class="form-group">
+                    <label for="highlight-title">العنوان:</label>
+                    <input type="text" id="highlight-title" placeholder="عنوان العرض">
+                </div>
+
+                <div class="form-group">
+                    <label for="highlight-description">الوصف:</label>
+                    <textarea id="highlight-description" placeholder="وصف العرض"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="highlight-price">السعر:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="number" id="highlight-price" placeholder="السعر الحالي" style="flex:2;">
+                            <select id="highlight-currency" style="flex:1;">
+                                <option value="SAR">ريال (SAR)</option>
+                                <option value="BHD">دينار بحريني (BHD)</option>
+                                <option value="USD">دولار (USD)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="highlight-old-price">السعر القديم:</label>
+                        <input type="number" id="highlight-old-price" placeholder="السعر القديم">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="highlight-dates">التواريخ:</label>
+                    <input type="text" id="highlight-dates" placeholder="من 15 يوليو إلى 25 يوليو 2025">
+                </div>
+
+                <div class="form-group">
+                    <label for="highlight-note">ملاحظة:</label>
+                    <input type="text" id="highlight-note" placeholder="خصم خاص للحجز المبكر">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="highlight-rating">التقييم:</label>
+                        <input type="number" step="0.1" id="highlight-rating" placeholder="4.5" min="0" max="5">
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="highlight-reviews">عدد التقييمات:</label>
+                        <input type="number" id="highlight-reviews" placeholder="128">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>صور العرض:</label>
+                    <div id="highlight-images-container" class="images-container">
+                        <!-- Highlight offer images will be loaded here -->
+                    </div>
+                    <button id="add-highlight-image" class="add-image-btn">
+                        <i class="mdi mdi-plus"></i> إضافة صورة
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button id="save-highlight-offer" class="save-btn">حفظ التغييرات</button>
+                </div>
+            </section>
+
+            <!-- Offers Section -->
+            <section id="offers" class="content-section">
+                <h2><i class="mdi mdi-tag"></i> إدارة العروض</h2>
+                <div class="section-actions">
+                    <button id="add-new-offer" class="add-btn">
+                        <i class="mdi mdi-plus"></i> إضافة عرض جديد
+                    </button>
+                </div>
+
+                <div id="offers-list" class="cards-container">
+                    <!-- Offers will be loaded here -->
+                </div>
+            </section>
+
+
+        </main>
+    </div>
+
+    <!-- Offer Modal -->
+    <div id="offer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">إضافة عرض جديد</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="offer-title">العنوان:</label>
+                    <input type="text" id="offer-title" placeholder="عنوان العرض">
+                </div>
+
+                <div class="form-group">
+                    <label for="offer-label">التصنيف:</label>
+                    <select id="offer-label">
+                        <option value="جديد">جديد</option>
+                        <option value="تخفيضات">تخفيضات</option>
+                        <option value="موصى به">موصى به</option>
+                        <option value="حصري">حصري</option>
+                        <option value="مميز">مميز</option>
+                        <option value="عرض محدود">عرض محدود</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="offer-description">الوصف:</label>
+                    <textarea id="offer-description" placeholder="وصف العرض"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="offer-price">السعر:</label>
+                        <input type="number" id="offer-price" placeholder="السعر الحالي">
+                        <select id="offer-currency" style="margin-top: 0.5rem; width: 100%;">
+                            <option value="SAR">ريال (SAR)</option>
+                            <option value="BHD">دينار بحريني (BHD)</option>
+                            <option value="USD">دولار (USD)</option>
+                        </select>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="offer-old-price">السعر القديم:</label>
+                        <input type="number" id="offer-old-price" placeholder="السعر القديم">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="offer-dates">التواريخ:</label>
+                    <input type="text" id="offer-dates" placeholder="من 15 يوليو إلى 25 يوليو 2025">
+                </div>
+
+                <div class="form-group">
+                    <label for="offer-note">ملاحظة:</label>
+                    <input type="text" id="offer-note" placeholder="خصم خاص للحجز المبكر">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="offer-rating">التقييم:</label>
+                        <input type="number" step="0.1" id="offer-rating" placeholder="4.5" min="0" max="5">
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="offer-reviews">عدد التقييمات:</label>
+                        <input type="number" id="offer-reviews" placeholder="128">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>الفئات:</label>
+                    <div class="categories-container">
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="highlight"> مميز
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="newest"> جديد
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="honeymoon"> شهر عسل
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="popular"> شعبي
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="family"> عائلي
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="guys"> رجالي
+                        </label>
+                        <label class="category-checkbox">
+                            <input type="checkbox" name="offer-category" value="girls"> نسائي
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>صور العرض:</label>
+                    <div id="offer-images-container" class="images-container">
+                        <!-- Offer images will be loaded here -->
+                    </div>
+                    <button id="add-offer-image" class="add-image-btn">
+                        <i class="mdi mdi-plus"></i> إضافة صورة
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-offer" class="cancel-btn">إلغاء</button>
+                <button id="save-offer" class="save-btn">حفظ العرض</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Import the Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <script>
+        // Your Supabase credentials
+        const supabaseUrl = "https://dkerfetnaquggtlpicul.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrZXJmZXRuYXF1Z2d0bHBpY3VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3ODY5MDUsImV4cCI6MjA2MjM2MjkwNX0.GMEkAcx_SWTjV_TdlhQNXzIzh9mDM_L2h8SaLXllQsw"; // use public key
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="dashboard.js"></script>
+
+
+</body>
+
+</html>

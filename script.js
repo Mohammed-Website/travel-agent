@@ -11,29 +11,62 @@ function formatNumber(num) {
 // Sample array data (will be replaced with data from JSON)
 let offersData = {};
 
-// Load data from JSON file
-function loadOffersData() {
-    return fetch('data.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Merge the loaded data with default data structure
-            offersData = {
-                ...offersData, // Keep default data as fallback
-                ...data,      // Override with loaded data
-                offers: data.offers || offersData.offers // Handle offers array specially
-            };
-            console.log('Data loaded successfully:', offersData);
-            return offersData;
-        })
-        .catch(error => {
-            console.error('Error loading JSON data, using default data:', error);
-            return offersData; // Return default data on error
-        });
+// Load data from Supabase
+async function loadOffersData() {
+    try {
+        // Load company info
+        const { data: companyInfo, error: companyError } = await supabase
+            .from('company_info')
+            .select('*')
+            .single();
+
+        if (companyError) {
+            console.error('Error loading company info:', companyError);
+        }
+
+        // Load highlight offer (id = 2)
+        const { data: highlightOffer, error: highlightError } = await supabase
+            .from('offers')
+            .select('*')
+            .eq('id', 2)
+            .maybeSingle();
+
+        if (highlightError) {
+            console.error('Error loading highlight offer:', highlightError);
+        }
+
+        // Load all other offers
+        const { data: offers, error: offersError } = await supabase
+            .from('offers')
+            .select('*')
+            .neq('id', 2)
+            .order('id', { ascending: true });
+
+        if (offersError) {
+            console.error('Error loading offers:', offersError);
+        }
+
+        // Combine all data
+        offersData = {
+            company_logo: companyInfo?.company_logo || { image: 'https://via.placeholder.com/150?text=Logo' },
+            web_intro_images: companyInfo?.web_intro_images || { images: [] },
+            highlightOffer: highlightOffer || null,
+            offers: offers || []
+        };
+
+        console.log('Data loaded successfully from Supabase:', offersData);
+        return offersData;
+    } catch (error) {
+        console.error('Error loading data from Supabase:', error);
+        // Return default data structure on error
+        offersData = {
+            company_logo: { image: 'https://via.placeholder.com/150?text=Logo' },
+            web_intro_images: { images: [] },
+            highlightOffer: null,
+            offers: []
+        };
+        return offersData;
+    }
 }
 
 // DOM Elements
@@ -93,7 +126,10 @@ async function init() {
         await loadOffersData();
 
         // Set logo image src dynamically after data is loaded
-        document.querySelector('.logo-img').src = offersData.companyLogo.image;
+        const logoImg = document.querySelector('.logo-img');
+        if (logoImg && offersData.company_logo?.image) {
+            logoImg.src = offersData.company_logo.image;
+        }
 
         updateFavoritesCount();
 
@@ -154,7 +190,7 @@ function displayHighlightedOffer() {
             priceElem.textContent = price ? `${formatNumber(price)} ر.س` : '';
         }
         if (oldPriceElem) {
-            const oldPrice = highlightData.oldPrice || '?';
+            const oldPrice = highlightData.old_price || '?';
             oldPriceElem.textContent = oldPrice ? `${formatNumber(oldPrice)} ر.س` : '';
         }
         if (datesElem) {
@@ -359,7 +395,7 @@ function displayOffers(category) {
                         </div>
                         <div class="offer-info">
                             <h3 class="offer-title">${offer.title}</h3>
-                            <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.oldPrice)} ر.س</span></p>
+                            <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.old_price)} ر.س</span></p>
                             <p class="offer-dates">${offer.dates}</p>
                             <div class="offer-rating">
                                 ${generateStars(offer.rating)} (${offer.reviews})
@@ -415,7 +451,7 @@ function displayOffers(category) {
             </div>
             <div class="offer-info">
                 <h3 class="offer-title">${offer.title}</h3>
-                <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.oldPrice)} ر.س</span></p>
+                <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.old_price)} ر.س</span></p>
                 <p class="offer-dates">${offer.dates}</p>
                 <div class="offer-rating">
                     ${generateStars(offer.rating)} (${offer.reviews})
@@ -454,7 +490,7 @@ function openOfferModal(offer) {
     const images = offer.images || (offer.highlightData.images[0] ? [offer.highlightData.images[0]] : []);
     const title = offer.title || offer.title || 'عرض مميز';
     const price = offer.price || '?';
-    const oldPrice = offer.oldPrice || '?';
+    const oldPrice = offer.old_price || '?';
     const description = offer.description || offer.highlightOffer_description || '';
     const dates = offer.dates || '';
     const note = offer.note || '';
@@ -777,7 +813,7 @@ function shareOnWhatsApp() {
     const message = `أهلاً، حاب استفسر عن العرض التالي:
     
 *${currentOffer.title}*
-- السعر القديم: ${formatNumber(currentOffer.oldPrice)} ر.س
+- السعر القديم: ${formatNumber(currentOffer.old_price)} ر.س
 - السعر الحالي: ${formatNumber(currentOffer.price)} ر.س
 ${currentOffer.description}
 
@@ -803,7 +839,7 @@ function checkout() {
     cart.forEach(item => {
         message += `*${item.title}*
 الكمية: ${item.quantity}
-- السعر القديم: ${formatNumber(item.oldPrice)} ر.س
+- السعر القديم: ${formatNumber(item.old_price)} ر.س
 - السعر الحالي: ${formatNumber(item.price)} ر.س
 المجموع: ${formatNumber(item.price * item.quantity)} ر.س
 ${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n\n`;
@@ -831,8 +867,8 @@ function shareHighlightedOfferOnWhatsApp() {
         message += `${highlightData.description}\n\n`;
     }
 
-    if (highlightData.price && highlightData.oldPrice) {
-        message += `السعر القديم: ${formatNumber(highlightData.oldPrice)} ر.س\n`;
+    if (highlightData.price && highlightData.old_price) {
+        message += `السعر القديم: ${formatNumber(highlightData.old_price)} ر.س\n`;
         message += `السعر الحالي: ${formatNumber(highlightData.price)} ر.س\n`;
     }
 
@@ -915,13 +951,13 @@ init();
 function initializeServiceGoalsSection() {
     const serviceGoalsImagesContainer = document.getElementById('serviceGoalsImages');
 
-    if (!serviceGoalsImagesContainer || !offersData?.webIntroImages?.images) return;
+    if (!serviceGoalsImagesContainer || !offersData?.web_intro_images?.images || offersData.web_intro_images.images.length === 0) return;
 
     // Clear existing images
     serviceGoalsImagesContainer.innerHTML = '';
 
     // Create image elements from JSON data
-    offersData.webIntroImages.images.forEach((imageUrl, index) => {
+    offersData.web_intro_images.images.forEach((imageUrl, index) => {
         const img = document.createElement('img');
         img.src = imageUrl;
         img.alt = `Service goal background ${index + 1}`;
@@ -1024,24 +1060,26 @@ function initializeIntroSection() {
     const scrollHint = document.getElementById('scrollHint');
 
     // Get images from the loaded data, fallback to default images
-    const imagesData = offersData.webIntroImages.images;
+    const imagesData = offersData.web_intro_images?.images || [];
 
     // Clear existing images
     if (introImagesContainer) {
         introImagesContainer.innerHTML = '';
     }
 
-    // Create image elements
-    imagesData.forEach((imageUrl, index) => {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = `Travel destination ${index + 1}`;
-        img.classList.add('intro-image');
-        if (index === 0) img.classList.add('active');
-        if (introImagesContainer) {
-            introImagesContainer.appendChild(img);
-        }
-    });
+    // Create image elements only if we have images
+    if (imagesData.length > 0) {
+        imagesData.forEach((imageUrl, index) => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = `Travel destination ${index + 1}`;
+            img.classList.add('intro-image');
+            if (index === 0) img.classList.add('active');
+            if (introImagesContainer) {
+                introImagesContainer.appendChild(img);
+            }
+        });
+    }
 
     // Image switching logic
     const images = document.querySelectorAll('.intro-image');
@@ -1191,7 +1229,7 @@ async function fetchReviews() {
             if (!comment.trim()) return;
 
             // Use a fallback image if company logo is not available
-            const logoImage = offersData?.companyLogo?.image || 'https://via.placeholder.com/150?text=Logo';
+            const logoImage = offersData?.company_logo?.image || 'https://via.placeholder.com/150?text=Logo';
 
             const div = document.createElement("div");
             div.classList.add("user_card_rate_div");
