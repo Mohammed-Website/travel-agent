@@ -550,15 +550,8 @@ body {
 
 }
 
-#company-info .form-group label[for="company-logo"] {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
 #company-info #company-logo {
-    display: none;
+    color: transparent;
 }
 
 #company-info .custom-logo-upload {
