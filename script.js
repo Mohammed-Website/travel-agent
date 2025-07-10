@@ -4,8 +4,15 @@ function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-
-
+// Helper to get currency symbol
+function getCurrencySymbol(currency) {
+    switch (currency) {
+        case 'SAR': return 'ر.س';
+        case 'BHD': return 'د.ب';
+        case 'USD': return '$';
+        default: return '';
+    }
+}
 
 
 // Sample array data (will be replaced with data from JSON)
@@ -164,34 +171,32 @@ async function init() {
 function displayHighlightedOffer() {
     if (offersData.highlightOffer) {
         const highlightData = offersData.highlightOffer;
-
+        const currency = highlightData.currency || 'SAR';
+        const currencySymbol = getCurrencySymbol(currency);
         // Title
         if (highlightedOfferTitle) {
             highlightedOfferTitle.textContent = highlightData.title || 'عرض مميز';
         }
-
         // Description
         if (highlightedOfferDescription) {
             highlightedOfferDescription.textContent = highlightData.highlightOffer_description || highlightData.description || 'احجز الآن واحصل على خصم 20%';
         }
-
         // Image
         if (highlightedOfferImage) {
             highlightedOfferImage.src = highlightData.images[0];
             highlightedOfferImage.alt = highlightData.title || 'عرض مميز';
         }
-
         // Price, Old Price, Dates
         const priceElem = document.getElementById('highlighted-offer-price');
         const oldPriceElem = document.getElementById('highlighted-offer-oldPrice');
         const datesElem = document.getElementById('highlighted-offer-dates');
         if (priceElem) {
             const price = highlightData.price || '?';
-            priceElem.textContent = price ? `${formatNumber(price)} ر.س` : '';
+            priceElem.textContent = price ? `${formatNumber(price)} ${currencySymbol}` : '';
         }
         if (oldPriceElem) {
             const oldPrice = highlightData.old_price || '?';
-            oldPriceElem.textContent = oldPrice ? `${formatNumber(oldPrice)} ر.س` : '';
+            oldPriceElem.textContent = oldPrice ? `${formatNumber(oldPrice)} ${currencySymbol}` : '';
         }
         if (datesElem) {
             datesElem.textContent = highlightData.dates || 'ترايخ العرض ليس محدد بعد';
@@ -395,7 +400,7 @@ function displayOffers(category) {
                         </div>
                         <div class="offer-info">
                             <h3 class="offer-title">${offer.title}</h3>
-                            <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.old_price)} ر.س</span></p>
+                            <p class="offer-price">${formatNumber(offer.price)} ${getCurrencySymbol(offer.currency || 'SAR')} <span class="old-price">${formatNumber(offer.old_price)} ${getCurrencySymbol(offer.currency || 'SAR')}</span></p>
                             <p class="offer-dates">${offer.dates}</p>
                             <div class="offer-rating">
                                 ${generateStars(offer.rating)} (${offer.reviews})
@@ -442,6 +447,8 @@ function displayOffers(category) {
         return;
     }
     filteredOffers.forEach(offer => {
+        const currency = offer.currency || 'SAR';
+        const currencySymbol = getCurrencySymbol(currency);
         const offerCard = document.createElement('div');
         offerCard.className = 'offer-card';
         offerCard.innerHTML = `
@@ -451,7 +458,7 @@ function displayOffers(category) {
             </div>
             <div class="offer-info">
                 <h3 class="offer-title">${offer.title}</h3>
-                <p class="offer-price">${formatNumber(offer.price)} ر.س <span class="old-price">${formatNumber(offer.old_price)} ر.س</span></p>
+                <p class="offer-price">${formatNumber(offer.price)} ${currencySymbol} <span class="old-price">${formatNumber(offer.old_price)} ${currencySymbol}</span></p>
                 <p class="offer-dates">${offer.dates}</p>
                 <div class="offer-rating">
                     ${generateStars(offer.rating)} (${offer.reviews})
@@ -485,6 +492,8 @@ function generateStars(rating) {
 // Open offer ReadyToUseofferModal with details
 function openOfferModal(offer) {
     currentOffer = offer;
+    const currency = offer.currency || 'SAR';
+    const currencySymbol = getCurrencySymbol(currency);
 
     // Fallbacks for highlightOffer fields
     const images = offer.images || (offer.highlightData.images[0] ? [offer.highlightData.images[0]] : []);
@@ -531,8 +540,8 @@ function openOfferModal(offer) {
     modalRating.innerHTML = generateStars(rating);
     modalReviewCount.textContent = `(${reviews})`;
     modalPrice.innerHTML = `
-        ${formatNumber(price)} ر.س 
-        <span class="old-price">${formatNumber(oldPrice)} ر.س</span>
+        ${formatNumber(price)} ${currencySymbol} 
+        <span class="old-price">${formatNumber(oldPrice)} ${currencySymbol}</span>
     `;
     modalDates.textContent = dates;
     modalDescription.textContent = description;
@@ -594,6 +603,8 @@ function displayFavorites() {
     }
 
     favorites.forEach((offer, index) => {
+        const currency = offer.currency || 'SAR';
+        const currencySymbol = getCurrencySymbol(currency);
         const favItem = document.createElement('div');
         favItem.className = 'fav-item';
         favItem.innerHTML = `
@@ -601,7 +612,7 @@ function displayFavorites() {
             <img src="${offer.images[0]}" alt="${offer.title}" class="fav-item-img" loading="lazy" width="80" height="80">
             <div class="fav-item-details">
                 <h4 class="fav-item-title">${offer.title}</h4>
-                <p class="fav-item-price">${formatNumber(offer.price)} ر.س</p>
+                <p class="fav-item-price">${formatNumber(offer.price)} ${currencySymbol}</p>
                 <button class="add-to-cart-btn" data-id="${offer.id}">
                     <i class="fas fa-cart-plus"></i> أضف للسلة
                 </button>
@@ -699,6 +710,8 @@ function displayCart() {
     let total = 0;
 
     cart.forEach((item, index) => {
+        const currency = item.currency || 'SAR';
+        const currencySymbol = getCurrencySymbol(currency);
         // Safely get values with fallbacks
         const itemId = item.id || 'unknown';
         const itemTitle = item.title || item.name || 'عنوان غير معروف';
@@ -719,7 +732,7 @@ function displayCart() {
             <img src="${itemImage}" alt="${itemTitle}" class="cart-item-img" loading="lazy" width="80" height="80">
             <div class="cart-item-details">
                 <h4 class="cart-item-title">${itemTitle}</h4>
-                <p class="cart-item-price">${formatNumber(itemPrice)} ر.س</p>
+                <p class="cart-item-price">${formatNumber(itemPrice)} ${currencySymbol}</p>
                 <div class="cart-item-actions">
                     <div class="quantity-control">
                         <button class="quantity-btn minus" data-id="${itemId}">-</button>
@@ -736,7 +749,7 @@ function displayCart() {
 
     // Update total
     console.log("Calculated total:", total); // Debug log
-    cartTotalPrice.textContent = `${formatNumber(total)} ر.س`;
+    cartTotalPrice.textContent = `${formatNumber(total)} ${getCurrencySymbol(cart[0]?.currency || 'SAR')}`;
 
     // Add event listeners to dynamically created buttons
     document.querySelectorAll('.quantity-btn.minus').forEach(button => {
@@ -808,22 +821,10 @@ function updateCartCount() {
 // Share offer via WhatsApp
 function shareOnWhatsApp() {
     if (!currentOffer) return;
-
     const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
-    const message = `أهلاً، حاب استفسر عن العرض التالي:
-    
-*${currentOffer.title}*
-- السعر القديم: ${formatNumber(currentOffer.old_price)} ر.س
-- السعر الحالي: ${formatNumber(currentOffer.price)} ر.س
-${currentOffer.description}
-
-${currentOffer.dates}
-${currentOffer.note ? 'ملاحظة: ' + currentOffer.note : ''}
-
-${currentOffer.images && currentOffer.images.length > 0 ? `صورة العرض: ${currentOffer.images[0]}` : ''}
-
-الرجاء تزويدي بتوافر العرض او بالعروض المشابهة.`;
-
+    const currency = currentOffer.currency || 'SAR';
+    const currencySymbol = getCurrencySymbol(currency);
+    const message = `أهلاً، حاب استفسر عن العرض التالي:\n\n*${currentOffer.title}*\n- السعر القديم: ${formatNumber(currentOffer.old_price)} ${currencySymbol}\n- السعر الحالي: ${formatNumber(currentOffer.price)} ${currencySymbol}\n${currentOffer.description}\n\n${currentOffer.dates}\n${currentOffer.note ? 'ملاحظة: ' + currentOffer.note : ''}\n\n${currentOffer.images && currentOffer.images.length > 0 ? `صورة العرض: ${currentOffer.images[0]}` : ''}\n\nالرجاء تزويدي بتوافر العرض او بالعروض المشابهة.`;
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 }
@@ -831,23 +832,16 @@ ${currentOffer.images && currentOffer.images.length > 0 ? `صورة العرض: 
 // Checkout via WhatsApp
 function checkout() {
     if (cart.length === 0) return;
-
     const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
     let message = `أهلاً، حاب احجز العروض التالية:\n\n`;
     let total = 0;
-
     cart.forEach(item => {
-        message += `*${item.title}*
-الكمية: ${item.quantity}
-- السعر القديم: ${formatNumber(item.old_price)} ر.س
-- السعر الحالي: ${formatNumber(item.price)} ر.س
-المجموع: ${formatNumber(item.price * item.quantity)} ر.س
-${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n\n`;
+        const currency = item.currency || 'SAR';
+        const currencySymbol = getCurrencySymbol(currency);
+        message += `*${item.title}*\nالكمية: ${item.quantity}\n- السعر القديم: ${formatNumber(item.old_price)} ${currencySymbol}\n- السعر الحالي: ${formatNumber(item.price)} ${currencySymbol}\nالمجموع: ${formatNumber(item.price * item.quantity)} ${currencySymbol}\n${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]}` : ''}\n\n\n`;
         total += item.price * item.quantity;
     });
-
-    message += `*المجموع الكلي: ${formatNumber(total)} ر.س*\n\nالرجاء تزويدي بتوافر هذه العروض.`;
-
+    message += `*المجموع الكلي: ${formatNumber(total)} ${getCurrencySymbol(cart[0]?.currency || 'SAR')}*\n\nالرجاء تزويدي بتوافر هذه العروض.`;
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 }
@@ -856,7 +850,8 @@ ${item.images && item.images.length > 0 ? `صورة العرض: ${item.images[0]
 function shareHighlightedOfferOnWhatsApp() {
     const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
     const highlightData = offersData.highlightOffer || {};
-
+    const currency = highlightData.currency || 'SAR';
+    const currencySymbol = getCurrencySymbol(currency);
     let message = `أهلاً بك، أرغب في الاستفسار عن العرض المميز:\n\n`;
 
     if (highlightData.title) {
@@ -868,8 +863,8 @@ function shareHighlightedOfferOnWhatsApp() {
     }
 
     if (highlightData.price && highlightData.old_price) {
-        message += `السعر القديم: ${formatNumber(highlightData.old_price)} ر.س\n`;
-        message += `السعر الحالي: ${formatNumber(highlightData.price)} ر.س\n`;
+        message += `السعر القديم: ${formatNumber(highlightData.old_price)} ${currencySymbol}\n`;
+        message += `السعر الحالي: ${formatNumber(highlightData.price)} ${currencySymbol}\n`;
     }
 
     if (highlightData.dates) {
