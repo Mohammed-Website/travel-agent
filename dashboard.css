@@ -72,7 +72,7 @@ body {
     box-shadow: var(--box-shadow);
     padding: clamp(0.5rem, 1vw, 1rem);
     position: sticky;
-    top: clamp(100px, 6vw, 150px);
+    top: clamp(90px, 6vw, 150px);
     z-index: 99;
 }
 
