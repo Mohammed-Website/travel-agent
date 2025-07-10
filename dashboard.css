@@ -453,7 +453,8 @@ body {
     background: white;
     margin: 2rem auto;
     width: 90%;
-    height: fit-content;
+    height: 90%;
+    overflow-y: auto;
     max-width: 600px;
     border-radius: var(--border-radius);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
