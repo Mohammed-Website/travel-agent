@@ -109,6 +109,7 @@ body {
 .content-section {
     display: none;
     font-size: clamp(0.9rem, 1vw, 1rem);
+    margin-top: 25px;
 }
 
 .content-section.active {
@@ -547,4 +548,164 @@ body {
     }
 
 
+}
+
+#company-info .form-group label[for="company-logo"] {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+#company-info #company-logo {
+    display: none;
+}
+
+#company-info .custom-logo-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--secondary-color);
+    border-radius: 16px;
+    padding: 1.5rem 0.5rem;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+#company-info .custom-logo-upload:hover {
+    border-color: var(--primary-color);
+    background: #f0f4fa;
+}
+
+#company-info .custom-logo-upload .logo-upload-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+#company-info .custom-logo-upload .logo-upload-text {
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+#company-info .logo-preview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+    background: #f5f7fa;
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    #company-info .logo-preview {
+        width: 90px;
+        height: 90px;
+    }
+
+    #company-info .custom-logo-upload {
+        padding: 1rem 0.2rem;
+    }
+}
+
+#company-info {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.07);
+    padding: 2rem 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#company-info .form-group {
+    margin-bottom: 2.2rem;
+}
+
+#company-info label {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+#company-info input[type="file"] {
+    margin-top: 0.5rem;
+}
+
+#company-info .image-preview-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#company-info .image-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+    background: #f5f7fa;
+}
+
+#company-info .images-container {
+    gap: 1.5rem;
+}
+
+#company-info .image-thumbnail {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    object-fit: cover;
+    background: #fafbfc;
+}
+
+#company-info .add-image-btn {
+    background: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+}
+
+#company-info .add-image-btn:hover {
+    background: var(--primary-color);
+}
+
+#company-info .form-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+    #company-info {
+        padding: 1rem 0.5rem;
+    }
+
+    #company-info .image-preview {
+        width: 80px;
+        height: 80px;
+    }
+
+    #company-info .image-thumbnail {
+        width: 60px;
+        height: 60px;
+    }
 }
