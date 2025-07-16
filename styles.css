@@ -2118,3 +2118,70 @@ footer {
     transform: translateY(0) scale(1);
     pointer-events: auto;
 }
+
+.modal-box {
+    background: #fff;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    text-align: center;
+    transition: opacity 1.5s, transform 1.5s;
+}
+
+.modal-box.hide {
+    opacity: 0;
+    transform: scale(0.95) translateY(40px);
+    pointer-events: none;
+}
+
+#password-modal {
+    transition: opacity 1.5s;
+}
+
+#welcome-animation {
+    display: none;
+    opacity: 0;
+    filter: blur(7px);
+    transform: translate(-50%, -50%) scale(0.98) translateX(-40px);
+    transition: opacity 1.5s, filter 1.5s, transform 1.5s;
+    font-size: 1.3rem;
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10001;
+    padding: 1.2em 2em;
+    border-radius: 1em;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+}
+
+#welcome-animation.active {
+    display: block;
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1) translateX(0);
+}
+
+#welcome-animation.hide {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translate(-50%, -50%) scale(0.98) translateX(40px);
+    transition: opacity 1.5s, filter 1.5s, transform 1.5s;
+}
+
+.blurred-by-modal {
+    filter: blur(7px) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    transition: filter 1.5s, opacity 1.5s;
+}
+
+.blurred-by-modal-hide {
+    filter: blur(0) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    transition: filter 1.5s;
+}

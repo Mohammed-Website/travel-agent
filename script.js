@@ -96,13 +96,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Helper for blur effect
 function setPageBlurred(blurred) {
-    document.querySelectorAll('body > *:not(#password-modal)').forEach(el => {
-        if (blurred) {
+    const elements = document.querySelectorAll('body > *:not(#password-modal)');
+    if (blurred) {
+        elements.forEach(el => {
+            el.classList.remove('blurred-by-modal-hide');
             el.classList.add('blurred-by-modal');
-        } else {
+        });
+    } else {
+        elements.forEach(el => {
+            el.classList.add('blurred-by-modal-hide');
             el.classList.remove('blurred-by-modal');
-        }
-    });
+            // Remove the hide class after the transition
+            setTimeout(() => {
+                el.classList.remove('blurred-by-modal-hide');
+            }, 1500);
+        });
+    }
 }
 
 // === Password Modal Logic ===
@@ -153,12 +162,48 @@ document.addEventListener('DOMContentLoaded', function () {
         const matchedCompany = companies.find(company => company.password === value);
 
         if (matchedCompany) {
-            passwordModal.style.display = 'none';
-            setPageBlurred(false);
-            applyCompanyBrand(matchedCompany);
+            const welcomeAnimation = document.getElementById('welcome-animation');
+            const modalBox = document.querySelector('#password-modal .modal-box');
+            if (welcomeAnimation && modalBox) {
+                // Hide the modal box smoothly
+                modalBox.classList.add('hide');
+
+                // After the box is hidden, show the welcome animation
+                setTimeout(() => {
+                    welcomeAnimation.textContent = `اهلا بك في موقع ${matchedCompany.name}`;
+                    welcomeAnimation.style.display = 'block';
+                    setTimeout(() => {
+                        welcomeAnimation.classList.add('active');
+                    }, 10);
+
+                    // After 2 seconds, fade out the overlay and welcome message with blur and slide out
+                    setTimeout(() => {
+                        welcomeAnimation.classList.remove('active');
+                        welcomeAnimation.classList.add('hide');
+                        // Apply company brand before fade out, so details update during animation
+                        applyCompanyBrand(matchedCompany);
+                        // Fade out the overlay and remove blur at the same time
+                        setPageBlurred(false);
+                        document.getElementById('password-modal').style.transition = 'opacity 1.5s';
+                        document.getElementById('password-modal').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('password-modal').style.display = 'none';
+                            document.getElementById('password-modal').style.opacity = '';
+                            welcomeAnimation.style.display = 'none';
+                            welcomeAnimation.classList.remove('hide');
+                            modalBox.classList.remove('hide');
+                        }, 1500);
+                    }, 2000);
+
+                }, 700); // Wait for modal box to hide
+            } else {
+                // fallback
+                document.getElementById('password-modal').style.display = 'none';
+                setPageBlurred(false);
+                applyCompanyBrand(matchedCompany);
+            }
         } else {
             passwordError.style.display = 'block';
-            // Remove invalid saved password if exists
             localStorage.removeItem('savedCompanyPassword');
         }
     });
