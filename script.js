@@ -1,3 +1,207 @@
+// === Companies Configuration ===
+const companies = [
+    {
+        name: "روائع السفر",
+        password: "روائع السفر",
+        logo: "روائع-السفر.jpg",
+        whatsapp: "+966567957373",
+        email: "Amazingtrv@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "مراسي السفر",
+        password: "مراسي السفر",
+        logo: "مراسي-السفر.jpg",
+        whatsapp: "+966565909069",
+        email: "Marassialsafar@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "نور الافق",
+        password: "نور الافق",
+        logo: "نور-الافق.jpg",
+        whatsapp: "+966507709026",
+        email: "Nooralufoq@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "رويال ترافل",
+        password: "رويال ترافل",
+        logo: "رويال-ترافل.jpg",
+        whatsapp: "+971522897402",
+        email: "booking@royaltimeholidays.ae",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+];
+
+// Move applyCompanyBrand to top-level scope so it is accessible everywhere
+function applyCompanyBrand(company) {
+    // 1. Change website name
+    const logoText = document.querySelector('.logo-text');
+    if (logoText) logoText.textContent = company.name;
+    document.title = company.name;
+
+    // 2. Change phone number everywhere
+    const whatsappButton = document.querySelector('.whatsapp-button');
+    if (whatsappButton) {
+        whatsappButton.href = `https://wa.me/${company.whatsapp}`;
+    }
+
+    const footerPhone = document.querySelector('footer .footer-section ul li[style*="direction: ltr"]');
+    if (footerPhone) {
+        footerPhone.innerHTML = `${company.whatsapp} <i class="fas fa-phone"></i>`;
+    }
+
+    document.querySelectorAll('a, li, span, div').forEach(el => {
+        if (el.textContent && el.textContent.includes(company.oldWhatsapp)) {
+            el.textContent = el.textContent.replace(company.oldWhatsapp, company.whatsapp);
+        }
+    });
+
+    // 3. Change logo image
+    const logoImg = document.querySelector('.logo-img');
+    if (logoImg) logoImg.src = company.logo;
+
+    // 4. Change email address in footer
+    const footerEmail = Array.from(document.querySelectorAll('footer .footer-section ul li')).find(li =>
+        li.textContent.includes(company.oldEmail));
+    if (footerEmail) {
+        footerEmail.innerHTML = `<i class="fas fa-envelope"></i> ${company.email}`;
+    }
+
+    // 5. Change email in any mailto links
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+        if (a.href.includes(company.oldEmail)) {
+            a.href = `mailto:${company.email}`;
+            a.textContent = company.email;
+        }
+    });
+
+    // Store current company info
+    window.__currentCompany = company;
+    // Store the successful password in localStorage
+    localStorage.setItem('savedCompanyPassword', company.password);
+}
+
+// Add CSS for blur effect
+document.addEventListener('DOMContentLoaded', function () {
+    const style = document.createElement('style');
+    style.innerHTML = `.blurred-by-modal { filter: blur(7px) !important; pointer-events: none !important; user-select: none !important; }`;
+    document.head.appendChild(style);
+});
+
+// Helper for blur effect
+function setPageBlurred(blurred) {
+    document.querySelectorAll('body > *:not(#password-modal)').forEach(el => {
+        if (blurred) {
+            el.classList.add('blurred-by-modal');
+        } else {
+            el.classList.remove('blurred-by-modal');
+        }
+    });
+}
+
+// === Password Modal Logic ===
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordModal = document.getElementById('password-modal');
+    const passwordInput = document.getElementById('password-input');
+    const passwordSubmit = document.getElementById('password-submit');
+    const passwordError = document.getElementById('password-error');
+
+    if (!passwordModal) return;
+
+    function checkSavedPassword() {
+        const savedPassword = localStorage.getItem('savedCompanyPassword');
+        if (savedPassword === "وقت الصعود") { // Specific check for this password
+            const boardingSaudi = companies.find(company => company.password === "وقت الصعود");
+            if (boardingSaudi) {
+                passwordModal.style.display = 'none';
+                setPageBlurred(false);
+                applyCompanyBrand(boardingSaudi);
+                return true;
+            }
+        } else if (savedPassword) { // General check for other passwords
+            const matchedCompany = companies.find(company => company.password === savedPassword);
+            if (matchedCompany) {
+                passwordModal.style.display = 'none';
+                setPageBlurred(false);
+                applyCompanyBrand(matchedCompany);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // First try to use saved password (with priority for "وقت الصعود")
+    const hasSavedPassword = checkSavedPassword();
+
+    // Only show modal if no valid saved password
+    if (!hasSavedPassword) {
+        passwordModal.style.display = 'flex';
+        passwordInput.value = '';
+        passwordError.style.display = 'none';
+        passwordInput.focus();
+        setPageBlurred(true);
+    }
+
+    passwordSubmit.addEventListener('click', function () {
+        const value = passwordInput.value.trim();
+        const matchedCompany = companies.find(company => company.password === value);
+
+        if (matchedCompany) {
+            passwordModal.style.display = 'none';
+            setPageBlurred(false);
+            applyCompanyBrand(matchedCompany);
+        } else {
+            passwordError.style.display = 'block';
+            // Remove invalid saved password if exists
+            localStorage.removeItem('savedCompanyPassword');
+        }
+    });
+
+    passwordInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            passwordSubmit.click();
+        }
+    });
+});
+
+function getCurrentPhone() {
+    return window.__currentCompany ? window.__currentCompany.whatsapp : '+966569446280';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // function to format numbers with commas
 function formatNumber(num) {
     if (num === null || num === undefined || num === '') return '';
@@ -162,6 +366,18 @@ async function init() {
 
         // Fetch reviews after data is loaded
         fetchReviews();
+
+        // === MOVE THIS TO THE VERY END ===
+        setTimeout(() => {
+            const storedCompanyKey = localStorage.getItem('savedCompanyPassword');
+            if (storedCompanyKey) {
+                const company = companies.find(c => c.password === storedCompanyKey);
+                if (company) {
+                    window.__selectedCompany = company;
+                    applyCompanyBrand(company);
+                }
+            }
+        }, 0);
     } catch (error) {
         console.error('Initialization error:', error);
     }
@@ -821,7 +1037,7 @@ function updateCartCount() {
 // Share offer via WhatsApp
 function shareOnWhatsApp() {
     if (!currentOffer) return;
-    const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
+    const phoneNumber = getBoardingSaudiPhone();
     const currency = currentOffer.currency || 'SAR';
     const currencySymbol = getCurrencySymbol(currency);
     const message = `أهلاً، حاب استفسر عن العرض التالي:\n\n*${currentOffer.title}*\n- السعر القديم: ${formatNumber(currentOffer.old_price)} ${currencySymbol}\n- السعر الحالي: ${formatNumber(currentOffer.price)} ${currencySymbol}\n${currentOffer.description}\n\n${currentOffer.dates}\n${currentOffer.note ? 'ملاحظة: ' + currentOffer.note : ''}\n\n${currentOffer.images && currentOffer.images.length > 0 ? `صورة العرض: ${currentOffer.images[0]}` : ''}\n\nالرجاء تزويدي بتوافر العرض او بالعروض المشابهة.`;
@@ -832,7 +1048,7 @@ function shareOnWhatsApp() {
 // Checkout via WhatsApp
 function checkout() {
     if (cart.length === 0) return;
-    const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
+    const phoneNumber = getBoardingSaudiPhone();
     let message = `أهلاً، حاب احجز العروض التالية:\n\n`;
     let total = 0;
     cart.forEach(item => {
@@ -848,7 +1064,7 @@ function checkout() {
 
 // Share highlighted offer via WhatsApp
 function shareHighlightedOfferOnWhatsApp() {
-    const phoneNumber = '+966569446280'; // Replace with your WhatsApp number
+    const phoneNumber = getBoardingSaudiPhone();
     const highlightData = offersData.highlightOffer || {};
     const currency = highlightData.currency || 'SAR';
     const currencySymbol = getCurrencySymbol(currency);
@@ -1269,6 +1485,22 @@ function showSuccessNotification() {
 
 
 fetchReviews();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
