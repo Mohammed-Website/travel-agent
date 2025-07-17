@@ -36,6 +36,15 @@ const companies = [
         oldWhatsapp: "+966569446280",
         oldEmail: "bandar.abo.tariq@gmail.com"
     },
+    {
+        name: "البروفيسور",
+        password: "البروفيسور",
+        logo: "البروفيسور.jpg",
+        whatsapp: "+97366355519",
+        email: "theprofessor@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
 ];
 
 // Move applyCompanyBrand to top-level scope so it is accessible everywhere
