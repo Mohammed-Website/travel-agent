@@ -103,6 +103,15 @@ function applyCompanyBrand(company) {
     localStorage.setItem('savedCompanyPassword', company.password);
 }
 
+// Add this function to get the selected company's WhatsApp number
+function getBoardingSaudiPhone() {
+    if (window.__currentCompany && window.__currentCompany.whatsapp) {
+        return window.__currentCompany.whatsapp;
+    }
+    // fallback default number
+    return '+966569446280';
+}
+
 // Add CSS for blur effect
 document.addEventListener('DOMContentLoaded', function () {
     const style = document.createElement('style');
