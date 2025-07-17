@@ -2135,9 +2135,7 @@ footer {
     pointer-events: none;
 }
 
-#password-modal {
-    transition: opacity 1.5s;
-}
+#password-modal {}
 
 #welcome-animation {
     display: none;
@@ -2176,7 +2174,6 @@ footer {
     filter: blur(7px) !important;
     pointer-events: none !important;
     user-select: none !important;
-    transition: filter 1.5s, opacity 1.5s;
 }
 
 .blurred-by-modal-hide {
