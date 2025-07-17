@@ -166,6 +166,25 @@ document.addEventListener('DOMContentLoaded', function () {
         setPageBlurred(true);
     }
 
+    // Add this function to record company sign-ins in Supabase
+    async function recordCompanySignin(companyName) {
+        try {
+            const { data, error } = await supabase
+                .from('company_signins')
+                .upsert([
+                    { company_name: companyName, status: 'Done' }
+                ], { onConflict: ['company_name'] });
+
+            if (error) {
+                console.error('Error recording company signin:', error.message);
+            } else {
+                console.log('Company signin recorded:', data);
+            }
+        } catch (err) {
+            console.error('Unexpected error recording company signin:', err);
+        }
+    }
+
     passwordSubmit.addEventListener('click', function () {
         const value = passwordInput.value.trim();
         const matchedCompany = companies.find(company => company.password === value);
@@ -191,6 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         welcomeAnimation.classList.add('hide');
                         // Apply company brand before fade out, so details update during animation
                         applyCompanyBrand(matchedCompany);
+                        // Record company sign-in in Supabase
+                        recordCompanySignin(matchedCompany.name);
                         // Fade out the overlay and remove blur at the same time
                         setPageBlurred(false);
                         document.getElementById('password-modal').style.transition = 'opacity 1.5s';
@@ -210,6 +231,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('password-modal').style.display = 'none';
                 setPageBlurred(false);
                 applyCompanyBrand(matchedCompany);
+                // Record company sign-in in Supabase
+                recordCompanySignin(matchedCompany.name);
             }
         } else {
             passwordError.style.display = 'block';
