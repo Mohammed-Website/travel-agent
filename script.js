@@ -54,6 +54,13 @@ function applyCompanyBrand(company) {
     if (logoText) logoText.textContent = company.name;
     document.title = company.name;
 
+    // 1.1 Change company name in footer copyright
+    const footerCopyright = document.querySelector('footer .footer-bottom p');
+    if (footerCopyright) {
+        // Replace only the company name part before the dash
+        footerCopyright.innerHTML = footerCopyright.innerHTML.replace(/^[^\-]+/, `${company.name} `);
+    }
+
     // 2. Change phone number everywhere
     const whatsappButton = document.querySelector('.whatsapp-button');
     if (whatsappButton) {
@@ -206,13 +213,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // After 2 seconds, fade out the overlay and welcome message with blur and slide out
                     setTimeout(() => {
+                        // Apply company brand and record sign-in BEFORE hiding modal
+                        applyCompanyBrand(matchedCompany);
+                        recordCompanySignin(matchedCompany.name);
                         welcomeAnimation.classList.remove('active');
                         welcomeAnimation.classList.add('hide');
-                        // Apply company brand before fade out, so details update during animation
-                        applyCompanyBrand(matchedCompany);
-                        // Record company sign-in in Supabase
-                        recordCompanySignin(matchedCompany.name);
-                        // Fade out the overlay and remove blur at the same time
                         setPageBlurred(false);
                         document.getElementById('password-modal').style.transition = 'opacity 1.5s';
                         document.getElementById('password-modal').style.opacity = '0';
@@ -228,11 +233,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 700); // Wait for modal box to hide
             } else {
                 // fallback
+                applyCompanyBrand(matchedCompany);
+                recordCompanySignin(matchedCompany.name);
                 document.getElementById('password-modal').style.display = 'none';
                 setPageBlurred(false);
-                applyCompanyBrand(matchedCompany);
-                // Record company sign-in in Supabase
-                recordCompanySignin(matchedCompany.name);
             }
         } else {
             passwordError.style.display = 'block';
