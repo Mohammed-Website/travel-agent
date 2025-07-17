@@ -197,6 +197,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const matchedCompany = companies.find(company => company.password === value);
 
         if (matchedCompany) {
+            // Set logo image src immediately for faster loading
+            const logoImg = document.querySelector('.logo-img');
+            if (logoImg && matchedCompany.logo) {
+                logoImg.src = matchedCompany.logo;
+            }
             const welcomeAnimation = document.getElementById('welcome-animation');
             const modalBox = document.querySelector('#password-modal .modal-box');
             if (welcomeAnimation && modalBox) {
