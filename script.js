@@ -45,6 +45,42 @@ const companies = [
         oldWhatsapp: "+966569446280",
         oldEmail: "bandar.abo.tariq@gmail.com"
     },
+    {
+        name: "الجاسر",
+        password: "الجاسر",
+        logo: "الجاسر.jpg",
+        whatsapp: "+96563635137",
+        email: "aljasertravels@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "فالكون سكاي",
+        password: "فالكون سكاي",
+        logo: "فالكون-سكاي.jpg",
+        whatsapp: "+97332277775",
+        email: "falconskytravel@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "هوس السفر",
+        password: "هوس السفر",
+        logo: "هوس-السفر.jpg",
+        whatsapp: "+97332277775",
+        email: "travel-mania@outlook.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
+    {
+        name: "رويال تايم",
+        password: "رويال تايم",
+        logo: "رويال-تايم.jpg",
+        whatsapp: "+971522897402",
+        email: "royaltimetraveleu@gmail.com",
+        oldWhatsapp: "+966569446280",
+        oldEmail: "bandar.abo.tariq@gmail.com"
+    },
 ];
 
 // Move applyCompanyBrand to top-level scope so it is accessible everywhere
