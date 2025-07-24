@@ -1724,13 +1724,3 @@ function animateOnScroll() {
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('resize', animateOnScroll);
 document.addEventListener('DOMContentLoaded', animateOnScroll); // safer than immediate call
-
-
-
-
-
-
-
-
-
-
