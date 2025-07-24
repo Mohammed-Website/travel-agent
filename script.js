@@ -28,15 +28,6 @@ const companies = [
         oldEmail: "bandar.abo.tariq@gmail.com"
     },
     {
-        name: "رويال ترافل",
-        password: "رويال ترافل",
-        logo: "رويال-ترافل.jpg",
-        whatsapp: "+971522897402",
-        email: "booking@royaltimeholidays.ae",
-        oldWhatsapp: "+966569446280",
-        oldEmail: "bandar.abo.tariq@gmail.com"
-    },
-    {
         name: "البروفيسور",
         password: "البروفيسور",
         logo: "البروفيسور.jpg",
@@ -67,7 +58,7 @@ const companies = [
         name: "هوس السفر",
         password: "هوس السفر",
         logo: "هوس-السفر.jpg",
-        whatsapp: "+97332277775",
+        whatsapp: "+905524611700",
         email: "travel-mania@outlook.com",
         oldWhatsapp: "+966569446280",
         oldEmail: "bandar.abo.tariq@gmail.com"
